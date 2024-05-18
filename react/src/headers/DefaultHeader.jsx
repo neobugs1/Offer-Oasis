@@ -11,7 +11,7 @@ const DefaultHeader = () => {
       <Flex bgColor={"#00193c"} flexDir={"row"} h="7vh" justifyContent={"center"} color={"white"}>
         <Flex w={"80%"} alignItems={"center"} id="hello">
           <Link href="#default" className="logo">
-            CompanyLogo
+            Offer Oasis
           </Link>
           <Spacer />
           <Flex className="header-right" gap={10} alignItems={"center"} h={"100%"}>

@@ -10,40 +10,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultHeader from "./headers/DefaultHeader.jsx";
 import Dashboard from "./views/Dashboard.jsx";
 import { ChakraProvider } from "@chakra-ui/react";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <DefaultHeader />,
-    children: [
-      {
-        path: "/users",
-        element: <Users />,
-      },
-      {
-        path: "/dashboard",
-        element: <Dashboard />,
-      },
-    ],
-  },
-  {
-    path: "*",
-    element: <NotFound />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/signup",
-    element: <Signup />,
-  },
-]);
+import Layout from "./layouts/Layout.jsx";
+import MainContent from "./components/MainContent.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ChakraProvider>
-      <RouterProvider router={router} />
+      <App />
     </ChakraProvider>
   </React.StrictMode>
 );
