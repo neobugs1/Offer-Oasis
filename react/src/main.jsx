@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import "./index.css";
 import Login from "./views/Login.jsx";
 import Signup from "./views/Signup.jsx";
-import Users from "./views/Users.jsx";
+import Users from "./views/User.jsx";
 import NotFound from "./views/NotFound.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultHeader from "./headers/DefaultHeader.jsx";

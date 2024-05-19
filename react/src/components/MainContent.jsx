@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Stack, Input, Button, Text, Flex, Heading } from "@chakra-ui/react";
+import { Box, Container, Stack, Input, Button, Text, Flex, Heading, Link } from "@chakra-ui/react";
 import BackgroundChanger from "./BackgroundChanger";
 import LatestAds from "./LatestAds";
 import { Search2Icon } from "@chakra-ui/icons";
@@ -13,18 +13,17 @@ const MainContent = () => {
           <Text fontSize="4xl" color="white">
             Пребарајте огласи
           </Text>
-          <Flex w="full" maxW="650px">
+          <Flex w="full" maxW="650px" alignItems={"center"}>
             <Input placeholder="Пребарај, пр. BMW, Samsung, Iphone, Услуга ..." size="lg" bg="white" roundedLeft="3xl" roundedRight={0} />
-            <Button colorScheme="blue" size="lg" mt={4} roundedRight="3xl" roundedLeft={0}>
-              <Search2Icon />
-            </Button>
+            <Link href="/search">
+              <Button colorScheme="blue" size="lg" roundedRight="3xl" roundedLeft={0}>
+                <Search2Icon />
+              </Button>
+            </Link>
           </Flex>
           <Box flex="1" p={4}>
             <Heading color={"white"}>или</Heading>
           </Box>
-          <Text fontSize="xl" mb={4} color={"white"}>
-            Најнови огласи
-          </Text>
           <Box bg="white" p={6} borderRadius="md" boxShadow="lg" textAlign="center" maxW={"90%"}>
             <Stack direction="row" justify="center" spacing={4}>
               <LatestAds />
