@@ -7,6 +7,7 @@ import NotFound from "./views/NotFound";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import MainContent from "./components/MainContent";
+import SearchPage from "./views/SearchPage";
 
 const App = () => {
   return (
@@ -16,10 +17,11 @@ const App = () => {
           <Route index element={<MainContent />} />
           <Route path="users" element={<Users />} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="login" element={<Login />} />
+          <Route path="/search" element={<SearchPage />} />
         </Route>
-        <Route path="*" element={<NotFound />} />
+        <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

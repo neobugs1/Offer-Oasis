@@ -13,9 +13,9 @@ const MainContent = () => {
           <Text fontSize="4xl" color="white">
             Пребарајте огласи
           </Text>
-          <Flex w="full" maxW="lg">
-            <Input placeholder="Пребарај, пр. BMW, Samsung, Iphone, Услуга ..." size="lg" bg="white" borderRadius="md" />
-            <Button colorScheme="blue" size="lg" mt={4}>
+          <Flex w="full" maxW="650px">
+            <Input placeholder="Пребарај, пр. BMW, Samsung, Iphone, Услуга ..." size="lg" bg="white" roundedLeft="3xl" roundedRight={0} />
+            <Button colorScheme="blue" size="lg" mt={4} roundedRight="3xl" roundedLeft={0}>
               <Search2Icon />
             </Button>
           </Flex>

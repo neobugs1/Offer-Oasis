@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Box, Image } from "@chakra-ui/react";
 import image1 from "../assets/metalindustry.jpg";
 import image2 from "../assets/logistics.jpg";
+import image3 from "../assets/cnc.jpg";
 
 const BackgroundChanger = ({ children }) => {
   const images = [
     image1,
     image2,
+    image3,
     // Add more image URLs
   ];
 

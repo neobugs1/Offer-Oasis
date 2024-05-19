@@ -12,11 +12,11 @@ const Login = () => {
             <Flex flexDirection={"column"} gap={5}>
               <Box>
                 <FormLabel>E-Mail</FormLabel>
-                <Input placeholder="E-mail address" mb={2} />
+                <Input placeholder="E-mail address" mb={2} id="email" />
               </Box>
               <Box>
                 <FormLabel>Password</FormLabel>
-                <Input type="password" placeholder="Password" mb={4} />
+                <Input type="password" placeholder="Password" mb={4} id="password" />
               </Box>
               <Button bgColor="#0060df" color={"white"} size="lg" mb={4}>
                 Register now
