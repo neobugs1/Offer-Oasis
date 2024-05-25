@@ -1,7 +1,7 @@
 import React from "react";
+import { Link } from "@inertiajs/react";
 import {
     Box,
-    Link,
     Flex,
     Spacer,
     Stack,
@@ -37,7 +37,7 @@ const DefaultHeader = ({ auth }) => {
                         h={"100%"}
                     >
                         {auth.user ? (
-                            <Link href="/dashboard" h="100%">
+                            <Link href={route("dashboard")} className="h-full">
                                 <Box
                                     as="button"
                                     h={"100%"}
@@ -59,7 +59,7 @@ const DefaultHeader = ({ auth }) => {
                             </Link>
                         ) : (
                             <>
-                                <Link href="/login" h="100%">
+                                <Link href={route("login")} className="h-full">
                                     <Box
                                         as="button"
                                         h={"100%"}
@@ -81,26 +81,6 @@ const DefaultHeader = ({ auth }) => {
                                 </Link>
                             </>
                         )}
-                        {/* <Link href="/login" h="100%">
-                            <Box
-                                as="button"
-                                h={"100%"}
-                                borderBottom={"4px"}
-                                borderColor={"transparent"}
-                                _hover={{
-                                    borderBottom: "4px",
-                                    borderColor: "teal.700",
-                                }}
-                                color={"white"}
-                                display={"flex"}
-                                justifyContent={"center"}
-                                alignItems={"center"}
-                                gap={4}
-                            >
-                                Најава
-                                <Icon as={VscAccount} w={9} h={"80%"} />
-                            </Box>
-                        </Link> */}
                         <Box
                             as="button"
                             h={"100%"}

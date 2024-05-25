@@ -20,6 +20,8 @@ test('profile information can be updated', function () {
         ->patch('/profile', [
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'location' => 'Skopje',
+            'phoneNumber' => '078888666',
         ]);
 
     $response
