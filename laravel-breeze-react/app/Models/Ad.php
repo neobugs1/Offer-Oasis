@@ -13,9 +13,7 @@ class Ad extends Model
         'title',
         'description',
         'category',
-        'seller_id',
-        'seller_name',
-        'seller_rating',
+        'seller',
         'price',
         'currency',
         'start_price',
@@ -40,8 +38,8 @@ class Ad extends Model
     {
         return $this->hasOne(Review::class);
     }
-    public function createdBy()
+    public function seller()
     {
-        return $this->belongsTo(User::class, 'seller_id');
+        return $this->belongsTo(User::class, 'seller');
     }
 }

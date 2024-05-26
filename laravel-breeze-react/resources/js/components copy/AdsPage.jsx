@@ -1,5 +1,5 @@
 import React from "react";
-import { createInertiaApp } from "@inertiajs/react";
+import { Link, createInertiaApp } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
 import { Inertia } from "@inertiajs/inertia";
 import {
@@ -11,6 +11,7 @@ import {
     HStack,
     Stack,
     Flex,
+    textDecoration,
 } from "@chakra-ui/react";
 
 const AdsPage = ({ ads }) => {
@@ -47,9 +48,17 @@ const AdsPage = ({ ads }) => {
                                 mr={5}
                             />
                             <VStack align="start" spacing={2}>
-                                <Text fontSize="xl" fontWeight="bold">
-                                    {ad.title}
-                                </Text>
+                                <Link href={route("ad.show", ad.id)}>
+                                    <Text
+                                        fontSize="xl"
+                                        fontWeight="bold"
+                                        _hover={{
+                                            textDecoration: "underline",
+                                        }}
+                                    >
+                                        {ad.title}
+                                    </Text>
+                                </Link>
                                 <Text>{ad.description}</Text>
                                 <Text>
                                     Price: {ad.price} {ad.currency}
@@ -58,7 +67,7 @@ const AdsPage = ({ ads }) => {
                                 <Text>Condition: {ad.condition}</Text>
                                 <Text>Brand: {ad.brand}</Text>
                                 <Text>Model: {ad.model}</Text>
-                                <Text>Seller Rating: {ad.seller_rating}</Text>
+                                <Text>Seller Rating: {ad.seller.name}</Text>
                                 <Text>
                                     Date Posted:{" "}
                                     {new Date(
@@ -71,16 +80,21 @@ const AdsPage = ({ ads }) => {
                 ))}
             </VStack>
 
-            <HStack spacing={2} justify="center" mt={5}>
+            <HStack spacing={2} justify="center" mt={5} gap={5}>
                 {ads.meta.links.map((link, index) => (
-                    <Button
+                    <Link
                         key={index}
-                        onClick={() => handlePageChange(link.url)}
-                        disabled={!link.url}
-                        colorScheme={link.active ? "blue" : "gray"}
+                        href={link.url || ""}
+                        className={
+                            "py-2 px-3 rounded-lg text-gray-700 text-xs " +
+                            (!link.url
+                                ? "!text-gray-300 cursor-not-allowed "
+                                : "hover:bg-gray-700 text-white bg-gray-900") +
+                            (link.active ? " cursor-not-allowed " : " ")
+                        }
                     >
                         {link.label.replace(/&laquo;|&raquo;/g, "").trim()}
-                    </Button>
+                    </Link>
                 ))}
             </HStack>
         </Box>

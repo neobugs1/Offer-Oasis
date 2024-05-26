@@ -4,9 +4,12 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 
 class AdResource extends JsonResource
 {
+    public static $wrap = false;
     /**
      * Transform the resource into an array.
      *
@@ -19,9 +22,7 @@ class AdResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'category' => $this->category,
-            'seller_id' => $this->seller_id,
-            'seller_name' => $this->seller_name,
-            'seller_rating' => $this->seller_rating,
+            'seller' => new UserResource(User::find($this->seller)),
             'price' => $this->price,
             'currency' => $this->currency,
             'start_price' => $this->start_price,

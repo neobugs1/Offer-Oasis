@@ -15,9 +15,8 @@ return new class extends Migration {
             $table->string('title');
             $table->text('description');
             $table->string('category');
-            $table->foreignId('seller_id');
+            $table->foreignId('seller')->constrained('users');
             $table->unsignedBigInteger('reviewer')->nullable()->default(null);
-            $table->decimal('seller_rating', 3, 2);
             $table->decimal('price', 8, 2);
             $table->string('currency', 3);
             $table->decimal('start_price', 8, 2)->nullable();
@@ -33,7 +32,7 @@ return new class extends Migration {
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
 
             // Foreign key constraints
-            $table->foreign('seller_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('seller_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

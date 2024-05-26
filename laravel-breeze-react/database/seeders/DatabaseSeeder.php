@@ -26,6 +26,14 @@ class DatabaseSeeder extends Seeder
             'location' => 'Skopje',
             'phoneNumber' => '078888666',
         ]);
+        User::factory()->create([
+            'name' => 'Normal User',
+            'email' => 'user@user.com',
+            'password' => bcrypt('nikola123'),
+            'role' => 'user',
+            'location' => 'Skopje',
+            'phoneNumber' => '078585666',
+        ]);
 
         Ad::factory()->count(10)->create();
     }

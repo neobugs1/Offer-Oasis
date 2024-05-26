@@ -43,7 +43,9 @@ class AdController extends Controller
      */
     public function show(Ad $ad)
     {
-        //
+        return inertia('Ad/Show', [
+            'ad' => new AdResource($ad),
+        ]);
     }
 
     /**

@@ -25,5 +25,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/search', [AdController::class, 'index'])->name('search');
+Route::get('/ad/{ad}', [AdController::class, 'show'])->name('ad.show');
+
 
 require __DIR__ . '/auth.php';
