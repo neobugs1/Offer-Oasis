@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('category');
+            $table->foreignId('category')->constrained('categories');
             $table->foreignId('seller')->constrained('users');
             $table->unsignedBigInteger('reviewer')->nullable()->default(null);
             $table->decimal('price', 8, 2);

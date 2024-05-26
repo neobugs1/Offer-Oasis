@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
 
@@ -20,7 +21,7 @@ class AdFactory extends Factory
         return [
             'title' => fake()->sentence(),
             'description' => fake()->realText(),
-            'category' => fake()->randomElement(['eden', 'dva']),
+            'category' => Category::where('name', 'Lenovo')->first()->id,
             'seller' => User::find(1)->id,
             'price' => 1000,
             'currency' => fake()->currencyCode(),

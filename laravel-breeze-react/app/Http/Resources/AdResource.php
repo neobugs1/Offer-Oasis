@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\UserResource;
@@ -21,7 +22,7 @@ class AdResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'category' => $this->category,
+            'category' => $this->getCategoriesRecursive(Category::find($this->category)),
             'seller' => new UserResource(User::find($this->seller)),
             'price' => $this->price,
             'currency' => $this->currency,
@@ -36,5 +37,22 @@ class AdResource extends JsonResource
             'favorite_count' => $this->favorite_count,
             'status' => $this->status,
         ];
+    }
+    protected function getCategoriesRecursive($category)
+    {
+        $categories = [];
+
+        // Traverse up the category tree until the parent is null
+        while ($category) {
+            $categories[] = [
+                'id' => $category->id,
+                'name' => $category->name,
+                // Add other category attributes if needed
+            ];
+            $category = $category->parent;
+        }
+
+        // Reverse the array to maintain hierarchy order
+        return array_reverse($categories);
     }
 }

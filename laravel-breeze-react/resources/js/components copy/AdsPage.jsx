@@ -63,7 +63,6 @@ const AdsPage = ({ ads }) => {
                                 <Text>
                                     Price: {ad.price} {ad.currency}
                                 </Text>
-                                <Text>Category: {ad.category}</Text>
                                 <Text>Condition: {ad.condition}</Text>
                                 <Text>Brand: {ad.brand}</Text>
                                 <Text>Model: {ad.model}</Text>

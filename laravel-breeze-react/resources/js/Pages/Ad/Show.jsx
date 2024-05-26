@@ -17,6 +17,7 @@ import { FaArrowLeft, FaArrowRight, FaEnvelope } from "react-icons/fa";
 const Show = ({ ad, auth }) => {
     return (
         <Layout auth={auth}>
+            {/* <pre>{JSON.stringify(ad, 8, 2)}</pre> */}
             <Flex
                 p={5}
                 maxW="770px"
@@ -28,10 +29,11 @@ const Show = ({ ad, auth }) => {
                 {/* Navigation Tabs */}
                 <VStack align="start" spacing={4}>
                     <HStack spacing={5}>
-                        <Button variant="link">Home</Button>
-                        <Button variant="link">Automobiles</Button>
-                        <Button variant="link">Rentals</Button>
-                        {/* ... other tabs */}
+                        {ad.category.map((category, index) => (
+                            <Button variant="link" key={index}>
+                                {category.name}
+                            </Button>
+                        ))}
                     </HStack>
 
                     {/* Car Image with Navigation Arrows */}
