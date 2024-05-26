@@ -19,6 +19,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
         <>
             <Layout auth={auth}>
+                <Head title="Добредојде" />
                 <MainContent />
             </Layout>
         </>
