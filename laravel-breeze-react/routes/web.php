@@ -24,14 +24,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/search', function () {
-    return Inertia::render('Search', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-
-        Route::resource('ad', AdController::class),
-        Route::resource('user', UserController::class),
-    ]);
-});
+Route::get('/search', [AdController::class, 'index'])->name('search');
 
 require __DIR__ . '/auth.php';

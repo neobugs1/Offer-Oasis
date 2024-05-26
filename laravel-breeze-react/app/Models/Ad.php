@@ -40,4 +40,8 @@ class Ad extends Model
     {
         return $this->hasOne(Review::class);
     }
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'seller_id');
+    }
 }

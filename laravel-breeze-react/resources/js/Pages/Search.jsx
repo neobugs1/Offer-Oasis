@@ -21,9 +21,15 @@ import {
     PopoverArrow,
     PopoverCloseButton,
     Portal,
+    VStack,
+    HStack,
+    Text,
+    Image,
 } from "@chakra-ui/react";
+import { usePage } from "@inertiajs/react";
 import { ChevronRightIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import Layout from "@/Layouts/Layout";
+import AdsPage from "@/components copy/AdsPage";
 
 const categories = [
     {
@@ -115,7 +121,7 @@ const NestedMenu = ({ category, setSelectedCategory }) => {
     );
 };
 
-const Search = ({ onSearch, auth }) => {
+const SearchBar = ({ onSearch }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const [openPopover, setOpenPopover] = useState(null);
@@ -125,51 +131,69 @@ const Search = ({ onSearch, auth }) => {
     };
 
     return (
+        <Flex
+            as="form"
+            align="center"
+            p={4}
+            bg="gray.100"
+            borderRadius="md"
+            boxShadow="md"
+            onSubmit={(e) => {
+                e.preventDefault();
+                handleSearch();
+            }}
+        >
+            <Menu>
+                <MenuButton as={Button} rightIcon={<ChevronDownIcon />} mr={2}>
+                    {selectedCategory || "All Categories"}
+                </MenuButton>
+                <MenuList>
+                    {categories.map((category) => (
+                        <NestedMenu
+                            key={category.name}
+                            category={category}
+                            setSelectedCategory={setSelectedCategory}
+                            openPopover={openPopover}
+                            setOpenPopover={setOpenPopover}
+                        />
+                    ))}
+                </MenuList>
+            </Menu>
+            <Input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                flex="1"
+                mr={2}
+            />
+            <Button type="submit" colorScheme="blue">
+                Search
+            </Button>
+        </Flex>
+    );
+};
+
+const Search = ({ auth, ads }) => {
+    const handleSearch = (searchTerm, category) => {
+        console.log("Search Term:", searchTerm);
+        console.log("Selected Category:", category);
+        // Implement the search functionality here
+    };
+    const { meta, links } = usePage().props;
+
+    const handlePageChange = (url) => {
+        if (url) {
+            Inertia.get(url);
+        }
+    };
+    return (
         <Layout auth={auth}>
-            <Flex
-                as="form"
-                align="center"
-                p={4}
-                bg="gray.100"
-                borderRadius="md"
-                boxShadow="md"
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    handleSearch();
-                }}
-            >
-                <Menu>
-                    <MenuButton
-                        as={Button}
-                        rightIcon={<ChevronDownIcon />}
-                        mr={2}
-                    >
-                        {selectedCategory || "All Categories"}
-                    </MenuButton>
-                    <MenuList>
-                        {categories.map((category) => (
-                            <NestedMenu
-                                key={category.name}
-                                category={category}
-                                setSelectedCategory={setSelectedCategory}
-                                openPopover={openPopover}
-                                setOpenPopover={setOpenPopover}
-                            />
-                        ))}
-                    </MenuList>
-                </Menu>
-                <Input
-                    type="text"
-                    placeholder="Search..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    flex="1"
-                    mr={2}
-                />
-                <Button type="submit" colorScheme="blue">
-                    Search
-                </Button>
-            </Flex>
+            <Box p={6}>
+                <SearchBar onSearch={handleSearch} />
+                {/* Additional content */}
+                <AdsPage ads={ads} />
+            </Box>
         </Layout>
     );
 };

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AdResource;
 use App\Models\Ad;
 use App\Http\Requests\StoreAdRequest;
 use App\Http\Requests\UpdateAdRequest;
@@ -13,7 +14,12 @@ class AdController extends Controller
      */
     public function index()
     {
-        //
+        $query = Ad::query();
+        $ads = $query->paginate(5)->onEachSide(1);
+
+        return inertia('Search', [
+            'ads' => AdResource::collection($ads)->response()->getData(true),
+        ]);
     }
 
     /**

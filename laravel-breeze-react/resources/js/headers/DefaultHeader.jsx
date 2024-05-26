@@ -53,7 +53,7 @@ const DefaultHeader = ({ auth }) => {
                                     alignItems={"center"}
                                     gap={4}
                                 >
-                                    Профил
+                                    {auth.user.name}
                                     <Icon as={VscAccount} w={9} h={"80%"} />
                                 </Box>
                             </Link>

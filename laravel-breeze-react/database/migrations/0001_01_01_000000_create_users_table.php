@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->string('location');
             $table->string("phoneNumber")->unique();
+            $table->enum('role', ['user', 'admin', 'reviewer'])->default('user');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
