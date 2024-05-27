@@ -17,7 +17,6 @@ class Ad extends Model
         'price',
         'currency',
         'start_price',
-        'images',
         'condition',
         'brand',
         'model',
@@ -29,7 +28,6 @@ class Ad extends Model
     ];
 
     protected $casts = [
-        'images' => 'array',
         'features' => 'array',
         'date_posted' => 'datetime',
     ];
@@ -38,6 +36,11 @@ class Ad extends Model
     {
         return $this->hasOne(Review::class);
     }
+    public function images()
+    {
+        return $this->hasMany(AdImage::class);
+    }
+
     public function seller()
     {
         return $this->belongsTo(User::class, 'seller');

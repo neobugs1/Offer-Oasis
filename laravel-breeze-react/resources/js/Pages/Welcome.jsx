@@ -4,7 +4,7 @@ import DefaultFooter from "@/footers/DefaultFooter";
 import DefaultHeader from "@/headers/DefaultHeader";
 import { Link, Head } from "@inertiajs/react";
 
-export default function Welcome({ auth, laravelVersion, phpVersion }) {
+export default function Welcome({ auth, laravelVersion, phpVersion, ads }) {
     const handleImageError = () => {
         document
             .getElementById("screenshot-container")
@@ -20,7 +20,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
         <>
             <Layout auth={auth}>
                 <Head title="Добредојде" />
-                <MainContent />
+                <MainContent ads={ads} />
             </Layout>
         </>
     );

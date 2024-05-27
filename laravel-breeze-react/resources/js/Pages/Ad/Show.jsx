@@ -1,5 +1,5 @@
 import Layout from "@/Layouts/Layout";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import React from "react";
 import {
     Box,
@@ -17,7 +17,8 @@ import { FaArrowLeft, FaArrowRight, FaEnvelope } from "react-icons/fa";
 const Show = ({ ad, auth }) => {
     return (
         <Layout auth={auth}>
-            {/* <pre>{JSON.stringify(ad, 8, 2)}</pre> */}
+            <Head title={ad.title}></Head>
+            <pre>{JSON.stringify(ad, 8, 2)}</pre>
             <Flex
                 p={5}
                 maxW="770px"
@@ -30,9 +31,23 @@ const Show = ({ ad, auth }) => {
                 <VStack align="start" spacing={4}>
                     <HStack spacing={5}>
                         {ad.category.map((category, index) => (
-                            <Button variant="link" key={index}>
-                                {category.name}
-                            </Button>
+                            <>
+                                <Link>
+                                    <Text
+                                        fontSize="sm"
+                                        color={"gray.500"}
+                                        fontWeight="bold"
+                                        _hover={{
+                                            textDecoration: "underline",
+                                        }}
+                                    >
+                                        {category.name}
+                                    </Text>
+                                </Link>
+                                {index < ad.category.length - 1 && (
+                                    <Text as="span">/</Text>
+                                )}
+                            </>
                         ))}
                     </HStack>
 

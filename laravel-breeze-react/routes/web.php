@@ -3,12 +3,20 @@
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Resources\AdResource;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Ad;
+
+
 
 Route::get('/', function () {
+    $ads = Ad::paginate(5)->onEachSide(1);
+    $adsData = AdResource::collection($ads)->response()->getData(true);
+
     return Inertia::render('Welcome', [
+        'ads' => $adsData,
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
     ]);

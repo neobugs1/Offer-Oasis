@@ -14,7 +14,7 @@ import BackgroundChanger from "./BackgroundChanger";
 import LatestAds from "./LatestAds";
 import { Search2Icon } from "@chakra-ui/icons";
 
-const MainContent = () => {
+const MainContent = ({ ads }) => {
     return (
         <BackgroundChanger>
             <Flex justify={"center"} direction={"column"} h="93vh">
@@ -51,10 +51,10 @@ const MainContent = () => {
                         borderRadius="md"
                         boxShadow="lg"
                         textAlign="center"
-                        maxW={"90%"}
+                        w={"70%"}
                     >
                         <Stack direction="row" justify="center" spacing={4}>
-                            <LatestAds />
+                            <LatestAds ads={ads} />
                         </Stack>
                     </Box>
                 </Stack>

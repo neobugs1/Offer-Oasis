@@ -20,7 +20,6 @@ return new class extends Migration {
             $table->decimal('price', 8, 2);
             $table->string('currency', 3);
             $table->decimal('start_price', 8, 2)->nullable();
-            $table->json('images')->nullable();
             $table->string('condition');
             $table->string('brand')->nullable();
             $table->string('model')->nullable();

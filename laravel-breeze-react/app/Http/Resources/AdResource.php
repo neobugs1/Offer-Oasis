@@ -2,11 +2,13 @@
 
 namespace App\Http\Resources;
 
+use App\Models\AdImage;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use phpDocumentor\Reflection\PseudoTypes\List_;
 
 class AdResource extends JsonResource
 {

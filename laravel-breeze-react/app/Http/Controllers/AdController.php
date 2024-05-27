@@ -14,12 +14,13 @@ class AdController extends Controller
      */
     public function index()
     {
-        $query = Ad::query();
+        $query = Ad::query()->with('images');
         $ads = $query->paginate(5)->onEachSide(1);
 
         return inertia('Search', [
             'ads' => AdResource::collection($ads)->response()->getData(true),
         ]);
+
     }
 
     /**
