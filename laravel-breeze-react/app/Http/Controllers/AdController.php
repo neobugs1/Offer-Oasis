@@ -14,7 +14,7 @@ class AdController extends Controller
      */
     public function index()
     {
-        $query = Ad::query()->with('images');
+        $query = Ad::query();
         $ads = $query->paginate(5)->onEachSide(1);
 
         return inertia('Search', [

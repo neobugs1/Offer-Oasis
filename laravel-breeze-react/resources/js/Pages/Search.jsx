@@ -180,13 +180,6 @@ const Search = ({ auth, ads }) => {
         console.log("Selected Category:", category);
         // Implement the search functionality here
     };
-    const { meta, links } = usePage().props;
-
-    const handlePageChange = (url) => {
-        if (url) {
-            Inertia.get(url);
-        }
-    };
     return (
         <Layout auth={auth}>
             <Box p={6}>

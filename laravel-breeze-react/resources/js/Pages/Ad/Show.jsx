@@ -1,6 +1,6 @@
 import Layout from "@/Layouts/Layout";
 import { Head, Link } from "@inertiajs/react";
-import React from "react";
+import React, { useState } from "react";
 import {
     Box,
     Image,
@@ -12,13 +12,39 @@ import {
     HStack,
     IconButton,
 } from "@chakra-ui/react";
-import { FaArrowLeft, FaArrowRight, FaEnvelope } from "react-icons/fa";
+import {
+    FaArrowLeft,
+    FaArrowRight,
+    FaEnvelope,
+    FaExpand,
+} from "react-icons/fa";
 
 const Show = ({ ad, auth }) => {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const handleNextImage = () => {
+        setCurrentImageIndex((prevIndex) => {
+            if (prevIndex < ad.images.length - 1) {
+                return prevIndex + 1;
+            } else {
+                return 0; // Go back to the first image
+            }
+        });
+    };
+
+    const handlePreviousImage = () => {
+        setCurrentImageIndex((prevIndex) => {
+            if (prevIndex > 0) {
+                return prevIndex - 1;
+            } else {
+                return ad.images.length - 1; // Go to the last image
+            }
+        });
+    };
     return (
         <Layout auth={auth}>
             <Head title={ad.title}></Head>
-            <pre>{JSON.stringify(ad, 8, 2)}</pre>
+            {/* <pre>{JSON.stringify(ad, 8, 2)}</pre> */}
             <Flex
                 p={5}
                 maxW="770px"
@@ -52,18 +78,62 @@ const Show = ({ ad, auth }) => {
                     </HStack>
 
                     {/* Car Image with Navigation Arrows */}
-                    <HStack maxW="1000px" align="center">
+                    <Box position="relative">
+                        <Image
+                            src={ad.images[currentImageIndex].url}
+                            borderRadius="md"
+                            w={"750px"}
+                        />
                         <IconButton
                             aria-label="Previous image"
                             icon={<FaArrowLeft />}
+                            onClick={handlePreviousImage}
+                            position="absolute"
+                            top="50%"
+                            left="5"
+                            bg={"transparent"}
                         />
-                        <Image src={ad.images} borderRadius="md" />
                         <IconButton
                             aria-label="Next image"
                             icon={<FaArrowRight />}
+                            onClick={handleNextImage}
+                            position="absolute"
+                            top="50%"
+                            right="5"
+                            bg={"transparent"}
                         />
+                        <Text
+                            position="absolute"
+                            top="90%"
+                            right="90%"
+                            bg="white"
+                            p="2"
+                            bgColor={"transparent"}
+                        >
+                            {currentImageIndex + 1}/{ad.images.length}
+                        </Text>
+                    </Box>
+                    <HStack spacing={5} overflowX="auto" py={5}>
+                        {ad.images.map((image, index) => (
+                            <Box
+                                key={index}
+                                border={
+                                    currentImageIndex === index
+                                        ? "2px solid blue"
+                                        : "none"
+                                }
+                                borderRadius={"lg"}
+                            >
+                                <Image
+                                    borderRadius={"lg"}
+                                    src={image.url}
+                                    boxSize="100px"
+                                    onClick={() => setCurrentImageIndex(index)}
+                                    cursor="pointer"
+                                />
+                            </Box>
+                        ))}
                     </HStack>
-                    <Text>1/11</Text>
 
                     {/* Car Details */}
                     <Box p={5} w="100%" bg="gray.100" borderRadius="md">

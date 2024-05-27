@@ -21,8 +21,6 @@ class AdFactory extends Factory
      */
     public function definition(): array
     {
-        $imageCount = rand(1, 5);
-
         $adData = [
             'title' => fake()->sentence(),
             'description' => fake()->realText(),
@@ -41,23 +39,27 @@ class AdFactory extends Factory
             'status' => 'pending'
         ];
 
-        // Create ad instance
-        $ad = Ad::create($adData);
-
-        // Generate ad images
-        $images = [];
-        for ($i = 0; $i < $imageCount; $i++) {
-            $images[] = [
-                'ad_id' => $ad->id,
-                'url' => fake()->imageUrl(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        }
-
-        // Create ad images
-        AdImage::insert($images);
-
         return $adData;
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Ad $ad) {
+            $imageCount = rand(1, 5);
+
+            // Generate ad images
+            $images = [];
+            for ($i = 0; $i < $imageCount; $i++) {
+                $images[] = [
+                    'ad_id' => $ad->id,
+                    'url' => fake()->imageUrl(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+
+            // Create ad images
+            AdImage::insert($images);
+        });
     }
 }

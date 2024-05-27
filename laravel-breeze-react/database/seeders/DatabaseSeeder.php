@@ -53,6 +53,6 @@ class DatabaseSeeder extends Seeder
             'phoneNumber' => '078585666',
         ]);
 
-        Ad::factory()->count(10)->create();
+        Ad::factory()->count(20)->create();
     }
 }
