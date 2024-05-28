@@ -12,7 +12,7 @@ import { Link } from "@inertiajs/react";
 import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
-const AdListing = ({ ad }) => {
+const AdListing = ({ ad, index }) => {
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const now = new Date();

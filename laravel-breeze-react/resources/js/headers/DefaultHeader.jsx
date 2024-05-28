@@ -32,7 +32,7 @@ const DefaultHeader = ({ auth }) => {
                     <Spacer />
                     <Flex
                         className="header-right"
-                        gap={10}
+                        gap={7}
                         alignItems={"center"}
                         h={"100%"}
                     >
@@ -45,7 +45,7 @@ const DefaultHeader = ({ auth }) => {
                                     borderColor={"transparent"}
                                     _hover={{
                                         borderBottom: "4px",
-                                        borderColor: "teal.700",
+                                        borderColor: "#80ac0c",
                                     }}
                                     color={"white"}
                                     display={"flex"}
@@ -53,8 +53,8 @@ const DefaultHeader = ({ auth }) => {
                                     alignItems={"center"}
                                     gap={4}
                                 >
-                                    {auth.user.name}
                                     <Icon as={VscAccount} w={9} h={"80%"} />
+                                    {auth.user.name}
                                 </Box>
                             </Link>
                         ) : (
@@ -67,7 +67,7 @@ const DefaultHeader = ({ auth }) => {
                                         borderColor={"transparent"}
                                         _hover={{
                                             borderBottom: "4px",
-                                            borderColor: "teal.700",
+                                            borderColor: "#80ac0c",
                                         }}
                                         color={"white"}
                                         display={"flex"}
@@ -75,8 +75,8 @@ const DefaultHeader = ({ auth }) => {
                                         alignItems={"center"}
                                         gap={4}
                                     >
-                                        Најава
                                         <Icon as={VscAccount} w={9} h={"80%"} />
+                                        Најава
                                     </Box>
                                 </Link>
                             </>
@@ -88,18 +88,43 @@ const DefaultHeader = ({ auth }) => {
                             borderColor={"transparent"}
                             _hover={{
                                 borderBottom: "4px",
-                                borderColor: "teal.700",
+                                borderColor: "#80ac0c",
                             }}
                             color={"white"}
                             display={"flex"}
                             justifyContent={"center"}
                             alignItems={"center"}
-                            gap={4}
+                            gap={3}
                         >
                             <Icon as={VscGlobe} w={10} h={"100%"} />
                             Јазик
                             <Icon as={VscChevronDown} w={5} h={5} />
                         </Box>
+                        <Link href={route("ad.create")} className="h-full">
+                            <Box
+                                as="button"
+                                h={"100%"}
+                                borderBottom={"4px"}
+                                borderColor={"transparent"}
+                                _hover={{
+                                    borderBottom: "4px",
+                                    borderColor: "#80ac0c",
+                                }}
+                                color={"white"}
+                                display={"flex"}
+                                justifyContent={"center"}
+                                alignItems={"center"}
+                            >
+                                <Box
+                                    border={"2px"}
+                                    px={3}
+                                    py={2}
+                                    rounded={"3xl"}
+                                >
+                                    Додади оглас
+                                </Box>
+                            </Box>
+                        </Link>
                     </Flex>
                 </Flex>
             </Flex>

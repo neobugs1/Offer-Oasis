@@ -30,38 +30,6 @@ import { usePage } from "@inertiajs/react";
 import { ChevronRightIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import Layout from "@/Layouts/Layout";
 import AdsPage from "@/components copy/AdsPage";
-
-const categories = [
-    {
-        name: "Electronics",
-        subcategories: [
-            {
-                name: "Computers",
-                subcategories: [
-                    { name: "Laptops" },
-                    { name: "Desktops" },
-                    { name: "Tablets" },
-                ],
-            },
-            {
-                name: "Mobile Phones",
-                subcategories: [
-                    { name: "Smartphones" },
-                    { name: "Feature Phones" },
-                ],
-            },
-        ],
-    },
-    {
-        name: "Home Appliances",
-        subcategories: [
-            { name: "Refrigerators" },
-            { name: "Washing Machines" },
-            { name: "Microwaves" },
-        ],
-    },
-];
-
 const NestedMenu = ({ category, setSelectedCategory }) => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -81,13 +49,11 @@ const NestedMenu = ({ category, setSelectedCategory }) => {
                 >
                     <MenuItem onClick={() => handleClick(category.name)}>
                         {category.name}
-                        {category.subcategories && (
-                            <ChevronRightIcon ml="auto" />
-                        )}
+                        {category.children && <ChevronRightIcon ml="auto" />}
                     </MenuItem>
                 </Box>
             </PopoverTrigger>
-            {category.subcategories && (
+            {category.children && (
                 <Portal>
                     <PopoverContent
                         onMouseEnter={handleMouseEnter}
@@ -95,8 +61,8 @@ const NestedMenu = ({ category, setSelectedCategory }) => {
                         boxShadow="none"
                     >
                         <PopoverBody p={0}>
-                            {category.subcategories.map((subcategory) =>
-                                subcategory.subcategories ? (
+                            {category.children.map((subcategory) =>
+                                subcategory.children ? (
                                     <NestedMenu
                                         key={subcategory.name}
                                         category={subcategory}
@@ -122,6 +88,7 @@ const NestedMenu = ({ category, setSelectedCategory }) => {
 };
 
 const SearchBar = ({ onSearch }) => {
+    const { categories } = usePage().props;
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const [openPopover, setOpenPopover] = useState(null);

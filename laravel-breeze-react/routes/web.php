@@ -32,6 +32,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/ad/form', [AdController::class, 'create'])->name('ad.create');
+    Route::post('/ad/store', [AdController::class, 'store'])->name('ad.store'); // new route
+
+});
+
 Route::get('/search', [AdController::class, 'index'])->name('search');
 Route::get('/ad/{ad}', [AdController::class, 'show'])->name('ad.show');
 

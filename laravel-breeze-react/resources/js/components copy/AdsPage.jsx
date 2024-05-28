@@ -36,7 +36,7 @@ const AdsPage = ({ ads }) => {
                 </Text>
                 <VStack spacing={5} align="stretch">
                     {ads.data.map((ad, index) => (
-                        <AdListing ad={ad} index={index} />
+                        <AdListing ad={ad} key={index} index={index} />
                     ))}
                 </VStack>
 
