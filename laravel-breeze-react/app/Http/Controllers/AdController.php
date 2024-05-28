@@ -53,33 +53,20 @@ class AdController extends Controller
      */
     public function store(StoreAdRequest $request)
     {
-        $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'category' => 'required|exists:categories,id',
-            'price' => 'required|numeric',
-            'start_price' => 'required|numeric',
-            'condition' => 'required',
-            'brand' => 'nullable',
-            'model' => 'nullable',
-            'features' => 'nullable',
-            'images' => 'nullable',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        $ad = Ad::create([
+            "title" => request()->get('title'),
+            "description" => request()->get('description'),
+            "category" => request()->get('category'),
+            "price" => request()->get('price'),
+            "start_price" => request()->get('start_price'),
+            "currency" => "MKD",
+            "condition" => request()->get('condition'),
+            "brand" => request()->get('brand'),
+            "model" => request()->get('model'),
+            "features" => request()->get('features'),
+            "seller" => auth()->id(),
+            "date_posted" => now()
         ]);
-
-        $ad = new Ad;
-        $ad->title = $request->title;
-        $ad->description = $request->description;
-        $ad->category_id = $request->category;
-        $ad->price = $request->price;
-        $ad->start_price = $request->start_price;
-        $ad->condition = $request->condition;
-        $ad->brand = $request->brand;
-        $ad->model = $request->model;
-        $ad->features = $request->features;
-        $ad->seller_id = auth()->id(); // or any logic to assign the seller
-        $ad->date_posted = now();
-        $ad->save();
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
@@ -91,7 +78,8 @@ class AdController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Ad created successfully', 'ad' => $ad], 201);
+        // return response()->json(['message' => 'Ad created successfully', 'ad' => $ad], 201);
+        return to_route('ad.show', $ad->id);
     }
 
     /**

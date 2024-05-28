@@ -126,7 +126,7 @@ const AdListing = ({ ad, index }) => {
                     <Text>Location: {ad.seller.location}</Text>
                     <HStack spacing={5}>
                         {ad.category.map((category, index) => (
-                            <>
+                            <React.Fragment key={category.id}>
                                 <Link>
                                     <Text
                                         fontSize="sm"
@@ -142,7 +142,7 @@ const AdListing = ({ ad, index }) => {
                                 {index < ad.category.length - 1 && (
                                     <Text as="span">/</Text>
                                 )}
-                            </>
+                            </React.Fragment>
                         ))}
                     </HStack>
                 </VStack>

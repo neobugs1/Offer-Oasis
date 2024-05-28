@@ -30,7 +30,7 @@ export default function AdForm({ auth, categories }) {
     const handleSubmit = (e) => {
         console.log(data);
         e.preventDefault();
-        post(route("ad.store"));
+        post(route("ad.store"), data);
     };
 
     const renderOption = (category, level = 0) => (

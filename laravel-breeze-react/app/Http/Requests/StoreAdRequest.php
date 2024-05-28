@@ -22,7 +22,17 @@ class StoreAdRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            // 'title' => 'required|max:255',
+            // 'description' => 'required',
+            // 'category' => 'required|exists:categories,id',
+            // 'price' => 'required|numeric',
+            // 'start_price' => 'required|numeric',
+            // 'condition' => 'required',
+            // 'brand' => 'nullable',
+            // 'model' => 'nullable',
+            // 'features' => 'nullable',
+            // 'images' => 'nullable',
+            // 'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

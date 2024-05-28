@@ -44,7 +44,7 @@ const Show = ({ ad, auth }) => {
     return (
         <Layout auth={auth}>
             <Head title={ad.title}></Head>
-            {/* <pre>{JSON.stringify(ad, 8, 2)}</pre> */}
+            <pre>{JSON.stringify(ad, 8, 2)}</pre>
             <Flex
                 p={5}
                 maxW="770px"
