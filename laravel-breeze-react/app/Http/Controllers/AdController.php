@@ -97,7 +97,9 @@ class AdController extends Controller
      */
     public function edit(Ad $ad)
     {
-        //
+        return inertia('Ad/Edit', [
+            'ad' => new AdResource($ad),
+        ])
     }
 
     /**
@@ -113,6 +115,7 @@ class AdController extends Controller
      */
     public function destroy(Ad $ad)
     {
-        //
+        $ad->delete();
+        return to_route('search')->("success", "Ad deleted successfully");
     }
 }
