@@ -79,7 +79,7 @@ class AdController extends Controller
         }
 
         // return response()->json(['message' => 'Ad created successfully', 'ad' => $ad], 201);
-        return to_route('ad.show', $ad->id);
+        return to_route('ad.show', $ad->id)->with('success', 'Ad created successfully');
     }
 
     /**
@@ -97,9 +97,15 @@ class AdController extends Controller
      */
     public function edit(Ad $ad)
     {
+        $categories = Category::whereNull('parent_id')->with([
+            'children' => function ($query) {
+                $query->with('children');
+            }
+        ])->get();
         return inertia('Ad/Edit', [
             'ad' => new AdResource($ad),
-        ])
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -107,8 +113,37 @@ class AdController extends Controller
      */
     public function update(UpdateAdRequest $request, Ad $ad)
     {
-        //
+        // Debugging - Log request data
+        \Log::debug('Update request data:', $request->all());
+
+        $data = $request->all(); // Get all raw data from the request
+        $data['updated_by'] = auth()->id();
+        // Handle images if present
+        if ($request->hasFile('images')) {
+            // Delete old images
+            foreach ($ad->images as $image) {
+                Storage::disk('public')->delete($image->url);
+                $image->delete();
+            }
+
+            // Store new images
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('public/ads');
+                AdImage::create([
+                    'ad_id' => $ad->id,
+                    'url' => Storage::url($path),
+                ]);
+            }
+        }
+
+        $ad->update($data);
+
+        // Debugging - Log updated ad
+        \Log::debug('Updated ad:', $ad->toArray());
+
+        return redirect()->route('ad.show', $ad->id)->with("success", "Ad updated successfully");
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -116,6 +151,6 @@ class AdController extends Controller
     public function destroy(Ad $ad)
     {
         $ad->delete();
-        return to_route('search')->("success", "Ad deleted successfully");
+        return to_route('search')->with("success", "Ad deleted successfully");
     }
 }

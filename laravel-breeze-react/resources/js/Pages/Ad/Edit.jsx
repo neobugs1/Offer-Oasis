@@ -2,18 +2,22 @@ import { useForm, usePage } from "@inertiajs/inertia-react";
 import {
     Box,
     Button,
+    Flex,
     FormControl,
     FormLabel,
+    Image,
     Input,
     Select,
+    Text,
     Textarea,
     VStack,
     useToast,
 } from "@chakra-ui/react";
 import Layout from "@/Layouts/Layout";
 import React from "react";
+import { Inertia } from "@inertiajs/inertia";
 
-export default function AdForm({ auth, categories }) {
+export default function AdForm({ auth, categories, ad }) {
     const { data, setData, post } = useForm({
         title: ad.title || "",
         description: ad.description || "",
@@ -23,14 +27,15 @@ export default function AdForm({ auth, categories }) {
         model: ad.model || "",
         features: ad.features || "",
         category: ad.category || "",
-        images: [],
+        images: ad.images || [],
+        _method: "put",
     });
     const toast = useToast();
 
     const handleSubmit = (e) => {
-        console.log(data);
         e.preventDefault();
-        post(route("ad.store"), data);
+        console.log(data);
+        post(route("ad.update", ad.id));
     };
 
     const renderOption = (category, level = 0) => (
@@ -54,6 +59,7 @@ export default function AdForm({ auth, categories }) {
                 w={"70%"}
                 mx={"auto"}
                 marginTop={10}
+                encType="multipart/form-data" // Important for file uploads
             >
                 <FormControl isRequired>
                     <FormLabel>Title</FormLabel>
@@ -77,8 +83,23 @@ export default function AdForm({ auth, categories }) {
                     <Input
                         type="file"
                         multiple
-                        onChange={(e) => setData("images", [...e.target.files])}
+                        onChange={(e) => {
+                            const newImages = Array.from(e.target.files);
+                            setData("images", newImages);
+                        }}
                     />
+                    {ad.images && (
+                        <Flex gap={2} mt={2}>
+                            {ad.images.map((image) => (
+                                <Image
+                                    key={image.id}
+                                    src={image.url}
+                                    alt={image.name}
+                                    style={{ width: "250px" }}
+                                />
+                            ))}
+                        </Flex>
+                    )}
                 </FormControl>
                 <FormControl isRequired>
                     <FormLabel>Price</FormLabel>
@@ -124,7 +145,7 @@ export default function AdForm({ auth, categories }) {
                     />
                 </FormControl>
                 <Button type="submit" colorScheme="blue">
-                    Create Ad
+                    Edit Ad
                 </Button>
             </VStack>
         </Layout>

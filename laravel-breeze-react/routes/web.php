@@ -34,9 +34,13 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/ad/form', [AdController::class, 'create'])->name('ad.create');
-    Route::post('/ad/store', [AdController::class, 'store'])->name('ad.store'); // new route
+    Route::post('/ad/store', [AdController::class, 'store'])->name('ad.store');
+    Route::put('/ad/update/{ad}', [AdController::class, 'update'])->name('ad.update'); // Change to PUT
 
+    Route::delete('/ad/destroy/{ad}', [AdController::class, 'destroy'])->name('ad.destroy');
+    Route::get('/ad/edit/{ad}', [AdController::class, 'edit'])->name('ad.edit');
 });
+
 
 Route::get('/search', [AdController::class, 'index'])->name('search');
 Route::get('/ad/{ad}', [AdController::class, 'show'])->name('ad.show');

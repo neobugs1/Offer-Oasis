@@ -67,7 +67,13 @@ const AdListing = ({ ad, index }) => {
                 <Box position="relative">
                     <Box w={"300px"}>
                         <Image
-                            src={ad.images[currentImageIndex].url}
+                            src={
+                                ad.images &&
+                                ad.images[currentImageIndex] &&
+                                ad.images[currentImageIndex].url
+                                    ? ad.images[currentImageIndex].url
+                                    : "https://via.placeholder.com/300"
+                            }
                             borderRadius="md"
                         />
                     </Box>

@@ -1,5 +1,5 @@
 import Layout from "@/Layouts/Layout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import React, { useState } from "react";
 import {
     Box,
@@ -18,6 +18,7 @@ import {
     FaEnvelope,
     FaExpand,
 } from "react-icons/fa";
+import { Inertia } from "@inertiajs/inertia";
 
 const Show = ({ ad, auth }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -41,10 +42,23 @@ const Show = ({ ad, auth }) => {
             }
         });
     };
+    const deleteAd = (ad) => {
+        if (!window.confirm("Are you sure you want to delete the ad?")) {
+            return;
+        }
+        if (!ad.id) {
+            console.error("Error: ad.id is undefined");
+            return;
+        }
+        Inertia.post(route("ad.destroy", ad.id), { _method: "delete" });
+    };
+
     return (
         <Layout auth={auth}>
             <Head title={ad.title}></Head>
             {/* <pre>{JSON.stringify(ad, 8, 2)}</pre> */}
+            <Button onClick={() => deleteAd(ad)}>Избриши оглас</Button>
+            <Link href={route("ad.edit", ad.id)}>Измени оглас</Link>
             <Flex
                 p={5}
                 maxW="770px"
@@ -80,7 +94,13 @@ const Show = ({ ad, auth }) => {
                     {/* Car Image with Navigation Arrows */}
                     <Box position="relative">
                         <Image
-                            src={ad.images[currentImageIndex].url}
+                            src={
+                                ad.images &&
+                                ad.images[currentImageIndex] &&
+                                ad.images[currentImageIndex].url
+                                    ? ad.images[currentImageIndex].url
+                                    : "https://via.placeholder.com/300"
+                            }
                             borderRadius="md"
                             w={"750px"}
                         />
