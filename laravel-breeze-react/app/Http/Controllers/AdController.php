@@ -8,11 +8,15 @@ use App\Http\Requests\StoreAdRequest;
 use App\Http\Requests\UpdateAdRequest;
 use App\Models\AdImage;
 use App\Models\Category;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 
 class AdController extends Controller
 {
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -30,7 +34,6 @@ class AdController extends Controller
             'ads' => AdResource::collection($ads)->response()->getData(true),
             'categories' => $categories,
         ]);
-
     }
 
     /**
@@ -97,6 +100,8 @@ class AdController extends Controller
      */
     public function edit(Ad $ad)
     {
+        $this->authorize('edit', $ad);
+
         $categories = Category::whereNull('parent_id')->with([
             'children' => function ($query) {
                 $query->with('children');
@@ -113,19 +118,12 @@ class AdController extends Controller
      */
     public function update(UpdateAdRequest $request, Ad $ad)
     {
-        // Debugging - Log request data
-        \Log::debug('Update request data:', $request->all());
+        $this->authorize('update', $ad);
 
         $data = $request->all(); // Get all raw data from the request
         $data['updated_by'] = auth()->id();
         // Handle images if present
         if ($request->hasFile('images')) {
-            // Delete old images
-            foreach ($ad->images as $image) {
-                Storage::disk('public')->delete($image->url);
-                $image->delete();
-            }
-
             // Store new images
             foreach ($request->file('images') as $image) {
                 $path = $image->store('public/ads');
@@ -138,9 +136,6 @@ class AdController extends Controller
 
         $ad->update($data);
 
-        // Debugging - Log updated ad
-        \Log::debug('Updated ad:', $ad->toArray());
-
         return redirect()->route('ad.show', $ad->id)->with("success", "Ad updated successfully");
     }
 
@@ -150,6 +145,17 @@ class AdController extends Controller
      */
     public function destroy(Ad $ad)
     {
+        $this->authorize('delete', $ad);
+
+        if ($ad->images != null) {
+            foreach ($ad->images as $image) {
+                // Get the relative file path
+                $filePath = str_replace(Storage::url(''), '', $image->url);
+                // Delete the file
+                Storage::disk('public')->delete($filePath);
+                $image->delete();
+            }
+        }
         $ad->delete();
         return to_route('search')->with("success", "Ad deleted successfully");
     }

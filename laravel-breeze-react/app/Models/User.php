@@ -48,6 +48,6 @@ class User extends Authenticatable
     }
     public function ads()
     {
-        return $this->hasMany(Ad::class, 'seller_id');
+        return $this->hasMany(Ad::class, 'seller');
     }
 }

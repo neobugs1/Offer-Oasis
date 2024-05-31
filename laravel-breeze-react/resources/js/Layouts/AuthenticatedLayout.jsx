@@ -35,7 +35,7 @@ export default function Authenticated({ user, header, children }) {
                 borderBottomColor="gray.200"
             >
                 <Flex
-                    maxW="7xl"
+                    maxW="75%"
                     mx="auto"
                     px={4}
                     h={16}
@@ -54,10 +54,16 @@ export default function Authenticated({ user, header, children }) {
                             display={{ base: "none", md: "flex" }}
                         >
                             <NavLink
-                                href={route("dashboard")}
-                                active={route().current("dashboard")}
+                                href={route("oglasi")}
+                                active={route().current("oglasi")}
                             >
-                                Dashboard
+                                Огласи
+                            </NavLink>
+                            <NavLink
+                                href={route("reviews")}
+                                active={route().current("reviews")}
+                            >
+                                Админ панел
                             </NavLink>
                         </HStack>
                     </HStack>
@@ -106,10 +112,16 @@ export default function Authenticated({ user, header, children }) {
                     <Box pb={4} display={{ md: "none" }}>
                         <Stack as="nav" spacing={4}>
                             <ResponsiveNavLink
-                                href={route("dashboard")}
-                                active={route().current("dashboard")}
+                                href={route("oglasi")}
+                                active={route().current("oglasi")}
                             >
-                                Dashboard
+                                Огласи
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("reviews")}
+                                active={route().current("reviews")}
+                            >
+                                Админ панел
                             </ResponsiveNavLink>
                         </Stack>
                     </Box>
@@ -118,7 +130,7 @@ export default function Authenticated({ user, header, children }) {
 
             {header && (
                 <Box bg="white" shadow="sm">
-                    <Box maxW="7xl" mx="auto" py={6} px={4}>
+                    <Box maxW="75%" mx="auto" py={6} px={4}>
                         {header}
                     </Box>
                 </Box>

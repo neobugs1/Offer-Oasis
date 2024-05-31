@@ -37,7 +37,7 @@ const DefaultHeader = ({ auth }) => {
                         h={"100%"}
                     >
                         {auth.user ? (
-                            <Link href={route("dashboard")} className="h-full">
+                            <Link href={route("oglasi")} className="h-full">
                                 <Box
                                     as="button"
                                     h={"100%"}

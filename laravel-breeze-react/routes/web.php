@@ -22,9 +22,21 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/oglasi', function () {
+    $ads = auth()->user()->ads()->paginate(5)->onEachSide(1);
+    $adsData = AdResource::collection($ads)->response()->getData(true);
+    return Inertia::render('Oglasi', [
+        'ads' => $adsData,
+    ]);
+})->middleware(['auth', 'verified'])->name('oglasi');
+
+Route::get('/reviews', function () {
+    $ads = Ad::where('status', 'pending')->paginate(5)->onEachSide(1);
+    $adsData = AdResource::collection($ads)->response()->getData(true);
+    return Inertia::render('Reviews', [
+        'ads' => $adsData,
+    ]);
+})->middleware(['auth', 'verified'])->name('reviews');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -35,7 +47,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/ad/form', [AdController::class, 'create'])->name('ad.create');
     Route::post('/ad/store', [AdController::class, 'store'])->name('ad.store');
-    Route::put('/ad/update/{ad}', [AdController::class, 'update'])->name('ad.update'); // Change to PUT
+    Route::put('/ad/update/{ad}', [AdController::class, 'update'])->name('ad.update');
 
     Route::delete('/ad/destroy/{ad}', [AdController::class, 'destroy'])->name('ad.destroy');
     Route::get('/ad/edit/{ad}', [AdController::class, 'edit'])->name('ad.edit');
