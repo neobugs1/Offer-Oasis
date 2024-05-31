@@ -22,7 +22,7 @@ class AdController extends Controller
      */
     public function index()
     {
-        $query = Ad::query();
+        $query = Ad::where('status', 'approved');
         $ads = $query->paginate(5)->onEachSide(1);
         $categories = Category::whereNull('parent_id')->with([
             'children' => function ($query) {
@@ -122,6 +122,7 @@ class AdController extends Controller
 
         $data = $request->all(); // Get all raw data from the request
         $data['updated_by'] = auth()->id();
+        $data['status'] = 'pending';
         // Handle images if present
         if ($request->hasFile('images')) {
             // Store new images
@@ -139,6 +140,27 @@ class AdController extends Controller
         return redirect()->route('ad.show', $ad->id)->with("success", "Ad updated successfully");
     }
 
+    public function approve(UpdateAdRequest $request, Ad $ad)
+    {
+        $this->authorize('update', $ad);
+
+        $data['status'] = "approved";
+
+        $ad->update($data);
+
+        return redirect()->route('reviews', $ad->id)->with("success", "Ad approved successfully");
+    }
+
+    public function reject(UpdateAdRequest $request, Ad $ad)
+    {
+        $this->authorize('update', $ad);
+
+        $data['status'] = "rejected";
+
+        $ad->update($data);
+
+        return redirect()->route('reviews', $ad->id)->with("success", "Ad rejected successfully");
+    }
 
     /**
      * Remove the specified resource from storage.

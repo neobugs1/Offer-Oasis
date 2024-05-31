@@ -14,12 +14,49 @@ import {
     AccordionIcon,
     Button,
 } from "@chakra-ui/react";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import React, { useState } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import {
+    FaArrowLeft,
+    FaArrowRight,
+    FaCheck,
+    FaTimes,
+    FaTrashAlt,
+    FaWindowClose,
+} from "react-icons/fa";
+import { VscClose } from "react-icons/vsc";
+import { Inertia } from "@inertiajs/inertia";
 import ReviewShow from "./ReviewShow";
+import { useForm } from "@inertiajs/inertia-react";
 
 const ReviewAdListing = ({ ad, index }) => {
+    const { auth } = usePage().props;
+
+    const deleteAd = (ad) => {
+        if (!window.confirm("Are you sure you want to delete the ad?")) {
+            return;
+        }
+        if (!ad.id) {
+            console.error("Error: ad.id is undefined");
+            return;
+        }
+        Inertia.post(route("ad.destroy", ad.id), { _method: "delete" });
+    };
+
+    const { data, setData, post } = useForm({
+        _method: "put",
+    });
+
+    const handleApprove = (e) => {
+        e.preventDefault();
+        post(route("ad.approve", ad.id));
+    };
+
+    const handleDisapprove = (e) => {
+        e.preventDefault();
+        post(route("ad.reject", ad.id));
+    };
+
     return (
         <AccordionItem>
             <AccordionButton h={20}>
@@ -53,12 +90,30 @@ const ReviewAdListing = ({ ad, index }) => {
                     <ReviewShow ad={ad} />
                     <Flex gap={2}>
                         <Spacer />
-                        <Button bg={"green.500"} color={"white"}>
-                            Одобри
+                        <Button
+                            bg={"green.500"}
+                            color={"white"}
+                            onClick={handleApprove}
+                        >
+                            <FaCheck />
                         </Button>
-                        <Button bg={"red.500"} color={"white"}>
-                            Одбиј
+                        <Button
+                            bg={"red.500"}
+                            color={"white"}
+                            onClick={handleDisapprove}
+                        >
+                            <FaTimes />
                         </Button>
+                        {auth.user.role == "admin" && (
+                            <Button
+                                onClick={() => deleteAd(ad)}
+                                ml={10}
+                                bg={"red.500"}
+                                color={"white"}
+                            >
+                                <FaTrashAlt />
+                            </Button>
+                        )}
                     </Flex>
                 </Box>
             </AccordionPanel>

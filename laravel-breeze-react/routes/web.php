@@ -12,7 +12,7 @@ use App\Models\Ad;
 
 
 Route::get('/', function () {
-    $ads = Ad::paginate(5)->onEachSide(1);
+    $ads = Ad::where('status', 'approved')->paginate(5)->onEachSide(1);
     $adsData = AdResource::collection($ads)->response()->getData(true);
 
     return Inertia::render('Welcome', [
@@ -31,7 +31,7 @@ Route::get('/oglasi', function () {
 })->middleware(['auth', 'verified'])->name('oglasi');
 
 Route::get('/reviews', function () {
-    $ads = Ad::where('status', 'pending')->paginate(5)->onEachSide(1);
+    $ads = Ad::where('status', 'pending')->paginate(10)->onEachSide(1);
     $adsData = AdResource::collection($ads)->response()->getData(true);
     return Inertia::render('Reviews', [
         'ads' => $adsData,
@@ -48,6 +48,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/ad/form', [AdController::class, 'create'])->name('ad.create');
     Route::post('/ad/store', [AdController::class, 'store'])->name('ad.store');
     Route::put('/ad/update/{ad}', [AdController::class, 'update'])->name('ad.update');
+    Route::put('/ad/approve/{ad}', [AdController::class, 'approve'])->name('ad.approve');
+    Route::put('/ad/reject/{ad}', [AdController::class, 'reject'])->name('ad.reject');
+
 
     Route::delete('/ad/destroy/{ad}', [AdController::class, 'destroy'])->name('ad.destroy');
     Route::get('/ad/edit/{ad}', [AdController::class, 'edit'])->name('ad.edit');

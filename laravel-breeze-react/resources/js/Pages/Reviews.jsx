@@ -7,17 +7,13 @@ export default function Reviews({ auth, ads }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<Heading fontSize={"2xl"}>Твои огласи</Heading>}
+            header={<Heading fontSize={"2xl"}>Евалуација</Heading>}
         >
-            <Head title="Твои огласи" />
+            <Head title="Евалуација" />
             <Box className="py-12">
                 <Box className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <Box className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <Accordion
-                            allowMultiple
-                            allowToggle
-                            alignItems={"center"}
-                        >
+                        <Accordion allowMultiple alignItems={"center"}>
                             {ads.data.map((ad, index) => (
                                 <ReviewAdListing
                                     ad={ad}

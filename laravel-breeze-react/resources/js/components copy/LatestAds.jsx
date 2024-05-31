@@ -32,12 +32,20 @@ const AdCard = ({ title, images, price, currency }) => {
         });
     };
     return (
-        <Box borderWidth="1px" borderRadius="lg" overflow="hidden" m={2}>
+        <Box
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            m={2}
+            w={300}
+        >
             <Box position="relative">
                 <Image
                     src={images[currentImageIndex].url}
                     rounded="md"
                     roundedBottom={0}
+                    h={225}
+                    w={300}
                 />
                 <IconButton
                     aria-label="Previous image"

@@ -8,7 +8,7 @@ import {
     VStack,
     Spacer,
 } from "@chakra-ui/react";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight, FaEnvelope } from "react-icons/fa";
 
