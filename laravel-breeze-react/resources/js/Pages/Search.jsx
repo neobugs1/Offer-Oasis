@@ -30,6 +30,7 @@ import { usePage } from "@inertiajs/react";
 import { ChevronRightIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import Layout from "@/Layouts/Layout";
 import AdsPage from "@/components copy/AdsPage";
+import { Inertia } from "@inertiajs/inertia";
 const NestedMenu = ({ category, setSelectedCategory }) => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -47,13 +48,13 @@ const NestedMenu = ({ category, setSelectedCategory }) => {
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 >
-                    <MenuItem onClick={() => handleClick(category.name)}>
+                    <MenuItem onClick={() => handleClick(category)}>
                         {category.name}
-                        {category.children && <ChevronRightIcon ml="auto" />}
+                        {category.children[0] && <ChevronRightIcon ml="auto" />}
                     </MenuItem>
                 </Box>
             </PopoverTrigger>
-            {category.children && (
+            {category.children[0] && (
                 <Portal>
                     <PopoverContent
                         onMouseEnter={handleMouseEnter}
@@ -64,16 +65,14 @@ const NestedMenu = ({ category, setSelectedCategory }) => {
                             {category.children.map((subcategory) =>
                                 subcategory.children ? (
                                     <NestedMenu
-                                        key={subcategory.name}
+                                        key={subcategory.id}
                                         category={subcategory}
                                         setSelectedCategory={handleClick}
                                     />
                                 ) : (
                                     <MenuItem
                                         key={subcategory.name}
-                                        onClick={() =>
-                                            handleClick(subcategory.name)
-                                        }
+                                        onClick={() => handleClick(subcategory)}
                                     >
                                         {subcategory.name}
                                     </MenuItem>
@@ -88,13 +87,15 @@ const NestedMenu = ({ category, setSelectedCategory }) => {
 };
 
 const SearchBar = ({ onSearch }) => {
-    const { categories } = usePage().props;
+    const { categories, locations } = usePage().props;
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedLocation, setSelectedLocation] = useState("");
+
     const [openPopover, setOpenPopover] = useState(null);
 
     const handleSearch = () => {
-        onSearch(searchTerm, selectedCategory);
+        onSearch(searchTerm, selectedCategory.id, selectedLocation.id);
     };
 
     return (
@@ -112,7 +113,7 @@ const SearchBar = ({ onSearch }) => {
         >
             <Menu>
                 <MenuButton as={Button} rightIcon={<ChevronDownIcon />} mr={2}>
-                    {selectedCategory || "All Categories"}
+                    {selectedCategory.name || "All Categories"}
                 </MenuButton>
                 <MenuList>
                     {categories.map((category) => (
@@ -120,6 +121,22 @@ const SearchBar = ({ onSearch }) => {
                             key={category.name}
                             category={category}
                             setSelectedCategory={setSelectedCategory}
+                            openPopover={openPopover}
+                            setOpenPopover={setOpenPopover}
+                        />
+                    ))}
+                </MenuList>
+            </Menu>
+            <Menu>
+                <MenuButton as={Button} rightIcon={<ChevronDownIcon />} mr={2}>
+                    {selectedLocation.name || "All Locations"}
+                </MenuButton>
+                <MenuList>
+                    {locations.map((category) => (
+                        <NestedMenu
+                            key={category.name}
+                            category={category}
+                            setSelectedCategory={setSelectedLocation}
                             openPopover={openPopover}
                             setOpenPopover={setOpenPopover}
                         />
@@ -141,17 +158,20 @@ const SearchBar = ({ onSearch }) => {
     );
 };
 
-const Search = ({ auth, ads }) => {
-    const handleSearch = (searchTerm, category) => {
-        console.log("Search Term:", searchTerm);
-        console.log("Selected Category:", category);
-        // Implement the search functionality here
+const Search = ({ auth, ads, queryParams = null }) => {
+    const handleSearch = (searchTerm, category, location) => {
+        queryParams = queryParams || {};
+
+        if (searchTerm) queryParams["searchTerm"] = searchTerm;
+        if (category) queryParams["category"] = category;
+        if (location) queryParams["location"] = location;
+
+        Inertia.get(route("search"), queryParams);
     };
     return (
         <Layout auth={auth}>
             <Box p={6}>
                 <SearchBar onSearch={handleSearch} />
-                {/* Additional content */}
                 <AdsPage ads={ads} />
             </Box>
         </Layout>

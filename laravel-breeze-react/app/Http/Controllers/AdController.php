@@ -8,6 +8,7 @@ use App\Http\Requests\StoreAdRequest;
 use App\Http\Requests\UpdateAdRequest;
 use App\Models\AdImage;
 use App\Models\Category;
+use App\Models\Location;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -27,9 +28,26 @@ class AdController extends Controller
      */
     public function index()
     {
-        $query = Ad::where('status', 'approved');
+        $query = Ad::where('status', 'approved')
+            ->join('users', 'ads.seller', '=', 'users.id');
+
+        if (request('searchTerm')) {
+            $query->where('title', 'like', '%' . request('searchTerm') . '%');
+        }
+        if (request('category')) {
+            $query->where('category', request('category'));
+        }
+        if (request('location')) {
+            $query->where('location', request('location'));
+        }
+
         $ads = $query->paginate(5)->onEachSide(1);
         $categories = Category::whereNull('parent_id')->with([
+            'children' => function ($query) {
+                $query->with('children');
+            }
+        ])->get();
+        $locations = Location::whereNull('parent_id')->with([
             'children' => function ($query) {
                 $query->with('children');
             }
@@ -38,6 +56,8 @@ class AdController extends Controller
         return inertia('Search', [
             'ads' => AdResource::collection($ads)->response()->getData(true),
             'categories' => $categories,
+            'locations' => $locations,
+            'queryParams' => request()->query() ?: null,
         ]);
     }
 

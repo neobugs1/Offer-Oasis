@@ -29,9 +29,6 @@ return new class extends Migration {
             $table->integer('favorite_count')->default(0);
             $table->timestamps();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
-
-            // Foreign key constraints
-            // $table->foreign('seller_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

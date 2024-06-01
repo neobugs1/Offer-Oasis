@@ -24,7 +24,7 @@ class AdFactory extends Factory
         $adData = [
             'title' => fake()->sentence(),
             'description' => fake()->realText(),
-            'category' => Category::where('name', 'Lenovo')->first()->id,
+            'category' => fake()->numberBetween(1, 20),
             'seller' => User::find(1)->id,
             'price' => fake()->randomNumber(4, false),
             'currency' => fake()->randomElement(['MKD', 'EUR']),
