@@ -51,7 +51,7 @@ const MainContent = ({ ads }) => {
                         borderRadius="md"
                         boxShadow="lg"
                         textAlign="center"
-                        w={"70%"}
+                        maxW={"70%"}
                     >
                         <Stack direction="row" justify="center" spacing={4}>
                             <LatestAds ads={ads} />

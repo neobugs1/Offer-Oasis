@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+    AspectRatio,
     Box,
     Flex,
     IconButton,
@@ -40,13 +41,13 @@ const AdCard = ({ title, images, price, currency }) => {
             w={300}
         >
             <Box position="relative">
-                <Image
-                    src={images[currentImageIndex].url}
-                    rounded="md"
-                    roundedBottom={0}
-                    h={225}
-                    w={300}
-                />
+                <AspectRatio w={300} ratio={4 / 3}>
+                    <Image
+                        src={images[currentImageIndex].url}
+                        rounded="md"
+                        roundedBottom={0}
+                    />
+                </AspectRatio>
                 <IconButton
                     aria-label="Previous image"
                     icon={<FaArrowLeft />}

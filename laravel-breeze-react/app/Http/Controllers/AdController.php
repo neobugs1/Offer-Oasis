@@ -14,6 +14,11 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Imagick\Driver;
+
+
+
 class AdController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -73,14 +78,30 @@ class AdController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('public/ads');
+                // Create new manager instance with desired driver
+                $manager = new ImageManager(new Driver());
+
+                // Read image from filesystem
+                $img = $manager->read($image);
+
+                // Resize the image to a width of 400 and constrain aspect ratio (auto height)
+                $img->scale(width: 640);
+
+                // Generate a filename with .jpg extension
+                $filename = time() . '.jpg';
+
+                // Compress the image and save it with .jpg extension
+                $img->save(public_path('storage\\ads\\' . $filename), 60);
+
+                // Store the image with .jpg extension
+                $path = 'ads/' . $filename;
+
                 AdImage::create([
                     'ad_id' => $ad->id,
                     'url' => Storage::url($path),
                 ]);
             }
         }
-
         // return response()->json(['message' => 'Ad created successfully', 'ad' => $ad], 201);
         return to_route('ad.show', $ad->id)->with('success', 'Ad created successfully');
     }
@@ -125,16 +146,31 @@ class AdController extends Controller
         $data['status'] = 'pending';
         // Handle images if present
         if ($request->hasFile('images')) {
-            // Store new images
             foreach ($request->file('images') as $image) {
-                $path = $image->store('public/ads');
+                // Create new manager instance with desired driver
+                $manager = new ImageManager(new Driver());
+
+                // Read image from filesystem
+                $img = $manager->read($image);
+
+                // Resize the image to a width of 400 and constrain aspect ratio (auto height)
+                $img->scale(width: 640);
+
+                // Generate a filename with .jpg extension
+                $filename = time() . '.jpg';
+
+                // Compress the image and save it with .jpg extension
+                $img->save(public_path('storage\\ads\\' . $filename), 60);
+
+                // Store the image with .jpg extension
+                $path = 'ads/' . $filename;
+
                 AdImage::create([
                     'ad_id' => $ad->id,
                     'url' => Storage::url($path),
                 ]);
             }
         }
-
         $ad->update($data);
 
         return redirect()->route('ad.show', $ad->id)->with("success", "Ad updated successfully");

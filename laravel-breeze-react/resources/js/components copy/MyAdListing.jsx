@@ -1,4 +1,5 @@
 import {
+    AspectRatio,
     Box,
     Button,
     Flex,
@@ -68,7 +69,7 @@ const MyAdListing = ({ ad, index }) => {
         >
             <Flex gap={5}>
                 <Box position="relative">
-                    <Box w={"300px"}>
+                    <AspectRatio w={"300px"} ratio={4 / 3}>
                         <Image
                             src={
                                 ad.images &&
@@ -79,7 +80,7 @@ const MyAdListing = ({ ad, index }) => {
                             }
                             borderRadius="md"
                         />
-                    </Box>
+                    </AspectRatio>
                     <IconButton
                         aria-label="Previous image"
                         icon={<FaArrowLeft />}

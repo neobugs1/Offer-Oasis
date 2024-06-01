@@ -11,6 +11,7 @@ import {
     VStack,
     HStack,
     IconButton,
+    AspectRatio,
 } from "@chakra-ui/react";
 import {
     FaArrowLeft,
@@ -93,17 +94,18 @@ const Show = ({ ad, auth }) => {
 
                     {/* Car Image with Navigation Arrows */}
                     <Box position="relative">
-                        <Image
-                            src={
-                                ad.images &&
-                                ad.images[currentImageIndex] &&
-                                ad.images[currentImageIndex].url
-                                    ? ad.images[currentImageIndex].url
-                                    : "https://via.placeholder.com/300"
-                            }
-                            borderRadius="md"
-                            w={"750px"}
-                        />
+                        <AspectRatio minW="750px" ratio={4 / 3}>
+                            <Image
+                                src={
+                                    ad.images &&
+                                    ad.images[currentImageIndex] &&
+                                    ad.images[currentImageIndex].url
+                                        ? ad.images[currentImageIndex].url
+                                        : "https://via.placeholder.com/300"
+                                }
+                                borderRadius="md"
+                            />
+                        </AspectRatio>
                         <IconButton
                             aria-label="Previous image"
                             icon={<FaArrowLeft />}

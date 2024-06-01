@@ -13,6 +13,7 @@ import {
     AccordionPanel,
     AccordionIcon,
     Button,
+    AspectRatio,
 } from "@chakra-ui/react";
 import { Link, usePage } from "@inertiajs/react";
 import React, { useState } from "react";
@@ -61,12 +62,16 @@ const ReviewAdListing = ({ ad, index }) => {
         <AccordionItem>
             <AccordionButton h={20}>
                 <Flex w={"full"} alignContent={"center"}>
-                    <Image
-                        rounded={"md"}
-                        src={ad.images[0].url}
-                        h={14}
-                        mr={2}
-                    />
+                    <AspectRatio minW={20} mr={2} ratio={4 / 3}>
+                        <Image
+                            rounded={"md"}
+                            src={
+                                ad.images[0]
+                                    ? ad.images[0].url
+                                    : "https://via.placeholder.com/150"
+                            }
+                        />
+                    </AspectRatio>
                     <Box flex="1" textAlign="left" alignContent={"center"}>
                         {ad.title}
                     </Box>
