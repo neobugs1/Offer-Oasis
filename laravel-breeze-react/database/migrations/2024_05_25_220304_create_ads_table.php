@@ -17,9 +17,9 @@ return new class extends Migration {
             $table->foreignId('category')->constrained('categories');
             $table->foreignId('seller')->constrained('users');
             $table->unsignedBigInteger('reviewer')->nullable()->default(null);
-            $table->decimal('price', 8, 2);
+            $table->integer('price');
             $table->string('currency', 3);
-            $table->decimal('start_price', 8, 2)->nullable();
+            $table->integer('start_price')->nullable();
             $table->string('condition');
             $table->string('brand')->nullable();
             $table->string('model')->nullable();

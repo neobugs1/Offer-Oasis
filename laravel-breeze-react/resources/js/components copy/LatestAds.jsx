@@ -10,8 +10,9 @@ import {
 } from "@chakra-ui/react";
 import placeholderImage from "../assets/Placeholder.svg";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { Link } from "@inertiajs/react";
 
-const AdCard = ({ title, images, price, currency, location }) => {
+const AdCard = ({ title, id, images, price, currency, location }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const handleNextImage = () => {
         setCurrentImageIndex((prevIndex) => {
@@ -79,17 +80,22 @@ const AdCard = ({ title, images, price, currency, location }) => {
                     {location}
                 </Text>
             </Box>
-            <Box>
-                <Text
-                    fontSize="md"
-                    fontWeight="bold"
-                    textAlign={"left"}
-                    overflow={"hidden"}
-                    textOverflow={"ellipsis"}
-                    whiteSpace={"nowrap"}
-                >
-                    {title}
-                </Text>
+            <Box p={2}>
+                <Link href={route("ad.show", id)}>
+                    <Text
+                        fontSize="md"
+                        fontWeight="bold"
+                        textAlign={"left"}
+                        overflow={"hidden"}
+                        textOverflow={"ellipsis"}
+                        whiteSpace={"nowrap"}
+                        _hover={{
+                            textDecoration: "underline",
+                        }}
+                    >
+                        {title}
+                    </Text>
+                </Link>
                 <Text textAlign={"left"} color={"#00193c"}>
                     {price + " " + currency}
                 </Text>
@@ -104,11 +110,12 @@ const LatestAds = ({ ads }) => {
             {ads.data.map((ad, index) => (
                 <AdCard
                     key={index}
+                    id={ad.id}
                     title={ad.title}
                     images={ad.images}
                     price={ad.price}
                     currency={ad.currency}
-                    location={ad.seller.location}
+                    location={ad.seller.location.name}
                 />
             ))}
         </>

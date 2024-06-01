@@ -160,7 +160,7 @@ const Show = ({ ad, auth }) => {
                                             ? "4px solid gray"
                                             : "none"
                                     }
-                                    outlineOffset={"-2px"}
+                                    outlineOffset={"-4px"}
                                     borderRadius={"lg"}
                                 >
                                     <Image
@@ -176,7 +176,6 @@ const Show = ({ ad, auth }) => {
                             ))}
                         </HStack>
 
-                        {/* Car Details */}
                         <Box p={5} w="100%" bg="gray.100" borderRadius="md">
                             <Text fontSize="2xl" fontWeight="bold">
                                 {ad.title}
@@ -184,7 +183,6 @@ const Show = ({ ad, auth }) => {
                             <Text fontSize="lg">
                                 {ad.price} {ad.currency}
                             </Text>
-                            {/* ... other details */}
                         </Box>
                         <Flex direction={"row"} w={"100%"}>
                             <Box>

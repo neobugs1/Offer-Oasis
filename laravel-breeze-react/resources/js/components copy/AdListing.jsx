@@ -130,7 +130,7 @@ const AdListing = ({ ad, index }) => {
                         )}
                     </HStack>
                     <Spacer />
-                    <Text>Location: {ad.seller.location}</Text>
+                    <Text>Location: {ad.seller.location.name}</Text>
                     <HStack spacing={5}>
                         {ad.category.map((category, index) => (
                             <React.Fragment key={category.id}>

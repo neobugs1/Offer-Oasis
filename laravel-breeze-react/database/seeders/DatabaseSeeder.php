@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Location;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Factories\AdFactory;
@@ -33,6 +34,9 @@ class DatabaseSeeder extends Seeder
         $refrigerators = $homeAppliances->children()->create(['name' => 'Refrigerators']);
         $washingMachines = $homeAppliances->children()->create(['name' => 'Washing Machines']);
 
+        $skopje = Location::create(['name' => 'Skopje']);
+        $bitola = Location::create(['name' => 'Bitola']);
+
 
         // User::factory(10)->create();
 
@@ -41,7 +45,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => bcrypt('nikola123'),
             'role' => 'admin',
-            'location' => 'Skopje',
+            'location' => 1,
             'phoneNumber' => '078888666',
         ]);
         User::factory()->create([
@@ -49,7 +53,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'user@user.com',
             'password' => bcrypt('nikola123'),
             'role' => 'user',
-            'location' => 'Skopje',
+            'location' => 2,
             'phoneNumber' => '078585666',
         ]);
 

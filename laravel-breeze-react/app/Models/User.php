@@ -50,4 +50,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Ad::class, 'seller');
     }
+    public function location()
+    {
+        return $this->hasOne(Location::class, 'location');
+    }
 }
