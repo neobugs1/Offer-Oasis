@@ -11,7 +11,7 @@ import {
 import placeholderImage from "../assets/Placeholder.svg";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
-const AdCard = ({ title, images, price, currency }) => {
+const AdCard = ({ title, images, price, currency, location }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const handleNextImage = () => {
         setCurrentImageIndex((prevIndex) => {
@@ -41,7 +41,7 @@ const AdCard = ({ title, images, price, currency }) => {
             w={300}
         >
             <Box position="relative">
-                <AspectRatio w={300} ratio={4 / 3}>
+                <AspectRatio w={300} ratio={6 / 4}>
                     <Image
                         src={images[currentImageIndex].url}
                         rounded="md"
@@ -56,6 +56,7 @@ const AdCard = ({ title, images, price, currency }) => {
                     top="50%"
                     left="1"
                     bg={"transparent"}
+                    _hover={{ bg: "transparent", color: "white" }}
                 />
                 <IconButton
                     aria-label="Next image"
@@ -65,6 +66,7 @@ const AdCard = ({ title, images, price, currency }) => {
                     top="50%"
                     right="1"
                     bg={"transparent"}
+                    _hover={{ bg: "transparent", color: "white" }}
                 />
                 <Text
                     position="absolute"
@@ -74,7 +76,7 @@ const AdCard = ({ title, images, price, currency }) => {
                     bgColor={"transparent"}
                     color={"white"}
                 >
-                    {currentImageIndex + 1}/{images.length}
+                    {location}
                 </Text>
             </Box>
             <Box>
@@ -106,6 +108,7 @@ const LatestAds = ({ ads }) => {
                     images={ad.images}
                     price={ad.price}
                     currency={ad.currency}
+                    location={ad.seller.location}
                 />
             ))}
         </>
