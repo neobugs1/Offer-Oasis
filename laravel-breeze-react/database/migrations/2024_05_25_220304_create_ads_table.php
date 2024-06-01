@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->foreignId('seller')->constrained('users');
             $table->unsignedBigInteger('reviewer')->nullable()->default(null);
             $table->integer('price');
-            $table->string('currency', 3);
+            $table->enum('currency', ['EUR', 'MKD'])->default('MKD');
             $table->integer('start_price')->nullable();
             $table->string('condition');
             $table->string('brand')->nullable();

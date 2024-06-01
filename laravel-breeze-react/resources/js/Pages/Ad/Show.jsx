@@ -224,7 +224,9 @@ const Show = ({ ad, auth }) => {
                 </Flex>
             </Box>
             <Button onClick={() => deleteAd(ad)}>Избриши оглас</Button>
-            <Link href={route("ad.edit", ad.id)}>Измени оглас</Link>
+            <Link className="w-full" href={route("ad.edit", ad.id)}>
+                <Button w={"100%"}>Измени оглас</Button>
+            </Link>
         </Layout>
     );
 };
