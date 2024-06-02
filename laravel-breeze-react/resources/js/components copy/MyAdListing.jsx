@@ -14,6 +14,7 @@ import {
 import { Link } from "@inertiajs/react";
 import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { MdPending, MdCheckCircle, MdError } from "react-icons/md";
 
 const MyAdListing = ({ ad, index }) => {
     const formatDate = (dateString) => {
@@ -123,11 +124,11 @@ const MyAdListing = ({ ad, index }) => {
                     </Link>
                     <HStack color={"blue.500"}>
                         <Text fontWeight="bold" fontSize={"xl"}>
-                            Price: {Number(ad.price)} {ad.currency}
+                            {Number(ad.price)} {ad.currency}
                         </Text>
                         {Number(ad.start_price) > Number(ad.price) && (
                             <Text as="s">
-                                Start Price: {ad.start_price} {ad.currency}
+                                Почетна цена: {ad.start_price} {ad.currency}
                             </Text>
                         )}
                     </HStack>
@@ -149,6 +150,19 @@ const MyAdListing = ({ ad, index }) => {
             <Text position="absolute" top="2" right="2" fontSize="sm">
                 {formatDate(ad.date_posted)}
             </Text>
+            <Flex position="absolute" top="14" right="10">
+                <Flex alignItems={"center"} fontSize={"30px"} gap={2}>
+                    <Text fontSize={20} fontFamily={"serif"}>
+                        Статус:
+                    </Text>
+                    {ad.status === "approved" && (
+                        <MdCheckCircle color="green" />
+                    )}
+                    {ad.status === "rejected" && <MdError color="red" />}
+                    {ad.status === "pending" && <MdPending color="orange" />}
+                </Flex>
+            </Flex>
+
             <HStack position="absolute" bottom="5" right="5">
                 <Button
                     colorScheme="green"

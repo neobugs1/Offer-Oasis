@@ -25,17 +25,16 @@ class AdFactory extends Factory
             'title' => fake()->sentence(),
             'description' => fake()->realText(),
             'category' => fake()->numberBetween(1, 20),
-            'seller' => User::find(1)->id,
+            'seller' => fake()->numberBetween(1, 11),
             'price' => fake()->randomNumber(4, false),
             'currency' => fake()->randomElement(['MKD', 'EUR']),
             'start_price' => 4500,
-            'condition' => fake()->sentence(),
-            'brand' => fake()->sentence(),
-            'model' => fake()->sentence(),
-            'features' => fake()->sentence(),
-            'date_posted' => fake()->dateTimeBetween('now', '+1 year'),
+
+            'brand' => fake()->word(),
+            'model' => fake()->word(),
+
+            'date_posted' => fake()->dateTimeBetween('-1 year', 'now'),
             'view_count' => 1,
-            'favorite_count' => 1,
             'status' => 'pending'
         ];
 

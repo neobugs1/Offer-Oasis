@@ -12,6 +12,7 @@ use App\Models\Location;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,11 +24,23 @@ use Intervention\Image\Drivers\Imagick\Driver;
 class AdController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        function getChildIds($parentId, $table)
+        {
+            $childIds = DB::table($table)->where('parent_id', $parentId)->pluck('id')->toArray();
+
+            foreach ($childIds as $childId) {
+                $childIds = array_merge($childIds, getChildIds($childId, $table));
+            }
+
+            return $childIds;
+        }
+
         $query = Ad::where('status', 'approved')
             ->join('users', 'ads.seller', '=', 'users.id')
             ->select('ads.*', 'users.location');
@@ -36,10 +49,17 @@ class AdController extends Controller
             $query->where('title', 'like', '%' . request('searchTerm') . '%');
         }
         if (request('category')) {
-            $query->where('category', request('category'));
+            $categoryIds = array_merge([request('category')], getChildIds(request('category'), 'categories'));
+            $query->whereIn('category', $categoryIds);
         }
         if (request('location')) {
-            $query->where('location', request('location'));
+            $locationIds = array_merge([request('location')], getChildIds(request('location'), 'locations'));
+            $query->whereIn('location', $locationIds);
+        }
+        if (request('sort') === 'price') {
+            $query->orderBy('price');
+        } else {
+            $query->orderBy('date_posted');
         }
 
         $ads = $query->paginate(5)->onEachSide(1);
@@ -89,10 +109,21 @@ class AdController extends Controller
             "price" => request()->get('price'),
             "start_price" => request()->get('price'),
             "currency" => "MKD",
-            "condition" => request()->get('condition'),
-            "brand" => request()->get('brand'),
-            "model" => request()->get('model'),
-            "features" => request()->get('features'),
+
+            'brand' => request()->get('brand'),
+            'model' => request()->get('model'),
+            'year' => request()->get('year'),
+            'fuel_type' => request()->get('fuel_type'),
+            'mileage' => request()->get('mileage'),
+            'transmission' => request()->get('transmission'),
+            'body_type' => request()->get('body_type'),
+            'color' => request()->get('color'),
+            'registration_country' => request()->get('registration_country'),
+            'registration_valid_until' => request()->get('registration_valid_until'),
+            'engine_power_ks' => request()->get('engine_power_ks'),
+            'emission_class' => request()->get('emission_class'),
+
+
             "seller" => auth()->id(),
             "date_posted" => now()
         ]);
@@ -162,28 +193,24 @@ class AdController extends Controller
     {
         $this->authorize('update', $ad);
 
-        $data = $request->all(); // Get all raw data from the request
+        $data = $request->all();
         $data['updated_by'] = auth()->id();
         $data['status'] = 'pending';
-        // Handle images if present
+
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                // Create new manager instance with desired driver
                 $manager = new ImageManager(new Driver());
 
-                // Read image from filesystem
                 $img = $manager->read($image);
 
-                // Resize the image to a width of 400 and constrain aspect ratio (auto height)
+                // Resize the image to a width of 640 and constrain aspect ratio (auto height)
                 $img->scale(width: 640);
 
-                // Generate a filename with .jpg extension
                 $filename = time() . '.jpg';
 
-                // Compress the image and save it with .jpg extension
+                // Compress the image
                 $img->save(public_path('storage\\ads\\' . $filename), 60);
 
-                // Store the image with .jpg extension
                 $path = 'ads/' . $filename;
 
                 AdImage::create([

@@ -17,18 +17,26 @@ class Ad extends Model
         'price',
         'currency',
         'start_price',
-        'condition',
+
         'brand',
         'model',
-        'features',
+        'year',
+        'fuel_type',
+        'mileage',
+        'transmission',
+        'body_type',
+        'color',
+        'registration_country',
+        'registration_valid_until',
+        'engine_power_ks',
+        'emission_class',
+
         'date_posted',
         'view_count',
-        'favorite_count',
         'status'
     ];
 
     protected $casts = [
-        'features' => 'array',
         'date_posted' => 'datetime',
     ];
 

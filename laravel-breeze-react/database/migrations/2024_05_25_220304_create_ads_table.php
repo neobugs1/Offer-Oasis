@@ -20,13 +20,22 @@ return new class extends Migration {
             $table->integer('price');
             $table->enum('currency', ['EUR', 'MKD'])->default('MKD');
             $table->integer('start_price')->nullable();
-            $table->string('condition');
-            $table->string('brand')->nullable();
-            $table->string('model')->nullable();
-            $table->json('features')->nullable();
+
+            $table->string('brand')->nullable(); // Марка
+            $table->string('model')->nullable(); // Модел
+            $table->integer('year')->nullable(); // Година
+            $table->string('fuel_type')->nullable(); // Гориво
+            $table->integer('mileage')->nullable(); // Километри
+            $table->string('transmission')->nullable(); // Менувач
+            $table->string('body_type')->nullable(); // Каросерија
+            $table->string('color')->nullable(); // Боја
+            $table->string('registration_country')->nullable(); // Регистрација
+            $table->date('registration_valid_until')->nullable(); // Регистрирана до
+            $table->integer('engine_power_ks')->nullable(); // Сила на моторот (ks)
+            $table->string('emission_class')->nullable(); // Kласа на емисија
+
             $table->timestamp('date_posted')->nullable();
             $table->integer('view_count')->default(0);
-            $table->integer('favorite_count')->default(0);
             $table->timestamps();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
         });

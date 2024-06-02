@@ -216,7 +216,13 @@ const Search = ({ auth, ads, queryParams = null }) => {
     return (
         <Layout auth={auth}>
             <Head
-                title={queryParams ? queryParams["searchTerm"] : "Огласи"}
+                title={
+                    queryParams
+                        ? queryParams["searchTerm"]
+                            ? queryParams["searchTerm"]
+                            : "Огласи"
+                        : "Огласи"
+                }
             ></Head>
             <Box p={6}>
                 {/* <pre>{JSON.stringify(ads, 8, 2)}</pre> */}

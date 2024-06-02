@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
 import { Inertia } from "@inertiajs/inertia";
-import { Box, Text, VStack, HStack, Flex, Button } from "@chakra-ui/react";
+import {
+    Box,
+    Text,
+    VStack,
+    HStack,
+    Flex,
+    Button,
+    Select,
+    Spacer,
+} from "@chakra-ui/react";
 import AdListing from "./AdListing";
 
 const AdsPage = ({ ads }) => {
     const { url } = usePage();
+    const baseURL = "http://127.0.0.1:8000/";
 
     const handlePageChange = (pageUrl) => {
         if (pageUrl) {
@@ -24,16 +34,73 @@ const AdsPage = ({ ads }) => {
         }
     };
 
+    const getInitialSortOption = () => {
+        let myURL = new URL(window.location.href);
+
+        let sortOption = myURL.searchParams.get("sort");
+
+        if (sortOption === "date") {
+            return "date_posted";
+        } else if (sortOption === "price") {
+            return "price";
+        } else {
+            return "date_posted"; // default value
+        }
+    };
+
+    const [selectedOption, setSelectedOption] = useState(
+        getInitialSortOption()
+    );
+    const [currentURL, setCurrentURL] = useState(url);
+
+    useEffect(() => {
+        setSelectedOption(getInitialSortOption());
+    }, [window.location.href]);
+
+    const handleChange = (event) => {
+        const newValue = event.target.value;
+        if (newValue !== selectedOption) {
+            setSelectedOption(newValue);
+
+            let myURL = new URL(currentURL, baseURL);
+
+            let searchParams = myURL.searchParams;
+
+            if (newValue === "date_posted") {
+                searchParams.set("sort", "date_posted");
+            } else if (newValue === "price") {
+                searchParams.set("sort", "price");
+            }
+
+            myURL.search = searchParams.toString();
+
+            setCurrentURL(myURL.toString());
+
+            Inertia.get(myURL.toString());
+        }
+    };
+
     if (!ads || !ads.data) {
-        return <Text>No ads available</Text>;
+        return <Text>Нема пронајдени резултати.</Text>;
     }
 
     return (
         <Flex w={"100%"} justifyContent={"center"}>
             <Box p={5} w={"85%"}>
-                <Text fontSize="2xl" mb={5}>
-                    Ads
-                </Text>
+                <Flex>
+                    <Text fontSize="2xl" mb={5}>
+                        Сите огласи
+                    </Text>
+                    <Spacer w={"100%"} />
+                    <Select
+                        value={selectedOption}
+                        onChange={handleChange}
+                        w={200}
+                    >
+                        <option value="date_posted">Најнови прво</option>
+                        <option value="price">Најевтини прво</option>
+                    </Select>
+                </Flex>
                 <VStack spacing={5} align="stretch">
                     {ads.data.map((ad, index) => (
                         <AdListing ad={ad} key={index} index={index} />

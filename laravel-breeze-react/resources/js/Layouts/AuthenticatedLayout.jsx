@@ -45,7 +45,8 @@ export default function Authenticated({ user, header, children }) {
                     <HStack spacing={8} alignItems="center">
                         <Box>
                             <Link href="/">
-                                <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                <Text>Offer-Oasis</Text>
+                                {/* <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" /> */}
                             </Link>
                         </Box>
                         <HStack

@@ -186,19 +186,72 @@ const Show = ({ ad, auth }) => {
                         </Box>
                         <Flex direction={"row"} w={"100%"}>
                             <Box>
-                                <Text>
-                                    <b>Condition:</b> {ad.condition}
-                                </Text>
-                                <Text>
-                                    <b>Brand:</b> {ad.brand}
-                                </Text>
-                                <Text>
-                                    <b>Model:</b> {ad.model}
-                                </Text>
-                                <Text>
-                                    <b>Features:</b> {ad.features}
-                                </Text>
+                                {ad.brand && (
+                                    <Text>
+                                        <b>Бренд:</b> {ad.brand}
+                                    </Text>
+                                )}
+                                {ad.model && (
+                                    <Text>
+                                        <b>Модел:</b> {ad.model}
+                                    </Text>
+                                )}
+                                {ad.year && (
+                                    <Text>
+                                        <b>Година:</b> {ad.year}
+                                    </Text>
+                                )}
+                                {ad.fuel_type && (
+                                    <Text>
+                                        <b>Гориво:</b> {ad.fuel_type}
+                                    </Text>
+                                )}
+                                {ad.mileage && (
+                                    <Text>
+                                        <b>Километри:</b> {ad.mileage}
+                                    </Text>
+                                )}
+                                {ad.transmission && (
+                                    <Text>
+                                        <b>Менувач:</b> {ad.transmission}
+                                    </Text>
+                                )}
+                                {ad.body_type && (
+                                    <Text>
+                                        <b>Каросерија:</b> {ad.body_type}
+                                    </Text>
+                                )}
+                                {ad.color && (
+                                    <Text>
+                                        <b>Боја:</b> {ad.color}
+                                    </Text>
+                                )}
+                                {ad.registration_country && (
+                                    <Text>
+                                        <b>Регистрација:</b>{" "}
+                                        {ad.registration_country}
+                                    </Text>
+                                )}
+                                {ad.registration_valid_until && (
+                                    <Text>
+                                        <b>Регистрирана до::</b>{" "}
+                                        {ad.registration_valid_until}
+                                    </Text>
+                                )}
+                                {ad.engine_power_ks && (
+                                    <Text>
+                                        <b>Сила на моторот (ks):</b>{" "}
+                                        {ad.engine_power_ks}
+                                    </Text>
+                                )}
+                                {ad.emission_class && (
+                                    <Text>
+                                        <b>Класа на емисија:</b>{" "}
+                                        {ad.emission_class}
+                                    </Text>
+                                )}
                             </Box>
+
                             {/* Contact Information */}
                             <Spacer />
                             <Box bgColor={"gray.100"} rounded={"md"} p={5}>

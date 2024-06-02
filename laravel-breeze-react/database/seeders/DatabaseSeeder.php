@@ -19,56 +19,53 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //Categories
-        $MotorVehicles = Category::create(['name' => 'Motor Vehicles']);
-        $RealEstate = Category::create(['name' => 'Real Estate']);
-        $HomeAndGarden = Category::create(['name' => 'Home and Garden']);
-        $FashionAndClothing = Category::create(['name' => 'Fashion and Clothing']);
-        $MobilePhonesAndAccessories = Category::create(['name' => 'Mobile Phones and Accessories']);
+        // Категории
+        $MotorVehicles = Category::create(['name' => 'Моторни Возила']);
+        $RealEstate = Category::create(['name' => 'Недвижности']);
+        $HomeAndGarden = Category::create(['name' => 'Дом и Градина']);
+        $FashionAndClothing = Category::create(['name' => 'Мода и Облека']);
+        $MobilePhonesAndAccessories = Category::create(['name' => 'Мобилни Телефони и Додатоци']);
 
-        $Computers = Category::create(['name' => 'Computers']);
-        $TVVideoPhotoAndMultimedia = Category::create(['name' => 'TV, Video, Photo and Multimedia']);
-        $MusicalInstrumentsAndEquipment = Category::create(['name' => 'Musical Instruments and Equipment']);
-        $WatchesAndJewelry = Category::create(['name' => 'Watches and Jewelry']);
-        $BabyAndChildrenProducts = Category::create(['name' => 'Baby and Children Products']);
+        $Computers = Category::create(['name' => 'Компјутери']);
+        $TVVideoPhotoAndMultimedia = Category::create(['name' => 'ТВ, Видео, Фотографија и Мултимедија']);
+        $MusicalInstrumentsAndEquipment = Category::create(['name' => 'Музички Инструменти и Опрема']);
+        $WatchesAndJewelry = Category::create(['name' => 'Часовници и Накит']);
+        $BabyAndChildrenProducts = Category::create(['name' => 'Бебешки и Детски Производи']);
 
-        $HealthBeautySupplementsAndEquipment = Category::create(['name' => 'Health, Beauty Supplements and Equipment']);
-        $CDsDVDsVHSMusicMovies = Category::create(['name' => 'CDs, DVDs, VHS, Music, Movies']);
-        $BooksAndLiterature = Category::create(['name' => 'Books and Literature']);
+        $HealthBeautySupplementsAndEquipment = Category::create(['name' => 'Здравје, Убавина Додатоци и Опрема']);
+        $CDsDVDsVHSMusicMovies = Category::create(['name' => 'ЦД-а, ДВД-а, ВХС, Музика, Филмови']);
+        $BooksAndLiterature = Category::create(['name' => 'Книги и Литература']);
+        $other = Category::create(['name' => 'Останато']);
 
+        // Создади подкатегории
+        // Подкатегории за Моторни Возила
+        $cars = $MotorVehicles->children()->create(['name' => 'Автомобили']);
+        $trucks = $MotorVehicles->children()->create(['name' => 'Камиони']);
+        $bikes = $MotorVehicles->children()->create(['name' => 'Мотори']);
 
-        // Create subcategories
-        // Subcategories for Motor Vehicles
-        $cars = $MotorVehicles->children()->create(['name' => 'Cars']);
-        $trucks = $MotorVehicles->children()->create(['name' => 'Trucks']);
-        $bikes = $MotorVehicles->children()->create(['name' => 'Bikes']);
+        // Подкатегории за Недвижности
+        $houses = $RealEstate->children()->create(['name' => 'Куќи']);
+        $apartments = $RealEstate->children()->create(['name' => 'Станови']);
+        $lands = $RealEstate->children()->create(['name' => 'Земјишта']);
 
-        // Subcategories for Real Estate
-        $houses = $RealEstate->children()->create(['name' => 'Houses']);
-        $apartments = $RealEstate->children()->create(['name' => 'Apartments']);
-        $lands = $RealEstate->children()->create(['name' => 'Lands']);
+        // Подкатегории за Дом и Градина
+        $furniture = $HomeAndGarden->children()->create(['name' => 'Мебел']);
+        $gardenTools = $HomeAndGarden->children()->create(['name' => 'Градинарски Алати']);
+        $decorations = $HomeAndGarden->children()->create(['name' => 'Декорации']);
 
-        // Subcategories for Home and Garden
-        $furniture = $HomeAndGarden->children()->create(['name' => 'Furniture']);
-        $gardenTools = $HomeAndGarden->children()->create(['name' => 'Garden Tools']);
-        $decorations = $HomeAndGarden->children()->create(['name' => 'Decorations']);
+        // Подкатегории за Мода и Облека
+        $menClothing = $FashionAndClothing->children()->create(['name' => 'Машка Облека']);
+        $womenClothing = $FashionAndClothing->children()->create(['name' => 'Женска Облека']);
+        $childrenClothing = $FashionAndClothing->children()->create(['name' => 'Детска Облека']);
 
-        // Subcategories for Fashion and Clothing
-        $menClothing = $FashionAndClothing->children()->create(['name' => 'Men\'s Clothing']);
-        $womenClothing = $FashionAndClothing->children()->create(['name' => 'Women\'s Clothing']);
-        $childrenClothing = $FashionAndClothing->children()->create(['name' => 'Children\'s Clothing']);
-
-        // Subcategories for Mobile Phones and Accessories
-        $smartphones = $MobilePhonesAndAccessories->children()->create(['name' => 'Smartphones']);
-        $tablets = $MobilePhonesAndAccessories->children()->create(['name' => 'Tablets']);
-        $accessories = $MobilePhonesAndAccessories->children()->create(['name' => 'Accessories']);
-
-        // And so on for the other categories...
+        // Подкатегории за Мобилни Телефони и Додатоци
+        $smartphones = $MobilePhonesAndAccessories->children()->create(['name' => 'Паметни Телефони']);
+        $tablets = $MobilePhonesAndAccessories->children()->create(['name' => 'Таблети']);
+        $accessories = $MobilePhonesAndAccessories->children()->create(['name' => 'Додатоци']);
 
 
         $Skopje = Location::create(['name' => 'Скопје']);
 
-        // Municipalities of Skopje
         $Aerodrom = $Skopje->children()->create(['name' => 'Аеродром']);
         $Butel = $Skopje->children()->create(['name' => 'Бутел']);
         $Centar = $Skopje->children()->create(['name' => 'Центар']);
@@ -142,7 +139,7 @@ class DatabaseSeeder extends Seeder
         // $StaJeRada = Location::create(['name' => 'Штаје Рада']);
 
 
-        // User::factory(10)->create();
+        User::factory(10)->create();
 
         User::factory()->create([
             'name' => 'Admin User',
@@ -161,6 +158,6 @@ class DatabaseSeeder extends Seeder
             'phoneNumber' => '078585666',
         ]);
 
-        Ad::factory()->count(20)->create();
+        Ad::factory()->count(50)->create();
     }
 }

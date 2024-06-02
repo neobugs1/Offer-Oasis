@@ -22,10 +22,20 @@ export default function AdForm({ auth, categories, ad }) {
         title: ad.title || "",
         description: ad.description || "",
         price: ad.price || "",
-        condition: ad.condition || "",
+
         brand: ad.brand || "",
         model: ad.model || "",
-        features: ad.features || "",
+        year: ad.year || "",
+        fuel_type: ad.fuel_type || "",
+        mileage: ad.mileage || "",
+        transmission: ad.transmission || "",
+        body_type: ad.body_type || "",
+        color: ad.color || "",
+        registration_country: ad.registration_country || "",
+        registration_valid_until: ad.registration_valid_until || "",
+        engine_power_ks: ad.engine_power_ks || "",
+        emission_class: ad.emission_class || "",
+
         category: ad.category || "",
         images: ad.images || [],
         _method: "put",
@@ -50,6 +60,23 @@ export default function AdForm({ auth, categories, ad }) {
         </React.Fragment>
     );
 
+    const resetData = (newCategory) => {
+        const newData = {
+            year: "",
+            fuel_type: "",
+            mileage: "",
+            transmission: "",
+            body_type: "",
+            color: "",
+            registration_country: "",
+            registration_valid_until: "",
+            engine_power_ks: "",
+            emission_class: "",
+            category: newCategory,
+        };
+        setData({ ...data, ...newData });
+    };
+
     return (
         <Layout auth={auth}>
             <VStack
@@ -70,9 +97,10 @@ export default function AdForm({ auth, categories, ad }) {
                 </FormControl>
                 <FormControl isRequired>
                     <FormLabel>Category</FormLabel>
+                    {console.log(data.category)}
                     <Select
                         placeholder="Select category"
-                        value={data.category}
+                        value={data.category[0].id}
                         onChange={(e) => setData("category", e.target.value)}
                     >
                         {categories.map((category) => renderOption(category))}
@@ -109,13 +137,7 @@ export default function AdForm({ auth, categories, ad }) {
                         onChange={(e) => setData("price", e.target.value)}
                     />
                 </FormControl>
-                <FormControl>
-                    <FormLabel>Condition</FormLabel>
-                    <Input
-                        value={data.condition}
-                        onChange={(e) => setData("condition", e.target.value)}
-                    />
-                </FormControl>
+
                 <FormControl>
                     <FormLabel>Brand</FormLabel>
                     <Input
@@ -130,13 +152,112 @@ export default function AdForm({ auth, categories, ad }) {
                         onChange={(e) => setData("model", e.target.value)}
                     />
                 </FormControl>
-                <FormControl>
-                    <FormLabel>Features</FormLabel>
-                    <Input
-                        value={data.features}
-                        onChange={(e) => setData("features", e.target.value)}
-                    />
-                </FormControl>
+
+                {data.category === "15" && (
+                    <>
+                        <FormControl>
+                            <FormLabel>Year</FormLabel>
+                            <Input
+                                type="number"
+                                value={data.year}
+                                onChange={(e) =>
+                                    setData("year", e.target.value)
+                                }
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel>Fuel Type</FormLabel>
+                            <Input
+                                value={data.fuel_type}
+                                onChange={(e) =>
+                                    setData("fuel_type", e.target.value)
+                                }
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel>Mileage</FormLabel>
+                            <Input
+                                type="number"
+                                value={data.mileage}
+                                onChange={(e) =>
+                                    setData("mileage", e.target.value)
+                                }
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel>Transmission</FormLabel>
+                            <Input
+                                value={data.transmission}
+                                onChange={(e) =>
+                                    setData("transmission", e.target.value)
+                                }
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel>Body Type</FormLabel>
+                            <Input
+                                value={data.body_type}
+                                onChange={(e) =>
+                                    setData("body_type", e.target.value)
+                                }
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel>Color</FormLabel>
+                            <Input
+                                value={data.color}
+                                onChange={(e) =>
+                                    setData("color", e.target.value)
+                                }
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel>Registration Country</FormLabel>
+                            <Input
+                                value={data.registration_country}
+                                onChange={(e) =>
+                                    setData(
+                                        "registration_country",
+                                        e.target.value
+                                    )
+                                }
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel>Registration Valid Until</FormLabel>
+                            <Input
+                                type="date"
+                                value={data.registration_valid_until}
+                                onChange={(e) =>
+                                    setData(
+                                        "registration_valid_until",
+                                        e.target.value
+                                    )
+                                }
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel>Engine Power (ks)</FormLabel>
+                            <Input
+                                type="number"
+                                value={data.engine_power_ks}
+                                onChange={(e) =>
+                                    setData("engine_power_ks", e.target.value)
+                                }
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel>Emission Class</FormLabel>
+                            <Input
+                                value={data.emission_class}
+                                onChange={(e) =>
+                                    setData("emission_class", e.target.value)
+                                }
+                            />
+                        </FormControl>
+                    </>
+                )}
+
                 <FormControl isRequired>
                     <FormLabel>Description</FormLabel>
                     <Textarea

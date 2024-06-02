@@ -12,7 +12,7 @@ use App\Models\Ad;
 
 
 Route::get('/', function () {
-    $ads = Ad::where('status', 'approved')->paginate(5)->onEachSide(1);
+    $ads = Ad::where('status', 'approved')->orderBy('date_posted')->paginate(5)->onEachSide(1);
     $adsData = AdResource::collection($ads)->response()->getData(true);
 
     return Inertia::render('Welcome', [
@@ -23,7 +23,7 @@ Route::get('/', function () {
 });
 
 Route::get('/oglasi', function () {
-    $ads = auth()->user()->ads()->paginate(5)->onEachSide(1);
+    $ads = auth()->user()->ads()->orderBy('date_posted')->paginate(5)->onEachSide(1);
     $adsData = AdResource::collection($ads)->response()->getData(true);
     return Inertia::render('Oglasi', [
         'ads' => $adsData,
@@ -31,7 +31,7 @@ Route::get('/oglasi', function () {
 })->middleware(['auth', 'verified'])->name('oglasi');
 
 Route::get('/reviews', function () {
-    $ads = Ad::where('status', 'pending')->paginate(10)->onEachSide(1);
+    $ads = Ad::where('status', 'pending')->orderBy('date_posted')->paginate(10)->onEachSide(1);
     $adsData = AdResource::collection($ads)->response()->getData(true);
     return Inertia::render('Reviews', [
         'ads' => $adsData,
