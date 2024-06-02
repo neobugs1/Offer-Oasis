@@ -85,18 +85,52 @@ const NestedMenu = ({ category, setSelectedCategory }) => {
         </Popover>
     );
 };
+const parseQueryParams = (queryString) => {
+    const params = new URLSearchParams(queryString);
+    let queryParams = {};
+    for (let [key, value] of params.entries()) {
+        queryParams[key] = value;
+    }
+    return queryParams;
+};
+// Helper function to find a category by its ID
+const findCategoryById = (categories, id) => {
+    for (let category of categories) {
+        if (category.id == id) {
+            return category;
+        }
+        if (category.children.length > 0) {
+            let found = findCategoryById(category.children, id);
+            if (found) return found;
+        }
+    }
+    return null;
+};
 
 const SearchBar = ({ queryParams }) => {
     const { categories, locations } = usePage().props;
-    const [searchTerm, setSearchTerm] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [selectedLocation, setSelectedLocation] = useState("");
+
+    const initialQueryParams = parseQueryParams(window.location.search);
+
+    const [searchTerm, setSearchTerm] = useState(
+        initialQueryParams["searchTerm"] || ""
+    );
+    const [selectedCategory, setSelectedCategory] = useState(() => {
+        return initialQueryParams["category"]
+            ? findCategoryById(categories, initialQueryParams["category"])
+            : "";
+    });
+    const [selectedLocation, setSelectedLocation] = useState(() => {
+        return initialQueryParams["location"]
+            ? findCategoryById(locations, initialQueryParams["location"])
+            : "";
+    });
 
     const [openPopover, setOpenPopover] = useState(null);
 
     const onSearch = (searchTerm, category, location) => {
         // Create a new queryParams object
-        let newQueryParams = { ...queryParams };
+        let newQueryParams = {};
 
         if (searchTerm) newQueryParams["searchTerm"] = searchTerm;
         else delete newQueryParams["searchTerm"];
@@ -112,41 +146,6 @@ const SearchBar = ({ queryParams }) => {
 
         Inertia.get(route("search"), newQueryParams);
     };
-
-    // Helper function to find a category by its ID
-    const findCategoryById = (categories, id) => {
-        for (let category of categories) {
-            if (category.id == id) {
-                return category;
-            }
-            if (category.children.length > 0) {
-                let found = findCategoryById(category.children, id);
-                if (found) return found;
-            }
-        }
-        return null;
-    };
-
-    useEffect(() => {
-        if (queryParams) {
-            if (queryParams["searchTerm"])
-                setSearchTerm(queryParams["searchTerm"]);
-            if (queryParams["category"]) {
-                const category = findCategoryById(
-                    categories,
-                    queryParams["category"]
-                );
-                setSelectedCategory(category);
-            }
-            if (queryParams["location"]) {
-                const location = findCategoryById(
-                    locations,
-                    queryParams["location"]
-                );
-                setSelectedLocation(location);
-            }
-        }
-    }, [queryParams, categories, locations]);
 
     const handleSearch = () => {
         onSearch(searchTerm, selectedCategory.id, selectedLocation.id);
@@ -167,9 +166,16 @@ const SearchBar = ({ queryParams }) => {
         >
             <Menu>
                 <MenuButton as={Button} rightIcon={<ChevronDownIcon />} mr={2}>
-                    {selectedCategory.name || "All Categories"}
+                    {selectedCategory.name || "Сите категории"}
                 </MenuButton>
-                <MenuList>
+                <MenuList zIndex={2}>
+                    <MenuItem
+                        key={"all"}
+                        onClick={() => setSelectedCategory("")}
+                    >
+                        Сите категории
+                    </MenuItem>
+
                     {categories.map((category) => (
                         <NestedMenu
                             key={category.name}
@@ -183,9 +189,15 @@ const SearchBar = ({ queryParams }) => {
             </Menu>
             <Menu>
                 <MenuButton as={Button} rightIcon={<ChevronDownIcon />} mr={2}>
-                    {selectedLocation.name || "All Locations"}
+                    {selectedLocation.name || "Цела Македонија"}
                 </MenuButton>
                 <MenuList>
+                    <MenuItem
+                        onClick={() => setSelectedLocation("")}
+                        key={"all"}
+                    >
+                        Цела Македонија
+                    </MenuItem>
                     {locations.map((category) => (
                         <NestedMenu
                             key={category.name}
@@ -225,7 +237,6 @@ const Search = ({ auth, ads, queryParams = null }) => {
                 }
             ></Head>
             <Box p={6}>
-                {/* <pre>{JSON.stringify(ads, 8, 2)}</pre> */}
                 <SearchBar queryParams={queryParams} />
                 <AdsPage ads={ads} />
             </Box>

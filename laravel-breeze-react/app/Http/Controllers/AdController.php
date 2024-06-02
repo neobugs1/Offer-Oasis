@@ -30,6 +30,8 @@ class AdController extends Controller
      */
     public function index()
     {
+
+
         function getChildIds($parentId, $table)
         {
             $childIds = DB::table($table)->where('parent_id', $parentId)->pluck('id')->toArray();
@@ -56,6 +58,44 @@ class AdController extends Controller
             $locationIds = array_merge([request('location')], getChildIds(request('location'), 'locations'));
             $query->whereIn('location', $locationIds);
         }
+
+        //Filter
+        if (request('brand')) {
+            $query->where('brand', request('brand'));
+        }
+        if (request('model')) {
+            $query->where('model', request('model'));
+        }
+        if (request('fuel_type')) {
+            $query->where('fuel_type', request('fuel_type'));
+        }
+        if (request('price_from')) {
+            $query->where('price', '>=', request('price_from'));
+        }
+        if (request('price_to')) {
+            $query->where('price', '<=', request('price_to'));
+        }
+        if (request('year_from')) {
+            $query->where('year', '>=', request('year_from'));
+        }
+        if (request('year_to')) {
+            $query->where('year', '<=', request('year_to'));
+        }
+        if (request('km_from')) {
+            $query->where('mileage', '>=', request('km_from'));
+        }
+        if (request('km_to')) {
+            $query->where('mileage', '<=', request('km_to'));
+        }
+        if (request('kw_from')) {
+            $query->where('engine_power_ks', '>=', request('kw_from'));
+        }
+        if (request('kw_to')) {
+            $query->where('engine_power_ks', '<=', request('kw_to'));
+        }
+        //END FILTER
+
+
         if (request('sort') === 'price') {
             $query->orderBy('price');
         } else {

@@ -11,12 +11,15 @@ import {
     Button,
     Select,
     Spacer,
+    Input,
+    Divider,
 } from "@chakra-ui/react";
 import AdListing from "./AdListing";
+import CarFilter from "./CarFilter";
 
 const AdsPage = ({ ads }) => {
     const { url } = usePage();
-    const baseURL = "http://127.0.0.1:8000/";
+    const baseURL = "http://127.0.0.1:8000/search";
 
     const handlePageChange = (pageUrl) => {
         if (pageUrl) {
@@ -84,9 +87,19 @@ const AdsPage = ({ ads }) => {
         return <Text>Нема пронајдени резултати.</Text>;
     }
 
+    const category = new URL(window.location.href).searchParams.get("category");
+
     return (
         <Flex w={"100%"} justifyContent={"center"}>
             <Box p={5} w={"85%"}>
+                {category === "15" && (
+                    <>
+                        <Divider mb={2} />
+                        <Text fontSize={"2xl"}>Автомобили филтер</Text>
+                        <CarFilter currentURL={url} url={usePage()} />
+                        <Divider mb={4} />
+                    </>
+                )}
                 <Flex>
                     <Text fontSize="2xl" mb={5}>
                         Сите огласи
