@@ -29,7 +29,8 @@ class AdController extends Controller
     public function index()
     {
         $query = Ad::where('status', 'approved')
-            ->join('users', 'ads.seller', '=', 'users.id');
+            ->join('users', 'ads.seller', '=', 'users.id')
+            ->select('ads.*', 'users.location');
 
         if (request('searchTerm')) {
             $query->where('title', 'like', '%' . request('searchTerm') . '%');
@@ -86,7 +87,7 @@ class AdController extends Controller
             "description" => request()->get('description'),
             "category" => request()->get('category'),
             "price" => request()->get('price'),
-            "start_price" => request()->get('start_price'),
+            "start_price" => request()->get('price'),
             "currency" => "MKD",
             "condition" => request()->get('condition'),
             "brand" => request()->get('brand'),

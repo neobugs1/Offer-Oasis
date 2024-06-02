@@ -1,32 +1,32 @@
-import React, { useState } from "react";
-import { Link, createInertiaApp } from "@inertiajs/react";
+import React from "react";
+import { Link } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
 import { Inertia } from "@inertiajs/inertia";
-import {
-    Box,
-    Button,
-    Image,
-    Text,
-    VStack,
-    HStack,
-    Stack,
-    Flex,
-    textDecoration,
-    IconButton,
-} from "@chakra-ui/react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { Box, Text, VStack, HStack, Flex, Button } from "@chakra-ui/react";
 import AdListing from "./AdListing";
 
 const AdsPage = ({ ads }) => {
+    const { url } = usePage();
+
+    const handlePageChange = (pageUrl) => {
+        if (pageUrl) {
+            const currentUrl = new URL(window.location.href);
+            const newUrl = new URL(pageUrl, currentUrl.origin);
+
+            // Preserve existing query parameters
+            currentUrl.searchParams.forEach((value, key) => {
+                if (!newUrl.searchParams.has(key)) {
+                    newUrl.searchParams.set(key, value);
+                }
+            });
+
+            Inertia.get(newUrl.toString());
+        }
+    };
+
     if (!ads || !ads.data) {
         return <Text>No ads available</Text>;
     }
-
-    const handlePageChange = (url) => {
-        if (url) {
-            Inertia.get(url);
-        }
-    };
 
     return (
         <Flex w={"100%"} justifyContent={"center"}>
@@ -42,9 +42,9 @@ const AdsPage = ({ ads }) => {
 
                 <HStack spacing={2} justify="center" mt={5} gap={5}>
                     {ads.meta.links.map((link, index) => (
-                        <Link
+                        <Button
                             key={index}
-                            href={link.url || ""}
+                            onClick={() => handlePageChange(link.url)}
                             className={
                                 "py-2 px-3 rounded-lg text-gray-700 text-xs " +
                                 (!link.url
@@ -52,9 +52,10 @@ const AdsPage = ({ ads }) => {
                                     : "hover:bg-gray-700 text-white bg-gray-900") +
                                 (link.active ? " cursor-not-allowed " : " ")
                             }
+                            disabled={!link.url}
                         >
                             {link.label.replace(/&laquo;|&raquo;/g, "").trim()}
-                        </Link>
+                        </Button>
                     ))}
                 </HStack>
             </Box>
