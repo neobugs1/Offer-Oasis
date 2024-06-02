@@ -60,12 +60,14 @@ export default function Authenticated({ user, header, children }) {
                             >
                                 Огласи
                             </NavLink>
-                            <NavLink
-                                href={route("reviews")}
-                                active={route().current("reviews")}
-                            >
-                                Админ панел
-                            </NavLink>
+                            {user.role == "admin" && (
+                                <NavLink
+                                    href={route("reviews")}
+                                    active={route().current("reviews")}
+                                >
+                                    Админ панел
+                                </NavLink>
+                            )}
                         </HStack>
                     </HStack>
                     <Flex alignItems="center">
@@ -118,12 +120,14 @@ export default function Authenticated({ user, header, children }) {
                             >
                                 Огласи
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                href={route("reviews")}
-                                active={route().current("reviews")}
-                            >
-                                Админ панел
-                            </ResponsiveNavLink>
+                            {user.role == "admin" && (
+                                <ResponsiveNavLink
+                                    href={route("reviews")}
+                                    active={route().current("reviews")}
+                                >
+                                    Админ панел
+                                </ResponsiveNavLink>
+                            )}
                         </Stack>
                     </Box>
                 ) : null}

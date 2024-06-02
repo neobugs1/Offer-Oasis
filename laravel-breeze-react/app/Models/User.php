@@ -54,4 +54,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Location::class, 'location');
     }
+    public function hasRole($role)
+    {
+        return $this->role === $role;
+    }
 }

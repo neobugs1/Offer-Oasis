@@ -12,7 +12,7 @@ use App\Models\Ad;
 
 
 Route::get('/', function () {
-    $ads = Ad::where('status', 'approved')->orderBy('date_posted')->paginate(5)->onEachSide(1);
+    $ads = Ad::where('status', 'approved')->orderBy('date_posted', 'desc')->paginate(5)->onEachSide(1);
     $adsData = AdResource::collection($ads)->response()->getData(true);
 
     return Inertia::render('Welcome', [
@@ -23,7 +23,7 @@ Route::get('/', function () {
 });
 
 Route::get('/oglasi', function () {
-    $ads = auth()->user()->ads()->orderBy('date_posted')->paginate(5)->onEachSide(1);
+    $ads = auth()->user()->ads()->orderBy('date_posted', 'desc')->paginate(5)->onEachSide(1);
     $adsData = AdResource::collection($ads)->response()->getData(true);
     return Inertia::render('Oglasi', [
         'ads' => $adsData,
@@ -36,7 +36,7 @@ Route::get('/reviews', function () {
     return Inertia::render('Reviews', [
         'ads' => $adsData,
     ]);
-})->middleware(['auth', 'verified'])->name('reviews');
+})->middleware(['auth', 'verified', 'can:view-reviews'])->name('reviews');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/ad/form', [AdController::class, 'create'])->name('ad.create');
     Route::post('/ad/store', [AdController::class, 'store'])->name('ad.store');
     Route::put('/ad/update/{ad}', [AdController::class, 'update'])->name('ad.update');
+    Route::put('/ad/renew/{ad}', [AdController::class, 'renew'])->name('ad.renew');
     Route::put('/ad/approve/{ad}', [AdController::class, 'approve'])->name('ad.approve');
     Route::put('/ad/reject/{ad}', [AdController::class, 'reject'])->name('ad.reject');
 

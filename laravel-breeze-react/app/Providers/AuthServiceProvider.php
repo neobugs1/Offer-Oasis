@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Ad;
 use App\Policies\AdPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('view-reviews', function ($user) {
+            return in_array($user->role, ['admin', 'reviewer']);
+        });
     }
 }

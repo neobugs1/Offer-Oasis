@@ -36,7 +36,7 @@ export default function AdForm({ auth, categories, ad }) {
         engine_power_ks: ad.engine_power_ks || "",
         emission_class: ad.emission_class || "",
 
-        category: ad.category || "",
+        category: ad.category[ad.category.length - 1].id || "",
         images: ad.images || [],
         _method: "put",
     });
@@ -97,11 +97,12 @@ export default function AdForm({ auth, categories, ad }) {
                 </FormControl>
                 <FormControl isRequired>
                     <FormLabel>Category</FormLabel>
-                    {console.log(data.category)}
                     <Select
                         placeholder="Select category"
-                        value={data.category[0].id}
-                        onChange={(e) => setData("category", e.target.value)}
+                        value={data.category}
+                        onChange={(e) => {
+                            resetData(e.target.value);
+                        }}
                     >
                         {categories.map((category) => renderOption(category))}
                     </Select>
@@ -153,7 +154,7 @@ export default function AdForm({ auth, categories, ad }) {
                     />
                 </FormControl>
 
-                {data.category === "15" && (
+                {data.category == "15" && (
                     <>
                         <FormControl>
                             <FormLabel>Year</FormLabel>

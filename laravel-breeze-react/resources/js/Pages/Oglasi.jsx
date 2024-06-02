@@ -21,7 +21,9 @@ export default function Ads({ auth, ads }) {
                 <Flex>
                     <Heading fontSize={"2xl"}>Твои огласи</Heading>
                     <Spacer />
-                    <Button>Додади нов оглас</Button>
+                    <Link href={route("ad.create")}>
+                        <Button>Додади нов оглас</Button>
+                    </Link>
                 </Flex>
             }
         >

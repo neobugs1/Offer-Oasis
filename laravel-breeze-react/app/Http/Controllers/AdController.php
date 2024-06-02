@@ -99,7 +99,7 @@ class AdController extends Controller
         if (request('sort') === 'price') {
             $query->orderBy('price');
         } else {
-            $query->orderBy('date_posted');
+            $query->orderBy('date_posted', 'desc');
         }
 
         $ads = $query->paginate(5)->onEachSide(1);
@@ -224,6 +224,17 @@ class AdController extends Controller
             'ad' => new AdResource($ad),
             'categories' => $categories,
         ]);
+    }
+
+    public function renew(UpdateAdRequest $request, Ad $ad)
+    {
+        $this->authorize('update', $ad);
+
+        $data['date_posted'] = now();
+
+        $ad->update($data);
+
+        return redirect()->route('oglasi', $ad->id)->with("success", "Ad renewed successfully");
     }
 
     /**

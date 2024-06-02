@@ -11,12 +11,15 @@ import {
     Text,
     VStack,
 } from "@chakra-ui/react";
-import { Link } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { MdPending, MdCheckCircle, MdError } from "react-icons/md";
 
 const MyAdListing = ({ ad, index }) => {
+    const { data, setData, post } = useForm({
+        _method: "put",
+    });
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const now = new Date();
@@ -58,6 +61,23 @@ const MyAdListing = ({ ad, index }) => {
             }
         });
     };
+
+    const deleteAd = (ad) => {
+        if (!window.confirm("Are you sure you want to delete the ad?")) {
+            return;
+        }
+        if (!ad.id) {
+            console.error("Error: ad.id is undefined");
+            return;
+        }
+        Inertia.post(route("ad.destroy", ad.id), { _method: "delete" });
+    };
+
+    const handleRenew = (e) => {
+        e.preventDefault();
+        post(route("ad.renew", ad.id));
+    };
+
     return (
         <Box
             key={ad.id}
@@ -164,28 +184,15 @@ const MyAdListing = ({ ad, index }) => {
             </Flex>
 
             <HStack position="absolute" bottom="5" right="5">
-                <Button
-                    colorScheme="green"
-                    onClick={() => {
-                        /* Handle renew */
-                    }}
-                >
-                    Renew
-                </Button>
-                <Button
-                    colorScheme="blue"
-                    onClick={() => {
-                        /* Handle edit */
-                    }}
-                >
-                    Edit
-                </Button>
-                <Button
-                    colorScheme="red"
-                    onClick={() => {
-                        /* Handle delete */
-                    }}
-                >
+                {ad.status === "approved" && (
+                    <Button colorScheme="green" onClick={handleRenew}>
+                        Renew
+                    </Button>
+                )}
+                <Link href={route("ad.edit", ad.id)}>
+                    <Button colorScheme="blue">Edit</Button>
+                </Link>
+                <Button colorScheme="red" onClick={() => deleteAd(ad)}>
                     Delete
                 </Button>
             </HStack>
