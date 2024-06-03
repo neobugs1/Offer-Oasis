@@ -11,8 +11,9 @@ import {
 import placeholderImage from "../assets/Placeholder.svg";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "@inertiajs/react";
+import { FaLocationDot } from "react-icons/fa6";
 
-const AdCard = ({ title, id, images, price, currency, location }) => {
+const AdCard = ({ title, id, images, price, currency, location, date }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const handleNextImage = () => {
         setCurrentImageIndex((prevIndex) => {
@@ -33,11 +34,33 @@ const AdCard = ({ title, id, images, price, currency, location }) => {
             }
         });
     };
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const now = new Date();
+        const yesterday = new Date(now.setDate(now.getDate() - 1));
+        now.setDate(now.getDate() + 1); // Reset to current date
+
+        if (date.toDateString() === now.toDateString()) {
+            return `Денес ${date.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+            })}`;
+        } else if (date.toDateString() === yesterday.toDateString()) {
+            return `Вчера ${date.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+            })}`;
+        } else {
+            return date.toLocaleDateString();
+        }
+    };
+
     return (
         <Box
-            borderWidth="1px"
+            borderWidth="3px"
             borderRadius="lg"
             overflow="hidden"
+            boxShadow={"md"}
             m={2}
             w={300}
         >
@@ -54,30 +77,46 @@ const AdCard = ({ title, id, images, price, currency, location }) => {
                     icon={<FaArrowLeft />}
                     onClick={handlePreviousImage}
                     position="absolute"
-                    top="50%"
+                    top="40%"
                     left="1"
                     bg={"transparent"}
-                    _hover={{ bg: "transparent", color: "white" }}
+                    color="white"
+                    _hover={{ bg: "transparent", color: "gray" }}
                 />
                 <IconButton
                     aria-label="Next image"
                     icon={<FaArrowRight />}
                     onClick={handleNextImage}
                     position="absolute"
-                    top="50%"
+                    top="40%"
                     right="1"
                     bg={"transparent"}
-                    _hover={{ bg: "transparent", color: "white" }}
+                    color="white"
+                    _hover={{ bg: "transparent", color: "gray" }}
                 />
+                <Flex
+                    position="absolute"
+                    bottom="5%"
+                    left="5%"
+                    bg="white"
+                    bgColor={"transparent"}
+                    color={"white"}
+                    gap={1}
+                    alignItems={"center"}
+                >
+                    <FaLocationDot />
+
+                    {location}
+                </Flex>
                 <Text
                     position="absolute"
-                    top="80%"
-                    right="80%"
+                    bottom="5%"
+                    right="5%"
                     bg="white"
                     bgColor={"transparent"}
                     color={"white"}
                 >
-                    {location}
+                    {formatDate(date)}
                 </Text>
             </Box>
             <Box p={2}>
@@ -96,8 +135,8 @@ const AdCard = ({ title, id, images, price, currency, location }) => {
                         {title}
                     </Text>
                 </Link>
-                <Text textAlign={"left"} color={"#00193c"}>
-                    {price + " " + currency}
+                <Text textAlign={"left"} color={"#0060df"}>
+                    <b>{price + " " + currency}</b>
                 </Text>
             </Box>
         </Box>
@@ -115,6 +154,7 @@ const LatestAds = ({ ads }) => {
                     images={ad.images}
                     price={ad.price}
                     currency={ad.currency}
+                    date={ad.date_posted}
                     location={ad.seller.location.name}
                 />
             ))}

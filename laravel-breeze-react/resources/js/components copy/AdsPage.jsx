@@ -74,6 +74,7 @@ const AdsPage = ({ ads }) => {
             } else if (newValue === "price") {
                 searchParams.set("sort", "price");
             }
+            searchParams.set("page", 1);
 
             myURL.search = searchParams.toString();
 

@@ -27,12 +27,12 @@ const MyAdListing = ({ ad, index }) => {
         now.setDate(now.getDate() + 1); // Reset to current date
 
         if (date.toDateString() === now.toDateString()) {
-            return `Today ${date.toLocaleTimeString([], {
+            return `Денес ${date.toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
             })}`;
         } else if (date.toDateString() === yesterday.toDateString()) {
-            return `Yesterday ${date.toLocaleTimeString([], {
+            return `Вчера ${date.toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
             })}`;
