@@ -12,6 +12,7 @@ import {
 import { Link } from "@inertiajs/react";
 import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { CiLocationOn } from "react-icons/ci";
 
 const AdListing = ({ ad, index }) => {
     const formatDate = (dateString) => {
@@ -63,8 +64,8 @@ const AdListing = ({ ad, index }) => {
             overflow="hidden"
             p={5}
             position="relative" // Added for absolute positioning of date
-            bg={'white'}
-            boxShadow={'md'}
+            bg={"white"}
+            boxShadow={"md"}
         >
             <Flex gap={5}>
                 <Box position="relative">
@@ -121,7 +122,11 @@ const AdListing = ({ ad, index }) => {
                         </Text>
                     </Link>
                     <HStack>
-                        <Text fontWeight="bold" fontSize={'lg'} color={'#0060df'}>
+                        <Text
+                            fontWeight="bold"
+                            fontSize={"lg"}
+                            color={"#0060df"}
+                        >
                             {Number(ad.price)} {ad.currency}
                         </Text>
                         {Number(ad.start_price) > Number(ad.price) && (
@@ -132,7 +137,9 @@ const AdListing = ({ ad, index }) => {
                     </HStack>
                     <Text fontSize="sm">{ad.description}</Text>
                     <Spacer />
-                    <Text>Location: {ad.seller.location.name}</Text>
+                    <Flex alignItems={"center"} fontSize={"lg"} gap={1}>
+                        <CiLocationOn /> {ad.seller.location.name}
+                    </Flex>
                     <HStack spacing={5}>
                         {ad.category.map((category, index) => (
                             <React.Fragment key={category.id}>

@@ -23,6 +23,7 @@ import { Inertia } from "@inertiajs/inertia";
 import { TfiMenuAlt } from "react-icons/tfi";
 import { FaSearchLocation } from "react-icons/fa";
 import { LiaSearchLocationSolid } from "react-icons/lia";
+import { MdOutlineMyLocation } from "react-icons/md";
 
 // Helper function to find a category by its ID
 const findCategoryById = (categories, id) => {
@@ -38,7 +39,7 @@ const findCategoryById = (categories, id) => {
     return null;
 };
 
-const SearchBar = ({ queryParams }) => {
+const SearchBar = ({ queryParams, auth }) => {
     const parseQueryParams = (queryString) => {
         const params = new URLSearchParams(queryString);
         let queryParams = {};
@@ -47,7 +48,6 @@ const SearchBar = ({ queryParams }) => {
         }
         return queryParams;
     };
-
     const { categories, locations } = usePage().props;
 
     const initialQueryParams = parseQueryParams(window.location.search);
@@ -83,7 +83,6 @@ const SearchBar = ({ queryParams }) => {
         // Reset the page query parameter
         newQueryParams["page"] = 1;
 
-        console.log(searchTerm, " ", category, " ", location);
         router.get(route("search"), newQueryParams);
         return;
     };
@@ -195,7 +194,7 @@ const SearchBar = ({ queryParams }) => {
                     bg={"#00193c"}
                     color={"white"}
                     rounded={"0"}
-                    w={"20%"}
+                    w={"17%"}
                     h={"100%"}
                     borderBottom={"4px"}
                     borderColor={"#00193c"}
@@ -225,16 +224,31 @@ const SearchBar = ({ queryParams }) => {
                         onClick={() => setSelectedLocation("")}
                         key={"all"}
                         _focus={{ bg: "charcoal.50" }}
+                        _hover={{ bg: "gray.100" }} // Ensure consistent hover effect
+                        cursor="pointer" // Ensure consistent cursor pointer
                     >
                         Цела Македонија
+                    </MenuItem>
+                    <MenuItem
+                        onClick={() =>
+                            setSelectedLocation(
+                                findCategoryById(locations, auth.user.location)
+                            )
+                        }
+                        key={"all"}
+                        _focus={{ bg: "charcoal.50" }}
+                        _hover={{ bg: "gray.100" }} // Ensure consistent hover effect
+                        cursor="pointer" // Ensure consistent cursor pointer
+                        gap={2}
+                        color={"blue"}
+                    >
+                        <MdOutlineMyLocation /> Моја локација
                     </MenuItem>
                     {locations.map((category) => (
                         <NestedMenu
                             key={category.name}
                             category={category}
                             setSelectedCategory={setSelectedLocation}
-                            openPopover={openPopover}
-                            setOpenPopover={setOpenPopover}
                         />
                     ))}
                 </MenuList>

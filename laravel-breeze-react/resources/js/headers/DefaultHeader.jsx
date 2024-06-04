@@ -15,6 +15,10 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import { VscAccount, VscGlobe } from "react-icons/vsc";
 import { VscChevronDown } from "react-icons/vsc";
 import Najava from "./HeaderComponents/Najava";
+import LogoLink from "./HeaderComponents/LogoLink";
+import LoggedInUser from "./HeaderComponents/LoggedInUser";
+import Jazik from "./HeaderComponents/Jazik";
+import DodadiOglas from "./HeaderComponents/DodadiOglas";
 
 const DefaultHeader = ({ auth }) => {
     return (
@@ -27,9 +31,7 @@ const DefaultHeader = ({ auth }) => {
                 color={"white"}
             >
                 <Flex w={"80%"} alignItems={"center"} id="hello">
-                    <Link href="/" className="logo">
-                        Offer Oasis
-                    </Link>
+                    <LogoLink />
                     <Spacer />
                     <Flex
                         className="header-right"
@@ -37,74 +39,9 @@ const DefaultHeader = ({ auth }) => {
                         alignItems={"center"}
                         h={"100%"}
                     >
-                        {auth.user ? (
-                            <Link href={route("oglasi")} className="h-full">
-                                <Box
-                                    as="button"
-                                    h={"100%"}
-                                    borderBottom={"4px"}
-                                    borderColor={"transparent"}
-                                    _hover={{
-                                        borderBottom: "4px",
-                                        borderColor: "#80ac0c",
-                                    }}
-                                    color={"white"}
-                                    display={"flex"}
-                                    justifyContent={"center"}
-                                    alignItems={"center"}
-                                    gap={4}
-                                >
-                                    <Icon as={VscAccount} w={9} h={"80%"} />
-                                    {auth.user.name}
-                                </Box>
-                            </Link>
-                        ) : (
-                            <Najava />
-                        )}
-                        <Box
-                            as="button"
-                            h={"100%"}
-                            borderBottom={"4px"}
-                            borderColor={"transparent"}
-                            _hover={{
-                                borderBottom: "4px",
-                                borderColor: "#80ac0c",
-                            }}
-                            color={"white"}
-                            display={"flex"}
-                            justifyContent={"center"}
-                            alignItems={"center"}
-                            gap={3}
-                        >
-                            <Icon as={VscGlobe} w={10} h={"100%"} />
-                            Јазик
-                            <Icon as={VscChevronDown} w={5} h={5} />
-                        </Box>
-                        <Link href={route("ad.create")} className="h-full">
-                            <Box
-                                as="button"
-                                h={"100%"}
-                                borderBottom={"4px"}
-                                borderColor={"transparent"}
-                                _hover={{
-                                    borderBottom: "4px",
-                                    borderColor: "#80ac0c",
-                                }}
-                                color={"white"}
-                                display={"flex"}
-                                justifyContent={"center"}
-                                alignItems={"center"}
-                            >
-                                <Box
-                                    border={"2px"}
-                                    px={3}
-                                    py={2}
-                                    rounded={"3xl"}
-                                >
-                                    Додади оглас
-                                </Box>
-                            </Box>
-                        </Link>
+                        {auth.user ? <LoggedInUser auth={auth} /> : <Najava />}
+                        <Jazik />
+                        <DodadiOglas />
                     </Flex>
                 </Flex>
             </Flex>

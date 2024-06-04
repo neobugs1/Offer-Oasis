@@ -1,6 +1,14 @@
-import { ChevronRightIcon } from '@chakra-ui/icons';
-import { Box, MenuItem, Popover, PopoverBody, PopoverContent, PopoverTrigger, Portal } from '@chakra-ui/react';
-import React, { useState } from 'react'
+import { ChevronRightIcon } from "@chakra-ui/icons";
+import {
+    Box,
+    MenuItem,
+    Popover,
+    PopoverBody,
+    PopoverContent,
+    PopoverTrigger,
+    Portal,
+} from "@chakra-ui/react";
+import React, { useState } from "react";
 
 const NestedMenu = ({ category, setSelectedCategory }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -57,4 +65,4 @@ const NestedMenu = ({ category, setSelectedCategory }) => {
     );
 };
 
-export default NestedMenu
+export default NestedMenu;

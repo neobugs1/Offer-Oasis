@@ -33,7 +33,7 @@ const SearchHeader = ({ auth }) => {
             >
                 <Flex w={"80%"} alignItems={"center"} id="hello">
                     <LogoLink />
-                    <SearchBar />
+                    <SearchBar auth={auth} />
                     <Flex
                         className="header-right"
                         gap={7}
