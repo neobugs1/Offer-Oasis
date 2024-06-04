@@ -9,6 +9,7 @@ import {
     Button,
 } from "@chakra-ui/react";
 import { Inertia } from "@inertiajs/inertia";
+import { router } from "@inertiajs/react";
 
 const CarFilter = ({ currentURL, url }) => {
     const baseURL = "http://127.0.0.1:8000/search/";
@@ -60,7 +61,7 @@ const CarFilter = ({ currentURL, url }) => {
         });
 
         const newUrl = `${baseURL}?${params.toString()}`;
-        Inertia.get(newUrl);
+        router.get(newUrl);
     };
 
     return (
@@ -74,6 +75,8 @@ const CarFilter = ({ currentURL, url }) => {
                         colorScheme="blue"
                         onChange={handleChange}
                         value={filters.brand}
+                        bg={'white'}
+                        boxShadow={'md'}
                     >
                         <option value="audi">Audi</option>
                         {/* Add more options */}
@@ -85,6 +88,8 @@ const CarFilter = ({ currentURL, url }) => {
                         colorScheme="blue"
                         onChange={handleChange}
                         value={filters.model}
+                        bg={'white'}
+                        boxShadow={'md'}
                     >
                         <option value="a3">A3</option>
                         {/* Add more options */}
@@ -95,6 +100,8 @@ const CarFilter = ({ currentURL, url }) => {
                         variant="filled"
                         colorScheme="blue"
                         onChange={handleChange}
+                        bg={'white'}
+                        boxShadow={'md'}
                         value={filters.fuel_type}
                     >
                         <option value="diesel">Дизел</option>
@@ -110,6 +117,8 @@ const CarFilter = ({ currentURL, url }) => {
                         colorScheme="blue"
                         onChange={handleChange}
                         value={filters.price_from}
+                        bg={'white'}
+                        boxShadow={'md'}
                     >
                         <option value="1000">1000€</option>
                         {/* Add more options */}
@@ -121,6 +130,8 @@ const CarFilter = ({ currentURL, url }) => {
                         colorScheme="blue"
                         onChange={handleChange}
                         value={filters.price_to}
+                        bg={'white'}
+                        boxShadow={'md'}
                     >
                         <option value="5000">5000€</option>
                         {/* Add more options */}
@@ -132,6 +143,8 @@ const CarFilter = ({ currentURL, url }) => {
                         colorScheme="blue"
                         onChange={handleChange}
                         value={filters.transmission}
+                        bg={'white'}
+                        boxShadow={'md'}
                     >
                         <option value="manual">Рачен</option>
                         <option value="automatic">Автоматски</option>
@@ -146,6 +159,8 @@ const CarFilter = ({ currentURL, url }) => {
                         colorScheme="blue"
                         onChange={handleChange}
                         value={filters.year_from}
+                        bg={'white'}
+                        boxShadow={'md'}
                     />
                     <Input
                         name="year_to"
@@ -154,6 +169,8 @@ const CarFilter = ({ currentURL, url }) => {
                         colorScheme="blue"
                         onChange={handleChange}
                         value={filters.year_to}
+                        bg={'white'}
+                        boxShadow={'md'}
                     />
                     <Select
                         name="registration"
@@ -162,6 +179,8 @@ const CarFilter = ({ currentURL, url }) => {
                         colorScheme="blue"
                         onChange={handleChange}
                         value={filters.registration}
+                        bg={'white'}
+                        boxShadow={'md'}
                     >
                         <option value="mk">Македонска</option>
                         <option value="other">Друга</option>
@@ -175,6 +194,8 @@ const CarFilter = ({ currentURL, url }) => {
                         colorScheme="blue"
                         onChange={handleChange}
                         value={filters.km_from}
+                        bg={'white'}
+                        boxShadow={'md'}
                     />
                     <Input
                         name="km_to"
@@ -183,6 +204,8 @@ const CarFilter = ({ currentURL, url }) => {
                         colorScheme="blue"
                         onChange={handleChange}
                         value={filters.km_to}
+                        bg={'white'}
+                        boxShadow={'md'}
                     />
                     <HStack w={"100%"}>
                         <Input
@@ -192,6 +215,8 @@ const CarFilter = ({ currentURL, url }) => {
                             placeholder="kW Од:"
                             onChange={handleChange}
                             value={filters.kw_from}
+                            bg={'white'}
+                            boxShadow={'md'}
                         />
                         <Input
                             name="kw_to"
@@ -200,6 +225,8 @@ const CarFilter = ({ currentURL, url }) => {
                             placeholder="kW До:"
                             onChange={handleChange}
                             value={filters.kw_to}
+                            bg={'white'}
+                            boxShadow={'md'}
                         />
                     </HStack>
                 </VStack>

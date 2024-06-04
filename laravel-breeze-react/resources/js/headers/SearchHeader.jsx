@@ -14,8 +14,9 @@ import { Outlet, useLocation } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { VscAccount, VscGlobe } from "react-icons/vsc";
 import { VscChevronDown } from "react-icons/vsc";
+import SearchBar from "@/components copy/SearchBar";
 
-const DefaultHeader = ({ auth }) => {
+const SearchHeader = ({ auth }) => {
     return (
         <>
             <Flex
@@ -29,6 +30,8 @@ const DefaultHeader = ({ auth }) => {
                     <Link href="/" className="logo">
                         Offer Oasis
                     </Link>
+                    <Spacer />
+                    <SearchBar/>
                     <Spacer />
                     <Flex
                         className="header-right"
@@ -133,4 +136,4 @@ const DefaultHeader = ({ auth }) => {
     );
 };
 
-export default DefaultHeader;
+export default SearchHeader;

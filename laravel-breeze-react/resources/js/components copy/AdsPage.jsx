@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
 import { Inertia } from "@inertiajs/inertia";
 import {
@@ -80,7 +80,7 @@ const AdsPage = ({ ads }) => {
 
             setCurrentURL(myURL.toString());
 
-            Inertia.get(myURL.toString());
+            router.get(myURL.toString());
         }
     };
 
@@ -95,21 +95,30 @@ const AdsPage = ({ ads }) => {
             <Box p={5} w={"85%"}>
                 {category === "15" && (
                     <>
-                        <Divider mb={2} />
-                        <Text fontSize={"2xl"}>Автомобили филтер</Text>
+                        <Divider borderColor={'gray'} mb={4} />
+                        <Flex>
+                            <Box borderBottomColor="#0060df" borderBottomWidth="4px">
+                                <Text fontSize="2xl">Автомобили филтер</Text>
+                            </Box>
+                        </Flex>
                         <CarFilter currentURL={url} url={usePage()} />
-                        <Divider mb={4} />
+                        <Divider borderColor={'gray'} mb={4} />
                     </>
                 )}
                 <Flex>
-                    <Text fontSize="2xl" mb={5}>
-                        Сите огласи
-                    </Text>
+                    <Box borderBottomColor="#0060df" borderBottomWidth="4px" mb={5}>
+                        <Text fontSize="2xl">
+                            Сите огласи
+                        </Text>
+                    </Box>
                     <Spacer w={"100%"} />
                     <Select
                         value={selectedOption}
                         onChange={handleChange}
                         w={200}
+                        bg={'white'}
+                        variant={'outline'}
+                        boxShadow={'sm'}
                     >
                         <option value="date_posted">Најнови прво</option>
                         <option value="price">Најевтини прво</option>

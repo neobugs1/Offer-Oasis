@@ -63,6 +63,8 @@ const AdListing = ({ ad, index }) => {
             overflow="hidden"
             p={5}
             position="relative" // Added for absolute positioning of date
+            bg={'white'}
+            boxShadow={'md'}
         >
             <Flex gap={5}>
                 <Box position="relative">
@@ -109,7 +111,7 @@ const AdListing = ({ ad, index }) => {
                 <VStack align="start" spacing={2}>
                     <Link href={route("ad.show", ad.id)}>
                         <Text
-                            fontSize="xl"
+                            fontSize="2xl"
                             fontWeight="bold"
                             _hover={{
                                 textDecoration: "underline",
@@ -118,17 +120,17 @@ const AdListing = ({ ad, index }) => {
                             {ad.title}
                         </Text>
                     </Link>
-                    <Text fontSize="sm">{ad.description}</Text>
                     <HStack>
-                        <Text fontWeight="bold">
-                            Price: {Number(ad.price)} {ad.currency}
+                        <Text fontWeight="bold" fontSize={'lg'} color={'#0060df'}>
+                            {Number(ad.price)} {ad.currency}
                         </Text>
                         {Number(ad.start_price) > Number(ad.price) && (
                             <Text as="s">
-                                Start Price: {ad.start_price} {ad.currency}
+                                Првична цена: {ad.start_price} {ad.currency}
                             </Text>
                         )}
                     </HStack>
+                    <Text fontSize="sm">{ad.description}</Text>
                     <Spacer />
                     <Text>Location: {ad.seller.location.name}</Text>
                     <HStack spacing={5}>

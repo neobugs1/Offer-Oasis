@@ -8,6 +8,7 @@ import {
     Text,
     Flex,
     Heading,
+    Spacer,
 } from "@chakra-ui/react";
 import { Link } from "@inertiajs/react";
 import BackgroundChanger from "./BackgroundChanger";
@@ -18,11 +19,15 @@ const MainContent = ({ ads }) => {
     return (
         <BackgroundChanger>
             <Flex justify={"center"} direction={"column"} h="93vh">
-                <Box flex="1" p={4}></Box>
-                <Stack spacing={8} align="center">
+                <Box flex="1" p={'4vh'}></Box>
+                <Stack spacing={8} align="center" maxW={'100%'} mx={'auto'} maxH={'100%'} h={'78vh'}>
+                    <Spacer />
+
                     <Text fontSize="4xl" color="white">
                         Пребарајте огласи
                     </Text>
+                    <Spacer />
+
                     <Flex w="full" maxW="650px" alignItems={"center"}>
                         <Input
                             placeholder="Пребарај, пр. BMW, Samsung, Iphone, Услуга ..."
@@ -42,18 +47,19 @@ const MainContent = ({ ads }) => {
                             </Button>
                         </Link>
                     </Flex>
-                    <Box flex="1" p={4}>
-                        <Heading color={"white"}>или</Heading>
-                    </Box>
+                    <Spacer />
+                    <Heading color={"white"}>или</Heading>
+                    <Spacer />
                     <Box
                         bg="white"
-                        p={6}
+                        p={4}
                         borderRadius="md"
                         boxShadow="lg"
                         textAlign="center"
-                        maxW={"70%"}
                         position="relative"
                         overflow={"hidden"}
+                        w={'70%'}
+                        h={'50%'}
                     >
                         <Box
                             bg="#7faf0d"
@@ -77,24 +83,25 @@ const MainContent = ({ ads }) => {
                                 Најнови {<br />} огласи
                             </Text>
                         </Box>
-                        <Stack direction="row" justify="center" spacing={4}>
+                        <Stack direction="row" justify="center" spacing={2} >
                             <LatestAds ads={ads} />
                         </Stack>
                     </Box>
+                    <Spacer />
                 </Stack>
-                <Box flex="1" p={4}></Box>
                 <Flex
                     w={"100%"}
                     bgColor={"black"}
                     opacity={0.5}
                     justify={"center"}
+                    h={'15vh'}
                 >
                     <Flex
                         w={"75%"}
                         justify="space-between"
                         color="white"
-                        h="15vh"
                         align={"center"}
+                        h={'150px'}
                     >
                         <Box textAlign="center">
                             <Text fontSize="2xl">640,000</Text>
