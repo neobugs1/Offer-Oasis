@@ -19,8 +19,15 @@ const MainContent = ({ ads }) => {
     return (
         <BackgroundChanger>
             <Flex justify={"center"} direction={"column"} h="93vh">
-                <Box flex="1" p={'4vh'}></Box>
-                <Stack spacing={8} align="center" maxW={'100%'} mx={'auto'} maxH={'100%'} h={'78vh'}>
+                <Box flex="1" p={"4vh"}></Box>
+                <Stack
+                    spacing={8}
+                    align="center"
+                    maxW={"100%"}
+                    mx={"auto"}
+                    maxH={"100%"}
+                    h={"78vh"}
+                >
                     <Spacer />
 
                     <Text fontSize="4xl" color="white">
@@ -58,8 +65,6 @@ const MainContent = ({ ads }) => {
                         textAlign="center"
                         position="relative"
                         overflow={"hidden"}
-                        w={'70%'}
-                        h={'50%'}
                     >
                         <Box
                             bg="#7faf0d"
@@ -83,7 +88,7 @@ const MainContent = ({ ads }) => {
                                 Најнови {<br />} огласи
                             </Text>
                         </Box>
-                        <Stack direction="row" justify="center" spacing={2} >
+                        <Stack direction="row" justify="center" spacing={2}>
                             <LatestAds ads={ads} />
                         </Stack>
                     </Box>
@@ -94,14 +99,13 @@ const MainContent = ({ ads }) => {
                     bgColor={"black"}
                     opacity={0.5}
                     justify={"center"}
-                    h={'15vh'}
+                    h={"15vh"}
                 >
                     <Flex
                         w={"75%"}
                         justify="space-between"
                         color="white"
                         align={"center"}
-                        h={'150px'}
                     >
                         <Box textAlign="center">
                             <Text fontSize="2xl">640,000</Text>

@@ -62,17 +62,17 @@ const AdCard = ({ title, id, images, price, currency, location, date }) => {
             overflow="hidden"
             boxShadow={"md"}
             m={2}
-            w={'20%'}
+            w={"20%"}
         >
             <Box position="relative">
                 <Box>
-                <AspectRatio ratio={6 / 4}>
-                    <Image
-                        src={images[currentImageIndex].url}
-                        rounded="md"
-                        roundedBottom={0}
-                    />
-                </AspectRatio>
+                    <AspectRatio ratio={6 / 4}>
+                        <Image
+                            src={images[currentImageIndex].url}
+                            rounded="md"
+                            roundedBottom={0}
+                        />
+                    </AspectRatio>
                 </Box>
                 <IconButton
                     aria-label="Previous image"

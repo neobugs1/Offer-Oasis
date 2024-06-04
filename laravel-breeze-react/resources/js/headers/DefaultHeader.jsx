@@ -14,6 +14,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { VscAccount, VscGlobe } from "react-icons/vsc";
 import { VscChevronDown } from "react-icons/vsc";
+import Najava from "./HeaderComponents/Najava";
 
 const DefaultHeader = ({ auth }) => {
     return (
@@ -58,28 +59,7 @@ const DefaultHeader = ({ auth }) => {
                                 </Box>
                             </Link>
                         ) : (
-                            <>
-                                <Link href={route("login")} className="h-full">
-                                    <Box
-                                        as="button"
-                                        h={"100%"}
-                                        borderBottom={"4px"}
-                                        borderColor={"transparent"}
-                                        _hover={{
-                                            borderBottom: "4px",
-                                            borderColor: "#80ac0c",
-                                        }}
-                                        color={"white"}
-                                        display={"flex"}
-                                        justifyContent={"center"}
-                                        alignItems={"center"}
-                                        gap={4}
-                                    >
-                                        <Icon as={VscAccount} w={9} h={"80%"} />
-                                        Најава
-                                    </Box>
-                                </Link>
-                            </>
+                            <Najava />
                         )}
                         <Box
                             as="button"

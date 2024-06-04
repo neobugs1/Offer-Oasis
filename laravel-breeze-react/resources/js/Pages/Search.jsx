@@ -31,12 +31,7 @@ import { ChevronRightIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import Layout from "@/Layouts/Layout";
 import AdsPage from "@/components copy/AdsPage";
 import SearchLayout from "@/Layouts/SearchLayout";
-import SearchBar from "@/components copy/SearchBar";
-
-
-
-
-
+import SearchBar from "@/headers/HeaderComponents/SearchBar";
 
 const Search = ({ auth, ads, queryParams = null }) => {
     return (
@@ -50,7 +45,7 @@ const Search = ({ auth, ads, queryParams = null }) => {
                         : "Огласи"
                 }
             ></Head>
-            <Box p={6} bg={'#00193c1a'}>
+            <Box p={6} bg={"#00193c1a"}>
                 {/* <SearchBar queryParams={queryParams} /> */}
                 <AdsPage ads={ads} />
             </Box>
