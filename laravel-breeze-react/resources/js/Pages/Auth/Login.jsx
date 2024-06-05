@@ -41,10 +41,10 @@ export default function Login({ status, canResetPassword, auth }) {
         <Layout auth={auth}>
             <Flex
                 justifyContent={"center"}
-                bgColor={"#f3f4f5"}
-                h="55vh"
+                bgColor={"#00193c1a"}
                 alignItems={"center"}
                 flexDirection={"column"}
+                p={10}
             >
                 <Box
                     w="400px"

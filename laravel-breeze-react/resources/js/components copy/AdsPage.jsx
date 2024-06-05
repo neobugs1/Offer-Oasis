@@ -13,9 +13,13 @@ import {
     Spacer,
     Input,
     Divider,
+    Stack,
+    Heading,
 } from "@chakra-ui/react";
 import AdListing from "./AdListing";
 import CarFilter from "./CarFilter";
+import LatestAds from "./LatestAds";
+import PopularAds from "./PopularAds";
 
 const AdsPage = ({ ads }) => {
     const { url } = usePage();
@@ -92,63 +96,69 @@ const AdsPage = ({ ads }) => {
 
     return (
         <Flex w={"100%"} justifyContent={"center"}>
-            <Box p={5} w={"85%"}>
-                {category === "15" && (
-                    <>
-                        <Divider borderColor={'gray'} mb={4} />
-                        <Flex>
-                            <Box borderBottomColor="#0060df" borderBottomWidth="4px">
-                                <Text fontSize="2xl">Автомобили филтер</Text>
-                            </Box>
-                        </Flex>
-                        <CarFilter currentURL={url} url={usePage()} />
-                        <Divider borderColor={'gray'} mb={4} />
-                    </>
-                )}
-                <Flex>
-                    <Box borderBottomColor="#0060df" borderBottomWidth="4px" mb={5}>
-                        <Text fontSize="2xl">
-                            Сите огласи
-                        </Text>
-                    </Box>
-                    <Spacer w={"100%"} />
-                    <Select
-                        value={selectedOption}
-                        onChange={handleChange}
-                        w={200}
-                        bg={'white'}
-                        variant={'outline'}
-                        boxShadow={'sm'}
-                    >
-                        <option value="date_posted">Најнови прво</option>
-                        <option value="price">Најевтини прво</option>
-                    </Select>
-                </Flex>
-                <VStack spacing={5} align="stretch">
-                    {ads.data.map((ad, index) => (
-                        <AdListing ad={ad} key={index} index={index} />
-                    ))}
-                </VStack>
-
-                <HStack spacing={2} justify="center" mt={5} gap={5}>
-                    {ads.meta.links.map((link, index) => (
-                        <Button
-                            key={index}
-                            onClick={() => handlePageChange(link.url)}
-                            className={
-                                "py-2 px-3 rounded-lg text-gray-700 text-xs " +
-                                (!link.url
-                                    ? "!text-gray-300 cursor-not-allowed "
-                                    : "hover:bg-gray-700 text-white bg-gray-900") +
-                                (link.active ? " cursor-not-allowed " : " ")
-                            }
-                            disabled={!link.url}
+            <Flex w={"85%"}>
+                <Box p={5} w={"75%"}>
+                    {category === "15" && (
+                        <>
+                            <Divider borderColor={'gray'} mb={4} />
+                            <Flex>
+                                <Box borderBottomColor="#0060df" borderBottomWidth="4px">
+                                    <Text fontSize="2xl">Автомобили филтер</Text>
+                                </Box>
+                            </Flex>
+                            <CarFilter currentURL={url} url={usePage()} />
+                            <Divider borderColor={'gray'} mb={4} />
+                        </>
+                    )}
+                    <Flex>
+                        <Box borderBottomColor="#0060df" borderBottomWidth="4px" mb={5}>
+                            <Text fontSize="2xl">
+                                Сите огласи
+                            </Text>
+                        </Box>
+                        <Spacer w={"100%"} />
+                        <Select
+                            value={selectedOption}
+                            onChange={handleChange}
+                            w={200}
+                            bg={'white'}
+                            variant={'outline'}
+                            boxShadow={'sm'}
                         >
-                            {link.label.replace(/&laquo;|&raquo;/g, "").trim()}
-                        </Button>
-                    ))}
-                </HStack>
-            </Box>
+                            <option value="date_posted">Најнови прво</option>
+                            <option value="price">Најевтини прво</option>
+                        </Select>
+                    </Flex>
+                    <VStack spacing={5} align="stretch">
+                        {ads.data.map((ad, index) => (
+                            <AdListing ad={ad} key={index} index={index} />
+                        ))}
+                    </VStack>
+
+                    <HStack spacing={2} justify="center" mt={5} gap={5}>
+                        {ads.meta.links.map((link, index) => (
+                            <Button
+                                key={index}
+                                onClick={() => handlePageChange(link.url)}
+                                className={
+                                    "py-2 px-3 rounded-lg text-gray-700 text-xs " +
+                                    (!link.url
+                                        ? "!text-gray-300 cursor-not-allowed "
+                                        : "hover:bg-gray-700 text-white bg-gray-900") +
+                                    (link.active ? " cursor-not-allowed " : " ")
+                                }
+                                disabled={!link.url}
+                            >
+                                {link.label.replace(/&laquo;|&raquo;/g, "").trim()}
+                            </Button>
+                        ))}
+                    </HStack>
+                </Box>
+                <Box w={"22%"} rounded={'xl'} p={2} bg={'white'} h={"max-content"}>
+                    <Heading textAlign={'center'} fontSize={"medium"}>Најпрегледани</Heading>
+                    <PopularAds ads={ads} />
+                </Box>
+            </Flex>
         </Flex>
     );
 };

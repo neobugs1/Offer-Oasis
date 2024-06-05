@@ -63,7 +63,7 @@ const AdListing = ({ ad, index }) => {
             borderRadius="lg"
             overflow="hidden"
             p={5}
-            position="relative" // Added for absolute positioning of date
+            position="relative"
             bg={"white"}
             boxShadow={"md"}
         >
@@ -73,8 +73,8 @@ const AdListing = ({ ad, index }) => {
                         <Image
                             src={
                                 ad.images &&
-                                ad.images[currentImageIndex] &&
-                                ad.images[currentImageIndex].url
+                                    ad.images[currentImageIndex] &&
+                                    ad.images[currentImageIndex].url
                                     ? ad.images[currentImageIndex].url
                                     : "https://via.placeholder.com/300"
                             }
@@ -111,20 +111,29 @@ const AdListing = ({ ad, index }) => {
                 </Box>
                 <VStack align="start" spacing={2}>
                     <Link href={route("ad.show", ad.id)}>
-                        <Text
-                            fontSize="2xl"
-                            fontWeight="bold"
-                            _hover={{
-                                textDecoration: "underline",
-                            }}
-                        >
-                            {ad.title}
-                        </Text>
+                        <Box w={"60%"}> {/* Adjusted width */}
+                            <Box w={"100%"}>
+                                <Text
+                                    fontSize="2xl"
+                                    fontWeight="bold"
+                                    whiteSpace="nowrap"
+                                    overflow="hidden"
+                                    textOverflow="ellipsis"
+                                    _hover={{
+                                        textDecoration: "underline",
+                                    }}
+                                >
+                                    {ad.title}
+                                </Text>
+                            </Box>
+                        </Box>
                     </Link>
+
+                    <Text fontSize="sm">{ad.description}</Text>
                     <HStack>
                         <Text
                             fontWeight="bold"
-                            fontSize={"lg"}
+                            fontSize={"2xl"}
                             color={"#0060df"}
                         >
                             {Number(ad.price)} {ad.currency}
@@ -135,7 +144,7 @@ const AdListing = ({ ad, index }) => {
                             </Text>
                         )}
                     </HStack>
-                    <Text fontSize="sm">{ad.description}</Text>
+
                     <Spacer />
                     <Flex alignItems={"center"} fontSize={"lg"} gap={1}>
                         <CiLocationOn /> {ad.seller.location.name}

@@ -56,7 +56,6 @@ const AdCard = ({ title, id, images, price, currency, location, date }) => {
             overflow="hidden"
             boxShadow={"md"}
             m={2}
-            w={"20%"}
         >
             <Box position="relative">
                 <Box>
@@ -138,7 +137,7 @@ const AdCard = ({ title, id, images, price, currency, location, date }) => {
     );
 };
 
-const LatestAds = ({ ads }) => {
+const PopularAds = ({ ads }) => {
     return (
         <>
             {ads.data.map((ad, index) => (
@@ -157,4 +156,4 @@ const LatestAds = ({ ads }) => {
     );
 };
 
-export default LatestAds;
+export default PopularAds;
