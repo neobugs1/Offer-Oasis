@@ -114,7 +114,7 @@ const SearchBar = ({ queryParams, auth }) => {
                     bg={"#00193c"}
                     color={"white"}
                     rounded={"0"}
-                    w={"18%"}
+                    w={"20%"}
                     h={"100%"}
                     borderBottom={"4px"}
                     borderColor={"#00193c"}
@@ -158,7 +158,7 @@ const SearchBar = ({ queryParams, auth }) => {
                     ))}
                 </MenuList>
             </Menu>
-            <InputGroup width="60%" height="60%">
+            <InputGroup width="58%" height="60%">
                 <Input
                     pl={"1.5rem"}
                     placeholder="Пребарај..."
@@ -194,7 +194,7 @@ const SearchBar = ({ queryParams, auth }) => {
                     bg={"#00193c"}
                     color={"white"}
                     rounded={"0"}
-                    w={"17%"}
+                    w={"22%"}
                     h={"100%"}
                     borderBottom={"4px"}
                     borderColor={"#00193c"}
@@ -214,6 +214,7 @@ const SearchBar = ({ queryParams, auth }) => {
                         whiteSpace="nowrap"
                         overflow="hidden"
                         textOverflow="ellipsis"
+                        fontWeight={"medium"}
                         maxWidth="calc(100% - 0.1rem)"
                     >
                         {selectedLocation.name || "Цела Македонија"}

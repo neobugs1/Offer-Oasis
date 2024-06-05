@@ -73,8 +73,8 @@ const AdListing = ({ ad, index }) => {
                         <Image
                             src={
                                 ad.images &&
-                                    ad.images[currentImageIndex] &&
-                                    ad.images[currentImageIndex].url
+                                ad.images[currentImageIndex] &&
+                                ad.images[currentImageIndex].url
                                     ? ad.images[currentImageIndex].url
                                     : "https://via.placeholder.com/300"
                             }
@@ -111,21 +111,19 @@ const AdListing = ({ ad, index }) => {
                 </Box>
                 <VStack align="start" spacing={2}>
                     <Link href={route("ad.show", ad.id)}>
-                        <Box w={"60%"}> {/* Adjusted width */}
-                            <Box w={"100%"}>
-                                <Text
-                                    fontSize="2xl"
-                                    fontWeight="bold"
-                                    whiteSpace="nowrap"
-                                    overflow="hidden"
-                                    textOverflow="ellipsis"
-                                    _hover={{
-                                        textDecoration: "underline",
-                                    }}
-                                >
-                                    {ad.title}
-                                </Text>
-                            </Box>
+                        <Box w={"100%"}>
+                            <Text
+                                fontSize="2xl"
+                                fontWeight="bold"
+                                whiteSpace="nowrap"
+                                overflow="hidden"
+                                textOverflow="ellipsis"
+                                _hover={{
+                                    textDecoration: "underline",
+                                }}
+                            >
+                                {ad.title}
+                            </Text>
                         </Box>
                     </Link>
 

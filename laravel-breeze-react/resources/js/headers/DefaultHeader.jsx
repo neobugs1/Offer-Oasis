@@ -19,6 +19,7 @@ import LogoLink from "./HeaderComponents/LogoLink";
 import LoggedInUser from "./HeaderComponents/LoggedInUser";
 import Jazik from "./HeaderComponents/Jazik";
 import DodadiOglas from "./HeaderComponents/DodadiOglas";
+import SiteOglasiButton from "./HeaderComponents/SiteOglasiButton";
 
 const DefaultHeader = ({ auth }) => {
     return (
@@ -30,8 +31,9 @@ const DefaultHeader = ({ auth }) => {
                 justifyContent={"center"}
                 color={"white"}
             >
-                <Flex w={"80%"} alignItems={"center"} id="hello">
+                <Flex w={"80%"} alignItems={"center"} id="hello" gap={5}>
                     <LogoLink />
+                    <SiteOglasiButton />
                     <Spacer />
                     <Flex
                         className="header-right"

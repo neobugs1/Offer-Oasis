@@ -96,34 +96,50 @@ const AdsPage = ({ ads }) => {
 
     return (
         <Flex w={"100%"} justifyContent={"center"}>
-            <Flex w={"85%"}>
-                <Box p={5} w={"75%"}>
+            <Flex w={"75%"}>
+                <Box p={5} w={"77%"}>
                     {category === "15" && (
                         <>
-                            <Divider borderColor={'gray'} mb={4} />
+                            <Divider borderColor={"gray"} mb={4} />
                             <Flex>
-                                <Box borderBottomColor="#0060df" borderBottomWidth="4px">
-                                    <Text fontSize="2xl">Автомобили филтер</Text>
+                                <Box
+                                    borderBottomColor="#0060df"
+                                    borderBottomWidth="4px"
+                                >
+                                    <Text fontSize="2xl">
+                                        Автомобили филтер
+                                    </Text>
                                 </Box>
                             </Flex>
                             <CarFilter currentURL={url} url={usePage()} />
-                            <Divider borderColor={'gray'} mb={4} />
+                            <Divider borderColor={"gray"} mb={4} />
                         </>
                     )}
                     <Flex>
-                        <Box borderBottomColor="#0060df" borderBottomWidth="4px" mb={5}>
-                            <Text fontSize="2xl">
-                                Сите огласи
-                            </Text>
+                        <Box
+                            borderBottomColor="#0060df"
+                            borderBottomWidth="4px"
+                            mb={5}
+                        >
+                            <Text fontSize="2xl">Сите огласи</Text>
                         </Box>
+                        <Text
+                            mt={2}
+                            ml={10}
+                            fontSize={"lg"}
+                            fontStyle={"italic"}
+                            fontWeight={"bold"}
+                        >
+                            Пронајдени огласи: {ads.meta.total}
+                        </Text>
                         <Spacer w={"100%"} />
                         <Select
                             value={selectedOption}
                             onChange={handleChange}
                             w={200}
-                            bg={'white'}
-                            variant={'outline'}
-                            boxShadow={'sm'}
+                            bg={"white"}
+                            variant={"outline"}
+                            boxShadow={"sm"}
                         >
                             <option value="date_posted">Најнови прво</option>
                             <option value="price">Најевтини прво</option>
@@ -149,13 +165,23 @@ const AdsPage = ({ ads }) => {
                                 }
                                 disabled={!link.url}
                             >
-                                {link.label.replace(/&laquo;|&raquo;/g, "").trim()}
+                                {link.label
+                                    .replace(/&laquo;|&raquo;/g, "")
+                                    .trim()}
                             </Button>
                         ))}
                     </HStack>
                 </Box>
-                <Box w={"22%"} rounded={'xl'} p={2} bg={'white'} h={"max-content"}>
-                    <Heading textAlign={'center'} fontSize={"medium"}>Најпрегледани</Heading>
+                <Box
+                    w={"22%"}
+                    rounded={"xl"}
+                    p={2}
+                    bg={"white"}
+                    h={"max-content"}
+                >
+                    <Heading textAlign={"center"} fontSize={"medium"}>
+                        Најпрегледани
+                    </Heading>
                     <PopularAds ads={ads} />
                 </Box>
             </Flex>

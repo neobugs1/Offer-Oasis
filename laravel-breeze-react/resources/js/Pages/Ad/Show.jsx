@@ -13,14 +13,18 @@ import {
     IconButton,
     AspectRatio,
     Center,
+    Divider,
 } from "@chakra-ui/react";
 import {
     FaArrowLeft,
     FaArrowRight,
+    FaChevronRight,
     FaEnvelope,
     FaExpand,
 } from "react-icons/fa";
 import { Inertia } from "@inertiajs/inertia";
+import UserInfoCard from "@/components copy/UserInfoCard";
+import { AiOutlineHome } from "react-icons/ai";
 
 const Show = ({ ad, auth }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -59,124 +63,166 @@ const Show = ({ ad, auth }) => {
         <Layout auth={auth}>
             <Head title={ad.title}></Head>
             {/* <pre>{JSON.stringify(ad, 8, 2)}</pre> */}
-            <Box w={"100%"} h={"100%"} bg={"gray.200"}>
+            <Flex
+                w={"100%"}
+                h={"100%"}
+                bg={"gray.200"}
+                flexDirection={"column"}
+            >
                 <Flex
-                    p={5}
-                    w="60%"
+                    w="70%"
                     mx={"auto"}
-                    my={10}
-                    boxShadow="xl"
-                    borderRadius="lg"
-                    bg={"white"}
+                    p={4}
+                    flexDir={"row"}
+                    alignItems={"center"}
+                    gap={3}
                 >
-                    {/* Navigation Tabs */}
-                    <VStack align="start" spacing={4} w="100%">
-                        <HStack spacing={5}>
-                            {ad.category.map((category, index) => (
-                                <>
-                                    <Link>
-                                        <Text
-                                            fontSize="sm"
-                                            color={"gray.500"}
-                                            fontWeight="bold"
-                                            _hover={{
-                                                textDecoration: "underline",
-                                            }}
-                                        >
-                                            {category.name}
-                                        </Text>
-                                    </Link>
-                                    {index < ad.category.length - 1 && (
-                                        <Text as="span">/</Text>
-                                    )}
-                                </>
-                            ))}
-                        </HStack>
+                    <AiOutlineHome color="#0060df" size={25} />
+                    <FaChevronRight color="gray" />
 
-                        {/* Car Image with Navigation Arrows */}
-                        <Flex position="relative" minW={"100%"}>
-                            <Box minW={"100%"}>
-                                <Image
-                                    src={
-                                        ad.images &&
-                                        ad.images[currentImageIndex] &&
-                                        ad.images[currentImageIndex].url
-                                            ? ad.images[currentImageIndex].url
-                                            : "https://via.placeholder.com/300"
-                                    }
-                                    borderRadius="md"
-                                    h="70vh"
-                                    mx={"auto"}
-                                />
-                            </Box>
-                            <IconButton
-                                aria-label="Previous image"
-                                icon={<FaArrowLeft />}
-                                onClick={handlePreviousImage}
-                                position="absolute"
-                                top="50%"
-                                left="5"
-                                bg={"transparent"}
-                                rounded={0}
-                                h={20}
-                                w={14}
-                                _hover={{
-                                    bgGradient: "linear(to-l, white, gray.200)",
-                                }}
-                            />
-
-                            <IconButton
-                                aria-label="Next image"
-                                icon={<FaArrowRight />}
-                                onClick={handleNextImage}
-                                position="absolute"
-                                top="50%"
-                                right="5"
-                                bg={"transparent"}
-                                rounded={0}
-                                h={20}
-                                w={14}
-                                _hover={{
-                                    bgGradient: "linear(to-r, white, gray.200)",
-                                }}
-                            />
-                            <Text
-                                position="absolute"
-                                top="90%"
-                                right="90%"
-                                p="2"
-                                fontWeight={"bold"}
-                                bgColor={"transparent"}
+                    <HStack spacing={5}>
+                        {ad.category.map((category, index) => (
+                            <>
+                                <Link>
+                                    <Text
+                                        fontSize="sm"
+                                        color={"#0060df"}
+                                        fontWeight="bold"
+                                        _hover={{
+                                            textDecoration: "underline",
+                                        }}
+                                    >
+                                        {category.name}
+                                    </Text>
+                                </Link>
+                                {index < ad.category.length - 1 && (
+                                    <FaChevronRight color="gray" />
+                                )}
+                            </>
+                        ))}
+                        <FaChevronRight color="gray" />
+                        <Text fontSize="lg" color={"black"} fontWeight="bold">
+                            {ad.title}
+                        </Text>
+                    </HStack>
+                </Flex>
+                <Flex pb={5} w="70%" mx={"auto"} gap={5}>
+                    <Box
+                        bg={"white"}
+                        h={"max-content"}
+                        w={"23%"}
+                        rounded={"xl"}
+                        boxShadow="md"
+                    >
+                        <UserInfoCard user={ad.seller} />
+                    </Box>
+                    <HStack></HStack>
+                    <VStack align="start" spacing={4} w="77%">
+                        <Flex w={"100%"} gap={5}>
+                            <Flex
+                                position="relative"
+                                w={"80%"}
+                                bg={"white"}
+                                boxShadow="md"
+                                rounded={"xl"}
                             >
-                                {currentImageIndex + 1}/{ad.images.length}
-                            </Text>
-                        </Flex>
-                        <HStack spacing={5} p={10}>
-                            {ad.images.map((image, index) => (
-                                <Box
-                                    key={index}
-                                    outline={
-                                        currentImageIndex === index
-                                            ? "4px solid gray"
-                                            : "none"
-                                    }
-                                    outlineOffset={"-4px"}
-                                    borderRadius={"lg"}
-                                >
+                                <Box minW={"100%"}>
                                     <Image
-                                        borderRadius={"lg"}
-                                        src={image.url}
-                                        boxSize="100px"
-                                        onClick={() =>
-                                            setCurrentImageIndex(index)
+                                        src={
+                                            ad.images &&
+                                            ad.images[currentImageIndex] &&
+                                            ad.images[currentImageIndex].url
+                                                ? ad.images[currentImageIndex]
+                                                      .url
+                                                : "https://via.placeholder.com/300"
                                         }
-                                        cursor="pointer"
+                                        borderRadius="md"
+                                        mx={"auto"}
                                     />
                                 </Box>
-                            ))}
-                        </HStack>
+                                <IconButton
+                                    aria-label="Previous image"
+                                    icon={<FaArrowLeft />}
+                                    onClick={handlePreviousImage}
+                                    position="absolute"
+                                    top="50%"
+                                    left="5"
+                                    bg={"transparent"}
+                                    rounded={0}
+                                    h={20}
+                                    w={14}
+                                    _hover={{
+                                        bgGradient:
+                                            "linear(to-l, white, gray.200)",
+                                    }}
+                                />
 
-                        <Box p={5} w="100%" bg="gray.100" borderRadius="md">
+                                <IconButton
+                                    aria-label="Next image"
+                                    icon={<FaArrowRight />}
+                                    onClick={handleNextImage}
+                                    position="absolute"
+                                    top="50%"
+                                    right="5"
+                                    bg={"transparent"}
+                                    rounded={0}
+                                    h={20}
+                                    w={14}
+                                    _hover={{
+                                        bgGradient:
+                                            "linear(to-r, white, gray.200)",
+                                    }}
+                                />
+                                <Text
+                                    position="absolute"
+                                    top="90%"
+                                    right="90%"
+                                    p="2"
+                                    fontWeight={"bold"}
+                                    bgColor={"transparent"}
+                                >
+                                    {currentImageIndex + 1}/{ad.images.length}
+                                </Text>
+                            </Flex>
+                            <VStack
+                                spacing={5}
+                                p={5}
+                                boxShadow="md"
+                                rounded={"xl"}
+                                bg={"white"}
+                                h={"max-content"}
+                            >
+                                {ad.images.map((image, index) => (
+                                    <Box
+                                        key={index}
+                                        outline={
+                                            currentImageIndex === index
+                                                ? "2px solid blue"
+                                                : "none"
+                                        }
+                                        outlineOffset={"-2px"}
+                                        borderRadius={"lg"}
+                                    >
+                                        <Image
+                                            borderRadius={"lg"}
+                                            src={image.url}
+                                            boxSize="100px"
+                                            onClick={() =>
+                                                setCurrentImageIndex(index)
+                                            }
+                                            cursor="pointer"
+                                        />
+                                    </Box>
+                                ))}
+                            </VStack>
+                        </Flex>
+                        <Box
+                            p={5}
+                            w="100%"
+                            bg="white"
+                            boxShadow={"md"}
+                            rounded={"xl"}
+                        >
                             <Text fontSize="2xl" fontWeight="bold">
                                 {ad.title}
                             </Text>
@@ -184,7 +230,22 @@ const Show = ({ ad, auth }) => {
                                 {ad.price} {ad.currency}
                             </Text>
                         </Box>
-                        <Flex direction={"row"} w={"100%"}>
+                        <Flex
+                            direction={"column"}
+                            w={"100%"}
+                            bg={"white"}
+                            p={5}
+                            rounded={"xl"}
+                            boxShadow={"md"}
+                        >
+                            <Box>
+                                <Text>
+                                    <b>Опис на огласот:</b>
+                                </Text>
+                            </Box>
+                            <Divider />
+                            <Text>{ad.description}</Text>
+                            <Divider />
                             <Box>
                                 {ad.brand && (
                                     <Text>
@@ -251,31 +312,10 @@ const Show = ({ ad, auth }) => {
                                     </Text>
                                 )}
                             </Box>
-
-                            {/* Contact Information */}
-                            <Spacer />
-                            <Box bgColor={"gray.100"} rounded={"md"} p={5}>
-                                <Text fontSize="xl" fontWeight="bold">
-                                    {ad.seller.name}
-                                </Text>
-                                <HStack>
-                                    <FaEnvelope />
-                                    <Text>{ad.seller.phoneNumber}</Text>
-                                </HStack>
-                                {/* ... other contact details */}
-                            </Box>
-                        </Flex>
-                        <Flex>
-                            <Box>
-                                <Text>
-                                    <b>Опис на огласот:</b>
-                                </Text>
-                                <Text>{ad.description}</Text>
-                            </Box>
                         </Flex>
                     </VStack>
                 </Flex>
-            </Box>
+            </Flex>
             <Button onClick={() => deleteAd(ad)}>Избриши оглас</Button>
             <Link className="w-full" href={route("ad.edit", ad.id)}>
                 <Button w={"100%"}>Измени оглас</Button>

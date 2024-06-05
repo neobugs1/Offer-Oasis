@@ -23,6 +23,7 @@ import {
     MenuDivider,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import LogoLink from "@/headers/HeaderComponents/LogoLink";
 
 export default function Authenticated({ user, header, children }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -43,11 +44,8 @@ export default function Authenticated({ user, header, children }) {
                     justifyContent="space-between"
                 >
                     <HStack spacing={8} alignItems="center">
-                        <Box>
-                            <Link href="/">
-                                <Text>Offer-Oasis</Text>
-                                {/* <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" /> */}
-                            </Link>
+                        <Box mt={2}>
+                            <LogoLink />
                         </Box>
                         <HStack
                             as="nav"
