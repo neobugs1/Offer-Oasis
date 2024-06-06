@@ -4,6 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import DefaultFooter from "../footers/DefaultFooter";
 import { Box, Flex } from "@chakra-ui/react";
 import { useStateContext } from "../contexts/ContextProvider";
+import { useTranslation } from "react-i18next";
 
 const Layout = ({ children, auth }) => {
     // const { user, token } = useStateContext();
@@ -11,6 +12,7 @@ const Layout = ({ children, auth }) => {
     // if (!token) {
     //   return <Navigate to="/login" />;
     // }
+    const { t } = useTranslation();
 
     return (
         <Flex direction={"column"} minH="100vh">

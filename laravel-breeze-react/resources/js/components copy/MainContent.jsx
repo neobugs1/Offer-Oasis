@@ -33,7 +33,7 @@ const MainContent = ({ ads }) => {
                 >
                     <Spacer />
                     <Text fontSize="4xl" color="white">
-                        {t('prebarajte')}
+                        {t("prebarajte")}
                     </Text>
                     <Flex
                         justifyContent={"center"}
@@ -44,7 +44,7 @@ const MainContent = ({ ads }) => {
                     >
                         <Flex w="full" maxW="650px" alignItems={"center"}>
                             <Input
-                                placeholder="Пребарај, пр. BMW, Samsung, Iphone, Услуга ..."
+                                placeholder={t("searchInput")}
                                 size="lg"
                                 bg="white"
                                 roundedLeft="3xl"
@@ -67,7 +67,7 @@ const MainContent = ({ ads }) => {
                             borderColor={"rgba(255, 255, 255, 1)"}
                         />
 
-                        <Heading color={"white"}>{t('ili')}</Heading>
+                        <Heading color={"white"}>{t("ili")}</Heading>
                         <Divider
                             orientation="vertical"
                             maxH={"2vh"}
@@ -103,7 +103,8 @@ const MainContent = ({ ads }) => {
                                     bottom="3%"
                                     left={"30%"}
                                 >
-                                    Најнови {<br />} огласи
+                                    {t("najnovi")}
+                                    {<br />} {t("oglasi")}
                                 </Text>
                             </Box>
                             <Stack direction="row" justify="center" spacing={2}>
@@ -128,23 +129,23 @@ const MainContent = ({ ads }) => {
                     >
                         <Box textAlign="center">
                             <Text fontSize="2xl">640,000</Text>
-                            <Text>Огласи</Text>
+                            <Text>{t("oglasi")}</Text>
                         </Box>
                         <Box textAlign="center">
                             <Text fontSize="2xl">111</Text>
-                            <Text>Индустриски сектори</Text>
+                            <Text>{t("industriskiSektori")}</Text>
                         </Box>
                         <Box textAlign="center">
                             <Text fontSize="2xl">350,000</Text>
-                            <Text>Продукти</Text>
+                            <Text>{t("produkti")}</Text>
                         </Box>
                         <Box textAlign="center">
                             <Text fontSize="2xl">600,000</Text>
-                            <Text>Слики и видеа</Text>
+                            <Text>{t("slikiIVidea")}</Text>
                         </Box>
                         <Box textAlign="center">
                             <Text fontSize="2xl">1 милион</Text>
-                            <Text>купувачи месечно</Text>
+                            <Text>{t("kupuvaciMesecno")}</Text>
                         </Box>
                     </Flex>
                 </Flex>

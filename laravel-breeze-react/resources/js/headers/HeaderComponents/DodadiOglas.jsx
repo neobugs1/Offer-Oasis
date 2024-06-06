@@ -1,10 +1,12 @@
 import { Box } from "@chakra-ui/react";
 import { Link } from "@inertiajs/react";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const DodadiOglas = () => {
+    const { t } = useTranslation();
     return (
-        <Link href={route("search")} className="h-full">
+        <Link href={route("ad.create")} className="h-full">
             <Box
                 as="button"
                 h={"100%"}
@@ -27,7 +29,7 @@ const DodadiOglas = () => {
                     rounded={"3xl"}
                     whiteSpace={"nowrap"}
                 >
-                    Додади оглас
+                    {t("dodadioglas")}
                 </Box>
             </Box>
         </Link>

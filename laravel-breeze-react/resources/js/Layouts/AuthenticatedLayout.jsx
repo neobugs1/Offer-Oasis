@@ -24,9 +24,12 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import LogoLink from "@/headers/HeaderComponents/LogoLink";
+import { useTranslation } from "react-i18next";
 
 export default function Authenticated({ user, header, children }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const { t } = useTranslation();
 
     return (
         <Box minH="100vh" bg="gray.100">
@@ -56,14 +59,14 @@ export default function Authenticated({ user, header, children }) {
                                 href={route("oglasi")}
                                 active={route().current("oglasi")}
                             >
-                                Огласи
+                                {t("layout.ads")}
                             </NavLink>
                             {user.role == "admin" && (
                                 <NavLink
                                     href={route("reviews")}
                                     active={route().current("reviews")}
                                 >
-                                    Админ панел
+                                    {t("layout.adminPanel")}
                                 </NavLink>
                             )}
                         </HStack>
@@ -87,7 +90,7 @@ export default function Authenticated({ user, header, children }) {
                                     as={Link}
                                     href={route("profile.edit")}
                                 >
-                                    Profile
+                                    {t("layout.profile")}
                                 </MenuItem>
                                 <MenuDivider />
                                 <MenuItem
@@ -95,7 +98,7 @@ export default function Authenticated({ user, header, children }) {
                                     href={route("logout")}
                                     method="post"
                                 >
-                                    Log Out
+                                    {t("layout.logout")}
                                 </MenuItem>
                             </MenuList>
                         </Menu>
@@ -116,14 +119,14 @@ export default function Authenticated({ user, header, children }) {
                                 href={route("oglasi")}
                                 active={route().current("oglasi")}
                             >
-                                Огласи
+                                {t("layout.ads")}
                             </ResponsiveNavLink>
                             {user.role == "admin" && (
                                 <ResponsiveNavLink
                                     href={route("reviews")}
                                     active={route().current("reviews")}
                                 >
-                                    Админ панел
+                                    {t("layout.adminPanel")}
                                 </ResponsiveNavLink>
                             )}
                         </Stack>

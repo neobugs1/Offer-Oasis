@@ -20,6 +20,7 @@ import {
     Radio,
     SelectField,
 } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 export default function Register({ auth, locations }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
@@ -55,6 +56,7 @@ export default function Register({ auth, locations }) {
     );
 
     // const { locations } = usePage().props;
+    const { t } = useTranslation();
 
     return (
         <Layout auth={auth}>
@@ -66,128 +68,255 @@ export default function Register({ auth, locations }) {
             >
                 <Box maxW="1200px" mx="auto" p={5}>
                     <Text fontSize="3xl" fontWeight="bold" textAlign="center">
-                        Зголемете ја вашата видливост онлајн!
+                        {t("register.increaseVisibility")}
                     </Text>
                     <Text fontSize="xl" textAlign="center" mb={6}>
-                        Придружете се на водечката огласна платформа во Македонија
+                        {t("register.joinLeadingPlatform")}
                     </Text>
-                    <Flex justify="space-between" direction={{ base: 'column', lg: 'row' }}>
-                        <Box w={{ base: '100%', lg: '60%' }} bg="white" boxShadow="md" p={6} borderRadius="md">
+                    <Flex
+                        justify="space-between"
+                        direction={{ base: "column", lg: "row" }}
+                    >
+                        <Box
+                            w={{ base: "100%", lg: "60%" }}
+                            bg="white"
+                            boxShadow="md"
+                            p={6}
+                            borderRadius="md"
+                        >
                             <Text fontSize="lg" fontWeight="bold" mb={4}>
-                                Креирај го својот профил бесплатно!
+                                {t("register.createProfileFree")}
                             </Text>
                             <FormControl as="form" onSubmit={submit}>
                                 <Flex mb={4}>
                                     <FormControl mr={4}>
-                                        <FormLabel htmlFor="firstName">First name *</FormLabel>
+                                        <FormLabel htmlFor="firstName">
+                                            {t("register.firstName")}
+                                        </FormLabel>
                                         <Input
-                                            placeholder="First name"
+                                            placeholder={t(
+                                                "register.firstName"
+                                            )}
                                             id="firstName"
                                             name="firstName"
                                             value={data.firstName}
-                                            onChange={(e) => setData({ ...data, firstName: e.target.value })}
+                                            onChange={(e) =>
+                                                setData({
+                                                    ...data,
+                                                    firstName: e.target.value,
+                                                })
+                                            }
                                         />
-                                        {errors.firstName && <Text color="red.500">{errors.firstName}</Text>}
+                                        {errors.firstName && (
+                                            <Text color="red.500">
+                                                {errors.firstName}
+                                            </Text>
+                                        )}
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel htmlFor="lastName">Last name *</FormLabel>
+                                        <FormLabel htmlFor="lastName">
+                                            {t("register.lastName")}
+                                        </FormLabel>
                                         <Input
-                                            placeholder="Last name"
+                                            placeholder={t("register.lastName")}
                                             id="lastName"
                                             name="lastName"
                                             value={data.lastName}
-                                            onChange={(e) => setData({ ...data, lastName: e.target.value })}
+                                            onChange={(e) =>
+                                                setData({
+                                                    ...data,
+                                                    lastName: e.target.value,
+                                                })
+                                            }
                                         />
-                                        {errors.lastName && <Text color="red.500">{errors.lastName}</Text>}
+                                        {errors.lastName && (
+                                            <Text color="red.500">
+                                                {errors.lastName}
+                                            </Text>
+                                        )}
                                     </FormControl>
                                 </Flex>
                                 <FormControl mb={4}>
-                                    <FormLabel htmlFor="email">Email *</FormLabel>
+                                    <FormLabel htmlFor="email">
+                                        {t("register.email")}
+                                    </FormLabel>
                                     <Input
                                         placeholder="e.g. myname@company.com"
                                         id="email"
                                         type="email"
                                         name="email"
                                         value={data.email}
-                                        onChange={(e) => setData({ ...data, email: e.target.value })}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                email: e.target.value,
+                                            })
+                                        }
                                     />
-                                    {errors.email && <Text color="red.500">{errors.email}</Text>}
+                                    {errors.email && (
+                                        <Text color="red.500">
+                                            {errors.email}
+                                        </Text>
+                                    )}
                                 </FormControl>
                                 <Flex mb={4}>
                                     <FormControl mr={4}>
-                                        <FormLabel htmlFor="password">Password *</FormLabel>
+                                        <FormLabel htmlFor="password">
+                                            {t("register.password")}
+                                        </FormLabel>
                                         <Input
                                             type="password"
-                                            placeholder="Minimum of 8 characters"
+                                            placeholder={t("register.password")}
                                             id="password"
                                             name="password"
                                             value={data.password}
-                                            onChange={(e) => setData({ ...data, password: e.target.value })}
+                                            onChange={(e) =>
+                                                setData({
+                                                    ...data,
+                                                    password: e.target.value,
+                                                })
+                                            }
                                         />
-                                        {errors.password && <Text color="red.500">{errors.password}</Text>}
+                                        {errors.password && (
+                                            <Text color="red.500">
+                                                {errors.password}
+                                            </Text>
+                                        )}
                                     </FormControl>
                                     <FormControl mb={4}>
-                                        <FormLabel htmlFor="password">Repeat Password *</FormLabel>
+                                        <FormLabel htmlFor="password_confirmation">
+                                            {t("register.repeatPassword")}
+                                        </FormLabel>
                                         <Input
                                             type="password"
-                                            placeholder="Minimum of 8 characters"
+                                            placeholder={t(
+                                                "register.repeatPassword"
+                                            )}
                                             id="password_confirmation"
                                             name="password_confirmation"
                                             value={data.password_confirmation}
-                                            onChange={(e) => setData({ ...data, password_confirmation: e.target.value })}
+                                            onChange={(e) =>
+                                                setData({
+                                                    ...data,
+                                                    password_confirmation:
+                                                        e.target.value,
+                                                })
+                                            }
                                         />
-                                        {errors.password_confirmation && <Text color="red.500">{errors.password_confirmation}</Text>}
+                                        {errors.password_confirmation && (
+                                            <Text color="red.500">
+                                                {errors.password_confirmation}
+                                            </Text>
+                                        )}
                                     </FormControl>
                                 </Flex>
                                 <FormControl mr={4}>
-                                    <FormLabel htmlFor="phoneNumber">Телефонски број *</FormLabel>
+                                    <FormLabel htmlFor="phoneNumber">
+                                        {t("register.phoneNumber")}
+                                    </FormLabel>
                                     <Input
-                                        placeholder="First name"
+                                        placeholder={t("register.phoneNumber")}
                                         id="phoneNumber"
                                         name="phoneNumber"
                                         value={data.phoneNumber}
-                                        onChange={(e) => setData({ ...data, phoneNumber: e.target.value })}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                phoneNumber: e.target.value,
+                                            })
+                                        }
                                     />
-                                    {errors.phoneNumber && <Text color="red.500">{errors.phoneNumber}</Text>}
+                                    {errors.phoneNumber && (
+                                        <Text color="red.500">
+                                            {errors.phoneNumber}
+                                        </Text>
+                                    )}
                                 </FormControl>
                                 <FormControl mb={4}>
-                                    <FormLabel htmlFor="companyName">Location *</FormLabel>
+                                    <FormLabel htmlFor="companyName">
+                                        {t("register.location")}
+                                    </FormLabel>
                                     <Select
-                                        placeholder="Локација"
+                                        placeholder={t("register.location")}
                                         id="companyName"
                                         name="companyName"
                                         value={data.companyName}
-                                        onChange={(e) => setData({ ...data, companyName: e.target.value })}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                companyName: e.target.value,
+                                            })
+                                        }
                                     >
-                                        {locations.map((location) => renderOption(location))}
+                                        {locations.map((location) =>
+                                            renderOption(location)
+                                        )}
                                     </Select>
-                                    {errors.companyName && <Text color="red.500">{errors.companyName}</Text>}
-                                </FormControl>
-                                <FormControl mb={4}>
+                                    {errors.companyName && (
+                                        <Text color="red.500">
+                                            {errors.companyName}
+                                        </Text>
+                                    )}
                                 </FormControl>
                                 <Text fontSize="sm" mt={4}>
-                                    By submitting the form, I accept the <a href="#" style={{ color: "#0060df" }}>Terms of Use</a> and the <a href="#" style={{ color: "#0060df" }}>General Terms and Conditions</a>. I have acknowledged the <a href="#" style={{ color: "#0060df" }}>Data Privacy</a>.
+                                    {t("register.terms")}{" "}
+                                    <Link href="#" color="#0060df">
+                                        {t("register.termsOfUse")}
+                                    </Link>{" "}
+                                    {t("register.and")}{" "}
+                                    <Link href="#" color="#0060df">
+                                        {t("register.generalTerms")}
+                                    </Link>
+                                    . {t("register.acknowledged")}{" "}
+                                    <Link href="#" color="#0060df">
+                                        {t("register.dataPrivacy")}
+                                    </Link>
+                                    .
                                 </Text>
-                                <Button type="submit" bgColor="#0060df" color={"white"} size="lg" mt={4} isDisabled={processing} > Register now </Button>
+                                <Button
+                                    type="submit"
+                                    bgColor="#0060df"
+                                    color={"white"}
+                                    size="lg"
+                                    mt={4}
+                                    isDisabled={processing}
+                                >
+                                    {t("register.registerButton")}
+                                </Button>
                             </FormControl>
                         </Box>
-                        <Box w={{ base: '100%', lg: '35%' }} mt={{ base: 8, lg: 0 }}>
+                        <Box
+                            w={{ base: "100%", lg: "35%" }}
+                            mt={{ base: 8, lg: 0 }}
+                        >
                             <Box mb={6}>
-                                <Text fontWeight="bold" mb={2}>Достигнете до поголема публика со вашите огласи</Text>
-                                <Text>Придружете се на нашата платформа каде што преку 1 милион корисници месечно бараат производи и услуги од нашата голема база од 600,000+ регистрирани продавачи.
-
+                                <Text fontWeight="bold" mb={2}>
+                                    {t("register.reachAudience")}
+                                </Text>
+                                <Text>{t("register.reachAudienceText")}</Text>
+                            </Box>
+                            <Box mb={6}>
+                                <Text fontWeight="bold" mb={2}>
+                                    {t("register.googleVisibility")}
+                                </Text>
+                                <Text>
+                                    {t("register.googleVisibilityText")}
                                 </Text>
                             </Box>
                             <Box mb={6}>
-                                <Text fontWeight="bold" mb={2}>Подобрете ја видливоста на Google</Text>
-                                <Text>Огласите на нашата платформа постојано се позиционираат погоре на Google, со просечно 1 милион клучни зборови за пребарување кои се наоѓаат во првите 3 резултати.</Text>
-                            </Box>
-                            <Box mb={6}>
-                                <Text fontWeight="bold" mb={2}>Претставете ги вашите огласи на потенцијалните купувачи</Text>
-                                <Text>Објавете ги вашите производи и услуги на нашата платформа и привлечете барања од заинтересирани купувачи.</Text>
+                                <Text fontWeight="bold" mb={2}>
+                                    {t("register.showcaseAds")}
+                                </Text>
+                                <Text>{t("register.showcaseAdsText")}</Text>
                             </Box>
                             <Text fontSize="sm" color="blue.500">
-                                Still have questions? <a href="#" style={{ textDecoration: 'underline' }}>Get all the information here</a>
+                                {t("register.questions")}{" "}
+                                <Link
+                                    href="#"
+                                    style={{ textDecoration: "underline" }}
+                                >
+                                    {t("register.getInfoHere")}
+                                </Link>
                             </Text>
                         </Box>
                     </Flex>

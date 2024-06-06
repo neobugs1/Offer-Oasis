@@ -24,6 +24,7 @@ import { TfiMenuAlt } from "react-icons/tfi";
 import { FaSearchLocation } from "react-icons/fa";
 import { LiaSearchLocationSolid } from "react-icons/lia";
 import { MdOutlineMyLocation } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 // Helper function to find a category by its ID
 const findCategoryById = (categories, id) => {
@@ -90,6 +91,7 @@ const SearchBar = ({ queryParams, auth }) => {
     const handleSearch = () => {
         onSearch(searchTerm, selectedCategory.id, selectedLocation.id);
     };
+    const { t } = useTranslation();
 
     return (
         <Flex
@@ -137,7 +139,7 @@ const SearchBar = ({ queryParams, auth }) => {
                         textOverflow="ellipsis"
                         maxWidth="calc(100% - 0.1rem)"
                     >
-                        {selectedCategory.name || "Категории"}
+                        {selectedCategory.name || `${t("search.categories")}`}
                     </Box>
                 </MenuButton>
                 <MenuList zIndex={2}>
@@ -145,7 +147,7 @@ const SearchBar = ({ queryParams, auth }) => {
                         key={"all"}
                         onClick={() => setSelectedCategory("")}
                     >
-                        Сите категории
+                        {t("search.categories")}
                     </MenuItem>
                     {categories.map((category) => (
                         <NestedMenu
@@ -217,7 +219,7 @@ const SearchBar = ({ queryParams, auth }) => {
                         fontWeight={"medium"}
                         maxWidth="calc(100% - 0.1rem)"
                     >
-                        {selectedLocation.name || "Цела Македонија"}
+                        {selectedLocation.name || `${t("search.allLocations")}`}
                     </Box>
                 </MenuButton>
                 <MenuList>
@@ -228,24 +230,27 @@ const SearchBar = ({ queryParams, auth }) => {
                         _hover={{ bg: "gray.100" }} // Ensure consistent hover effect
                         cursor="pointer" // Ensure consistent cursor pointer
                     >
-                        Цела Македонија
+                        {t("search.allLocations")}
                     </MenuItem>
                     {auth.user && (
-                    <MenuItem
-                        onClick={() =>
-                            setSelectedLocation(
-                                findCategoryById(locations, auth.user.location)
-                            )
-                        }
-                        key={"all"}
-                        _focus={{ bg: "charcoal.50" }}
-                        _hover={{ bg: "gray.100" }} // Ensure consistent hover effect
-                        cursor="pointer" // Ensure consistent cursor pointer
-                        gap={2}
-                        color={"blue"}
-                    >
-                        <MdOutlineMyLocation /> Моја локација
-                    </MenuItem>
+                        <MenuItem
+                            onClick={() =>
+                                setSelectedLocation(
+                                    findCategoryById(
+                                        locations,
+                                        auth.user.location
+                                    )
+                                )
+                            }
+                            key={"all"}
+                            _focus={{ bg: "charcoal.50" }}
+                            _hover={{ bg: "gray.100" }} // Ensure consistent hover effect
+                            cursor="pointer" // Ensure consistent cursor pointer
+                            gap={2}
+                            color={"blue"}
+                        >
+                            <MdOutlineMyLocation /> {t("search.myLocation")}
+                        </MenuItem>
                     )}
                     {locations.map((category) => (
                         <NestedMenu

@@ -15,9 +15,10 @@ import {
     Text,
 } from "@chakra-ui/react";
 import { VscAccount } from "react-icons/vsc";
-
+import { useTranslation } from "react-i18next";
 
 const Najava = () => {
+    const { t } = useTranslation();
     return (
         <Popover trigger="hover">
             <PopoverTrigger>
@@ -38,27 +39,25 @@ const Najava = () => {
                         gap={4}
                     >
                         <Icon as={VscAccount} w={9} h={"80%"} />
-                        Најава
+                        {t("najava")}
                     </Box>
                 </Link>
             </PopoverTrigger>
             <PopoverContent color="black" w={"250px"} gap={2}>
                 <PopoverBody p={5}>
-                    <Flex direction={'column'} gap={1}>
-                    <Link href={route("login")}>
-                        <Button w={"100%"} bg={"#0060df"} color={'white'}>
-                            Најави се
-                        </Button>
+                    <Flex direction={"column"} gap={1}>
+                        <Link href={route("login")}>
+                            <Button w={"100%"} bg={"#0060df"} color={"white"}>
+                                {t("najaviSe")}
+                            </Button>
                         </Link>
                         <Flex align="center">
                             <Divider />
-                            <Text padding="2">или</Text>
+                            <Text padding="2">{t("ili")}</Text>
                             <Divider />
                         </Flex>
                         <Link href={route("register")}>
-                        <Button w={"100%"}>
-                            Регистрирај се
-                        </Button>
+                            <Button w={"100%"}>{t("registrirajSe")}</Button>
                         </Link>
                     </Flex>
                 </PopoverBody>

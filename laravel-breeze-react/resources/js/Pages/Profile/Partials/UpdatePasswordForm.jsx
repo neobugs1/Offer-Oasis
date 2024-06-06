@@ -13,6 +13,7 @@ import {
     Input,
     Text,
 } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
 export default function UpdatePasswordForm({ className = "" }) {
     const passwordInput = useRef();
@@ -51,15 +52,16 @@ export default function UpdatePasswordForm({ className = "" }) {
             },
         });
     };
+    const { t } = useTranslation();
 
     return (
         <Box color={"black"}>
             <Box>
-                <Heading fontSize={"2xl"}>Update Password</Heading>
-
+                <Heading fontSize={"2xl"}>
+                    {t("profile.updatePassword.heading")}
+                </Heading>
                 <Text className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Ensure your account is using a long, random password to stay
-                    secure.
+                    {t("profile.updatePassword.description")}
                 </Text>
             </Box>
 
@@ -69,14 +71,9 @@ export default function UpdatePasswordForm({ className = "" }) {
                 className="mt-6 space-y-6"
             >
                 <Box>
-                    <FormLabel
-                        htmlFor="current_password"
-                        value="Current Password"
-                        fontSize={"sm"}
-                    >
-                        Current Password
+                    <FormLabel htmlFor="current_password" fontSize={"sm"}>
+                        {t("profile.updatePassword.currentPassword")}
                     </FormLabel>
-
                     <Input
                         id="current_password"
                         ref={currentPasswordInput}
@@ -87,7 +84,6 @@ export default function UpdatePasswordForm({ className = "" }) {
                         type="password"
                         autoComplete="current-password"
                     />
-
                     <InputError
                         message={errors.current_password}
                         className="mt-2"
@@ -95,14 +91,9 @@ export default function UpdatePasswordForm({ className = "" }) {
                 </Box>
 
                 <Box>
-                    <FormLabel
-                        htmlFor="password"
-                        value="New Password"
-                        fontSize={"sm"}
-                    >
-                        New Password
+                    <FormLabel htmlFor="password" fontSize={"sm"}>
+                        {t("profile.updatePassword.newPassword")}
                     </FormLabel>
-
                     <Input
                         id="password"
                         ref={passwordInput}
@@ -111,19 +102,13 @@ export default function UpdatePasswordForm({ className = "" }) {
                         type="password"
                         autoComplete="new-password"
                     />
-
                     <InputError message={errors.password} className="mt-2" />
                 </Box>
 
                 <Box>
-                    <FormLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                        fontSize={"sm"}
-                    >
-                        Confirm Password
+                    <FormLabel htmlFor="password_confirmation" fontSize={"sm"}>
+                        {t("profile.updatePassword.confirmPassword")}
                     </FormLabel>
-
                     <Input
                         id="password_confirmation"
                         value={data.password_confirmation}
@@ -133,7 +118,6 @@ export default function UpdatePasswordForm({ className = "" }) {
                         type="password"
                         autoComplete="new-password"
                     />
-
                     <InputError
                         message={errors.password_confirmation}
                         className="mt-2"
@@ -141,8 +125,9 @@ export default function UpdatePasswordForm({ className = "" }) {
                 </Box>
 
                 <Box className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
-
+                    <PrimaryButton disabled={processing}>
+                        {t("profile.save")}
+                    </PrimaryButton>
                     <Transition
                         show={recentlySuccessful}
                         enter="transition ease-in-out"
@@ -151,7 +136,7 @@ export default function UpdatePasswordForm({ className = "" }) {
                         leaveTo="opacity-0"
                     >
                         <Text className="text-sm text-gray-600 dark:text-gray-400">
-                            Saved.
+                            {t("profile.saved")}
                         </Text>
                     </Transition>
                 </Box>

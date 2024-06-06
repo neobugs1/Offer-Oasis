@@ -12,6 +12,7 @@ import {
     Flex,
     FormLabel,
 } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
 export default function UpdateProfileInformation({
     mustVerifyEmail,
@@ -32,14 +33,14 @@ export default function UpdateProfileInformation({
 
         patch(route("profile.update"));
     };
+    const { t } = useTranslation();
 
     return (
         <Box color={"black"} className={className}>
             <Box>
-                <Heading fontSize={"2xl"}>Profile Information</Heading>
-
+                <Heading fontSize={"2xl"}>{t("profile.heading")}</Heading>
                 <Text className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Update your account's profile information and email address.
+                    {t("profile.description")}
                 </Text>
             </Box>
 
@@ -50,9 +51,8 @@ export default function UpdateProfileInformation({
             >
                 <Box>
                     <FormLabel htmlFor="name" value="Name" fontSize={"sm"}>
-                        Name
+                        {t("profile.name")}
                     </FormLabel>
-
                     <TextInput
                         id="name"
                         className="mt-1 block w-full"
@@ -62,15 +62,13 @@ export default function UpdateProfileInformation({
                         isFocused
                         autoComplete="name"
                     />
-
                     <InputError className="mt-2" message={errors.name} />
                 </Box>
 
                 <Box>
                     <FormLabel htmlFor="email" value="Email" fontSize={"sm"}>
-                        E-Mail
+                        {t("profile.email")}
                     </FormLabel>
-
                     <TextInput
                         id="email"
                         type="email"
@@ -80,7 +78,6 @@ export default function UpdateProfileInformation({
                         required
                         autoComplete="username"
                     />
-
                     <InputError className="mt-2" message={errors.email} />
                 </Box>
 
@@ -90,9 +87,8 @@ export default function UpdateProfileInformation({
                         value="phoneNumber"
                         fontSize={"sm"}
                     >
-                        Phone Number
+                        {t("profile.phoneNumber")}
                     </FormLabel>
-
                     <TextInput
                         id="phoneNumber"
                         className="mt-1 block w-full"
@@ -101,36 +97,34 @@ export default function UpdateProfileInformation({
                         required
                         autoComplete="phoneNumber"
                     />
-
-                    <InputError className="mt-2" message={errors.email} />
+                    <InputError className="mt-2" message={errors.phoneNumber} />
                 </Box>
 
                 {mustVerifyEmail && user.email_verified_at === null && (
                     <Box>
                         <Text className="text-sm mt-2 text-gray-800 dark:text-gray-200">
-                            Your email address is unverified.
+                            {t("profile.unverifiedEmail")}
                             <Link
                                 href={route("verification.send")}
                                 method="post"
                                 as="button"
                                 className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                             >
-                                Click here to re-send the verification email.
+                                {t("profile.resendVerification")}
                             </Link>
                         </Text>
-
                         {status === "verification-link-sent" && (
                             <Box className="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                                A new verification link has been sent to your
-                                email address.
+                                {t("profile.verificationLinkSent")}
                             </Box>
                         )}
                     </Box>
                 )}
 
                 <Box className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
-
+                    <PrimaryButton disabled={processing}>
+                        {t("profile.save")}
+                    </PrimaryButton>
                     <Transition
                         show={recentlySuccessful}
                         enter="transition ease-in-out"
@@ -139,7 +133,7 @@ export default function UpdateProfileInformation({
                         leaveTo="opacity-0"
                     >
                         <Text className="text-sm text-gray-600 dark:text-gray-400">
-                            Saved.
+                            {t("profile.saved")}
                         </Text>
                     </Transition>
                 </Box>

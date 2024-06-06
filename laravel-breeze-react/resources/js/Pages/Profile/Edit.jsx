@@ -11,15 +11,17 @@ import {
     VStack,
     useColorModeValue,
 } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
 export default function Edit({ auth, mustVerifyEmail, status }) {
     const bg = useColorModeValue("white", "gray.800");
+    const { t } = useTranslation();
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={
                 <Heading as="h2" size="xl">
-                    Profile
+                    {t("profile.heading")}
                 </Heading>
             }
         >

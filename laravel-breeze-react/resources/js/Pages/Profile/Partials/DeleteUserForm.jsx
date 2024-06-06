@@ -6,7 +6,8 @@ import Modal from "@/Components/Modal";
 import SecondaryButton from "@/Components/SecondaryButton";
 import TextInput from "@/Components/TextInput";
 import { useForm } from "@inertiajs/react";
-import { Box, FormControl, Heading, Text } from "@chakra-ui/react";
+import { Box, FormControl, Heading, Input, Text } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
 export default function DeleteUserForm({ className = "" }) {
     const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
@@ -44,70 +45,65 @@ export default function DeleteUserForm({ className = "" }) {
         reset();
     };
 
+    const { t } = useTranslation();
+
     return (
         <Box className={`space-y-6 ${className}`}>
             <Box>
-                <Heading fontSize={"2xl"}>Delete Account</Heading>
+                <Heading fontSize={"2xl"}>
+                    {t("profile.deleteProfile.heading")}
+                </Heading>
 
                 <Text className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Once your account is deleted, all of its resources and data
-                    will be permanently deleted. Before deleting your account,
-                    please download any data or information that you wish to
-                    retain.
+                    {t("profile.deleteProfile.description")}
                 </Text>
             </Box>
 
             <DangerButton onClick={confirmUserDeletion}>
-                Delete Account
+                {t("profile.deleteProfile.deleteButton")}
             </DangerButton>
 
             <Modal show={confirmingUserDeletion} onClose={closeModal}>
                 <FormControl as={"form"} onSubmit={deleteUser} className="p-6">
                     <Heading>
-                        Are you sure you want to delete your account?
+                        {t("profile.deleteProfile.confirmDeleteHeading")}
                     </Heading>
 
                     <Text className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        Once your account is deleted, all of its resources and
-                        data will be permanently deleted. Please enter your
-                        password to confirm you would like to permanently delete
-                        your account.
+                        {t("profile.deleteProfile.confirmDeleteDescription")}
                     </Text>
 
                     <Box className="mt-6">
-                        <InputLabel
-                            htmlFor="password"
-                            value="Password"
-                            className="sr-only"
-                        />
-
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            ref={passwordInput}
-                            value={data.password}
-                            onChange={(e) =>
-                                setData("password", e.target.value)
-                            }
-                            className="mt-1 block w-3/4"
-                            isFocused
-                            placeholder="Password"
-                        />
-
-                        <InputError
-                            message={errors.password}
-                            className="mt-2"
-                        />
+                        <FormControl>
+                            <Input
+                                id="password"
+                                type="password"
+                                name="password"
+                                ref={passwordInput}
+                                value={data.password}
+                                onChange={(e) =>
+                                    setData("password", e.target.value)
+                                }
+                                className="mt-1 block w-3/4"
+                                isFocused
+                                placeholder={t(
+                                    "profile.deleteProfile.passwordPlaceholder"
+                                )}
+                            />
+                            <InputError
+                                message={errors.password}
+                                className="mt-2"
+                            />
+                        </FormControl>
                     </Box>
 
                     <Box className="mt-6 flex justify-end">
                         <SecondaryButton onClick={closeModal}>
-                            Cancel
+                            {t("profile.deleteProfile.cancelButton")}
                         </SecondaryButton>
 
                         <DangerButton className="ms-3" disabled={processing}>
-                            Delete Account
+                            {t("profile.deleteProfile.deleteButton")}
                         </DangerButton>
                     </Box>
                 </FormControl>

@@ -20,6 +20,7 @@ import AdListing from "./AdListing";
 import CarFilter from "./CarFilter";
 import LatestAds from "./LatestAds";
 import PopularAds from "./PopularAds";
+import { useTranslation } from "react-i18next";
 
 const AdsPage = ({ ads }) => {
     const { url } = usePage();
@@ -94,6 +95,8 @@ const AdsPage = ({ ads }) => {
 
     const category = new URL(window.location.href).searchParams.get("category");
 
+    const { t } = useTranslation();
+
     return (
         <Flex w={"100%"} justifyContent={"center"}>
             <Flex w={"75%"}>
@@ -121,7 +124,7 @@ const AdsPage = ({ ads }) => {
                             borderBottomWidth="4px"
                             mb={5}
                         >
-                            <Text fontSize="2xl">Сите огласи</Text>
+                            <Text fontSize="2xl">{t("siteOglasi")}</Text>
                         </Box>
                         <Text
                             mt={2}
@@ -130,7 +133,7 @@ const AdsPage = ({ ads }) => {
                             fontStyle={"italic"}
                             fontWeight={"bold"}
                         >
-                            Пронајдени огласи: {ads.meta.total}
+                            {t("search.foundAds")} {ads.meta.total}
                         </Text>
                         <Spacer w={"100%"} />
                         <Select
@@ -141,8 +144,13 @@ const AdsPage = ({ ads }) => {
                             variant={"outline"}
                             boxShadow={"sm"}
                         >
-                            <option value="date_posted">Најнови прво</option>
-                            <option value="price">Најевтини прво</option>
+                            <option value="date_posted">
+                                {t("search.newestFirst")}
+                            </option>
+                            <option value="price">
+                                {" "}
+                                {t("search.cheapestFirst")}
+                            </option>
                         </Select>
                     </Flex>
                     <VStack spacing={5} align="stretch">
@@ -180,7 +188,7 @@ const AdsPage = ({ ads }) => {
                     h={"max-content"}
                 >
                     <Heading textAlign={"center"} fontSize={"medium"}>
-                        Најпрегледани
+                        {t("search.mostViewed")}
                     </Heading>
                     <PopularAds ads={ads} />
                 </Box>

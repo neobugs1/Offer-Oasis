@@ -19,10 +19,11 @@ import {
 } from "@chakra-ui/react";
 import i18next, { changeLanguage } from "i18next";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { VscChevronDown, VscGlobe } from "react-icons/vsc";
 
 const Jazik = () => {
-
+    const { t } = useTranslation();
     const changeLanguage = (language) => {
         i18n.changeLanguage(language.toLowerCase());
     };
@@ -61,7 +62,7 @@ const Jazik = () => {
                         gap={5}
                     >
                         <Heading fontSize={"3xl"} textAlign="center">
-                            Јазик
+                            {t("jazik")}
                         </Heading>
                         <RadioGroup
                             onChange={changeLanguage}

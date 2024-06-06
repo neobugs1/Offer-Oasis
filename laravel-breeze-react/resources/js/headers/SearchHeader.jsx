@@ -20,8 +20,10 @@ import LoggedInUser from "./HeaderComponents/LoggedInUser";
 import LogoLink from "./HeaderComponents/LogoLink";
 import Jazik from "./HeaderComponents/Jazik";
 import DodadiOglas from "./HeaderComponents/DodadiOglas";
+import { useTranslation } from "react-i18next";
 
 const SearchHeader = ({ auth }) => {
+    const { t } = useTranslation();
     return (
         <>
             <Flex

@@ -17,6 +17,7 @@ import {
     SimpleGrid,
 } from "@chakra-ui/react";
 import Layout from "@/Layouts/Layout";
+import { useTranslation } from "react-i18next";
 
 export default function Login({ status, canResetPassword, auth }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -37,8 +38,11 @@ export default function Login({ status, canResetPassword, auth }) {
         post(route("login"));
     };
 
+    const { t } = useTranslation();
+
     return (
         <Layout auth={auth}>
+            <Head title={t("login.loginTitle")} />
             <Flex
                 justifyContent={"center"}
                 bgColor={"#00193c1a"}
@@ -60,13 +64,13 @@ export default function Login({ status, canResetPassword, auth }) {
                             align={"left"}
                             w={"100%"}
                         >
-                            Login
+                            {t("login.loginTitle")}
                         </Text>
                         <FormControl as={"form"} onSubmit={submit}>
                             <Flex flexDirection={"column"}>
                                 <Box>
-                                    <FormLabel htmlFor="email" value="Email">
-                                        E-Mail
+                                    <FormLabel htmlFor="email">
+                                        {t("login.emailLabel")}
                                     </FormLabel>
                                     <Input
                                         id="email"
@@ -86,11 +90,8 @@ export default function Login({ status, canResetPassword, auth }) {
                                     />
                                 </Box>
                                 <Box>
-                                    <FormLabel
-                                        htmlFor="password"
-                                        value="password"
-                                    >
-                                        Password
+                                    <FormLabel htmlFor="password">
+                                        {t("login.passwordLabel")}
                                     </FormLabel>
                                     <Input
                                         id="password"
@@ -121,7 +122,7 @@ export default function Login({ status, canResetPassword, auth }) {
                                             }
                                         />
                                         <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">
-                                            Remember me
+                                            {t("login.rememberMe")}
                                         </span>
                                     </label>
                                 </div>
@@ -132,9 +133,8 @@ export default function Login({ status, canResetPassword, auth }) {
                                     mt={4}
                                     size="lg"
                                     type="submit"
-                                    // onClick={submit}
                                 >
-                                    Login now
+                                    {t("login.loginButton")}
                                 </Button>
                             </Flex>
                         </FormControl>
@@ -145,7 +145,7 @@ export default function Login({ status, canResetPassword, auth }) {
                                     fontSize="sm"
                                     color="#0060df"
                                 >
-                                    Forgot your password?
+                                    {t("login.forgotPassword")}
                                 </Link>
                             )}
                         </div>
@@ -166,8 +166,7 @@ export default function Login({ status, canResetPassword, auth }) {
                         color="#0060df"
                         mb={4}
                     >
-                        Create account details for your company profile or
-                        register as an individual.
+                        {t("login.createAccount")}
                     </Link>
                 </Box>
             </Flex>

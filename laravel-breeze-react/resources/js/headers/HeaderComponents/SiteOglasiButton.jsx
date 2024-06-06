@@ -1,8 +1,10 @@
 import { Box } from "@chakra-ui/react";
-import { Link } from "@inertiajs/inertia-react";
+import { Link } from "@inertiajs/react";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const SiteOglasiButton = () => {
+    const { t } = useTranslation();
     return (
         <Link href={route("search")} className="h-full">
             <Box
@@ -20,7 +22,7 @@ const SiteOglasiButton = () => {
                 alignItems={"center"}
                 gap={4}
             >
-                Сите огласи
+                {t("siteOglasi")}
             </Box>
         </Link>
     );
