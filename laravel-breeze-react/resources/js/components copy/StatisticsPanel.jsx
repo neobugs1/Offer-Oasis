@@ -1,10 +1,10 @@
 import React from "react";
-import { Box, VStack, Text, Button } from "@chakra-ui/react";
+import { Box, VStack, Text, Button, Spacer, Flex } from "@chakra-ui/react";
 
 const StatisticsPanel = ({ stats }) => {
     return (
         <Box
-            bg="white" // Dark theme background
+            bg="white"
             color="black"
             p={4}
             borderRadius="md"
@@ -14,16 +14,34 @@ const StatisticsPanel = ({ stats }) => {
                 <Text fontSize="lg" fontWeight="bold">
                     Вашата состојба
                 </Text>
-                <Text>0.00 мкд</Text>
-                <Button colorScheme="blue" mt={4}>
+                <Text fontWeight={"bold"} color={"#0060df"}>0.00 мкд</Text>
+                <Button bgColor={"#0060df"} color={"white"} mt={4}>
                     Дополни ја сметката
                 </Button>
-                <Text fontSize="lg" fontWeight="bold" mt={6}>
+                <Text fontSize="lg" fontWeight="bold" mt={4}>
                     Статистика за огласи
                 </Text>
-                <Text>Активни огласи: {stats}</Text>
-                <Text>Поставени огласи овој месец: {stats}</Text>
-                <Text>Поставени огласи оваа година: {stats} </Text>
+                <Flex>
+                    <Text>Активни огласи:</Text><Spacer /> <Text>{stats}</Text>
+                </Flex>
+                <Flex>
+                    <Text>Поставени огласи овој месец:</Text><Spacer /> <Text>{stats}</Text>
+                </Flex>
+                <Flex>
+                    <Text>Поставени огласи оваа година:</Text><Spacer /> <Text>{stats}</Text>
+                </Flex>
+                <Text fontSize="lg" fontWeight="bold" mt={4}>
+                    Статус за огласи
+                </Text>
+                <Flex>
+                    <Text>Одобрени:</Text><Spacer /> <Text>{stats}</Text>
+                </Flex>
+                <Flex>
+                    <Text>Одбиени:</Text><Spacer /> <Text>{stats}</Text>
+                </Flex>
+                <Flex>
+                    <Text>Сеуште непроверени:</Text><Spacer /> <Text>{stats}</Text>
+                </Flex>
             </VStack>
         </Box>
     );

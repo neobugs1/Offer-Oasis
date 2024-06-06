@@ -9,6 +9,7 @@ import {
     Spacer,
     Tag,
     Text,
+    Tooltip,
     VStack,
 } from "@chakra-ui/react";
 import { Link, useForm } from "@inertiajs/react";
@@ -130,7 +131,7 @@ const MyAdListing = ({ ad, index }) => {
                         {currentImageIndex + 1}/{ad.images.length}
                     </Text>
                 </Box>
-                <VStack align="start" spacing={2}>
+                <VStack align="start" spacing={2} maxW={"700"}>
                     <Link href={route("ad.show", ad.id)}>
                         <Text
                             fontSize="xl"
@@ -142,8 +143,8 @@ const MyAdListing = ({ ad, index }) => {
                             {ad.title}
                         </Text>
                     </Link>
-                    <HStack color={"blue.500"}>
-                        <Text fontWeight="bold" fontSize={"xl"}>
+                    <HStack >
+                        <Text color={"#0060df"} fontWeight="bold" fontSize={"xl"}>
                             {Number(ad.price)} {ad.currency}
                         </Text>
                         {Number(ad.start_price) > Number(ad.price) && (
@@ -159,7 +160,7 @@ const MyAdListing = ({ ad, index }) => {
                                 key={category.id}
                                 size="sm"
                                 variant="outline"
-                                colorScheme="blue"
+                                color={"#0060df"}
                             >
                                 {category.name}
                             </Tag>
@@ -172,11 +173,8 @@ const MyAdListing = ({ ad, index }) => {
             </Text>
             <Flex position="absolute" top="14" right="10">
                 <Flex alignItems={"center"} fontSize={"30px"} gap={2}>
-                    <Text fontSize={20} fontFamily={"serif"}>
-                        Статус:
-                    </Text>
                     {ad.status === "approved" && (
-                        <MdCheckCircle color="green" />
+                        <MdCheckCircle size={40} color="green" />
                     )}
                     {ad.status === "rejected" && <MdError color="red" />}
                     {ad.status === "pending" && <MdPending color="orange" />}
@@ -185,14 +183,14 @@ const MyAdListing = ({ ad, index }) => {
 
             <HStack position="absolute" bottom="5" right="5">
                 {ad.status === "approved" && (
-                    <Button colorScheme="green" onClick={handleRenew}>
+                    <Button bg={"#0060df"} color={"white"} onClick={handleRenew}>
                         Renew
                     </Button>
                 )}
                 <Link href={route("ad.edit", ad.id)}>
-                    <Button colorScheme="blue">Edit</Button>
+                    <Button bg={"#0060df"} color={"white"}>Edit</Button>
                 </Link>
-                <Button colorScheme="red" onClick={() => deleteAd(ad)}>
+                <Button bg={"#0060df"} color={"white"} onClick={() => deleteAd(ad)}>
                     Delete
                 </Button>
             </HStack>

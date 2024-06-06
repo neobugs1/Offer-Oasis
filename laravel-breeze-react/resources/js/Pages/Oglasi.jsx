@@ -62,7 +62,7 @@ export default function Ads({ auth, ads }) {
                             ))}
                         </HStack>
                     </Box>
-                    <Box w={"20%"}>
+                    <Box w={"25%"}>
                         <StatisticsPanel stats={ads.meta.total} />
                     </Box>
                 </Flex>

@@ -14,6 +14,8 @@ import {
     AspectRatio,
     Center,
     Divider,
+    Icon,
+    textDecoration,
 } from "@chakra-ui/react";
 import {
     FaArrowLeft,
@@ -25,6 +27,8 @@ import {
 import { Inertia } from "@inertiajs/inertia";
 import UserInfoCard from "@/components copy/UserInfoCard";
 import { AiOutlineHome } from "react-icons/ai";
+import ImageCarousel from "@/components copy/Show/ImageCarousel";
+import { FiThumbsDown } from "react-icons/fi";
 
 const Show = ({ ad, auth }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -57,6 +61,12 @@ const Show = ({ ad, auth }) => {
             return;
         }
         Inertia.post(route("ad.destroy", ad.id), { _method: "delete" });
+    };
+
+    const [imageHeight, setImageHeight] = useState(0);
+
+    const handleImageLoad = (event) => {
+        setImageHeight(event.target.height);
     };
 
     return (
@@ -118,103 +128,75 @@ const Show = ({ ad, auth }) => {
                     </Box>
                     <HStack></HStack>
                     <VStack align="start" spacing={4} w="77%">
-                        <Flex w={"100%"} gap={5}>
-                            <Flex
-                                position="relative"
-                                w={"80%"}
-                                bg={"white"}
-                                boxShadow="md"
-                                rounded={"xl"}
-                            >
-                                <Box minW={"100%"}>
-                                    <Image
-                                        src={
-                                            ad.images &&
+                        <Flex
+                            position="relative"
+                            w={"84%"}
+                            bg={"white"}
+                            boxShadow="md"
+                            rounded={"xl"}
+                            gap={5}
+                            maxH={imageHeight ? `${imageHeight}px` : 'none'}
+                        >
+                            <Box minW={"100%"}>
+                                <Image
+                                    src={
+                                        ad.images &&
                                             ad.images[currentImageIndex] &&
                                             ad.images[currentImageIndex].url
-                                                ? ad.images[currentImageIndex]
-                                                      .url
-                                                : "https://via.placeholder.com/300"
-                                        }
-                                        borderRadius="md"
-                                        mx={"auto"}
-                                    />
-                                </Box>
-                                <IconButton
-                                    aria-label="Previous image"
-                                    icon={<FaArrowLeft />}
-                                    onClick={handlePreviousImage}
-                                    position="absolute"
-                                    top="50%"
-                                    left="5"
-                                    bg={"transparent"}
-                                    rounded={0}
-                                    h={20}
-                                    w={14}
-                                    _hover={{
-                                        bgGradient:
-                                            "linear(to-l, white, gray.200)",
-                                    }}
+                                            ? ad.images[currentImageIndex].url
+                                            : "https://via.placeholder.com/300"
+                                    }
+                                    borderRadius="md"
+                                    mx={"auto"}
+                                    onLoad={handleImageLoad}
                                 />
+                            </Box>
+                            <IconButton
+                                aria-label="Previous image"
+                                icon={<FaArrowLeft />}
+                                onClick={handlePreviousImage}
+                                position="absolute"
+                                top="50%"
+                                left="5"
+                                bg={"transparent"}
+                                rounded={0}
+                                h={20}
+                                w={14}
+                                _hover={{
+                                    bgGradient:
+                                        "linear(to-l, white, gray.200)",
+                                }}
+                            />
 
-                                <IconButton
-                                    aria-label="Next image"
-                                    icon={<FaArrowRight />}
-                                    onClick={handleNextImage}
-                                    position="absolute"
-                                    top="50%"
-                                    right="5"
-                                    bg={"transparent"}
-                                    rounded={0}
-                                    h={20}
-                                    w={14}
-                                    _hover={{
-                                        bgGradient:
-                                            "linear(to-r, white, gray.200)",
-                                    }}
-                                />
-                                <Text
-                                    position="absolute"
-                                    top="90%"
-                                    right="90%"
-                                    p="2"
-                                    fontWeight={"bold"}
-                                    bgColor={"transparent"}
-                                >
-                                    {currentImageIndex + 1}/{ad.images.length}
-                                </Text>
-                            </Flex>
-                            <VStack
-                                spacing={5}
-                                p={5}
-                                boxShadow="md"
-                                rounded={"xl"}
-                                bg={"white"}
-                                h={"max-content"}
+                            <IconButton
+                                aria-label="Next image"
+                                icon={<FaArrowRight />}
+                                onClick={handleNextImage}
+                                position="absolute"
+                                top="50%"
+                                right="5"
+                                bg={"transparent"}
+                                rounded={0}
+                                h={20}
+                                w={14}
+                                _hover={{
+                                    bgGradient:
+                                        "linear(to-r, white, gray.200)",
+                                }}
+                            />
+                            <Text
+                                position="absolute"
+                                top="90%"
+                                right="90%"
+                                p="2"
+                                fontWeight={"bold"}
+                                bgColor={"transparent"}
                             >
-                                {ad.images.map((image, index) => (
-                                    <Box
-                                        key={index}
-                                        outline={
-                                            currentImageIndex === index
-                                                ? "2px solid blue"
-                                                : "none"
-                                        }
-                                        outlineOffset={"-2px"}
-                                        borderRadius={"lg"}
-                                    >
-                                        <Image
-                                            borderRadius={"lg"}
-                                            src={image.url}
-                                            boxSize="100px"
-                                            onClick={() =>
-                                                setCurrentImageIndex(index)
-                                            }
-                                            cursor="pointer"
-                                        />
-                                    </Box>
-                                ))}
-                            </VStack>
+                                {currentImageIndex + 1}/{ad.images.length}
+                            </Text>
+                            <Box>
+                                <ImageCarousel ad={ad} imageHeight={imageHeight} currentImageIndex={currentImageIndex} setCurrentImageIndex={setCurrentImageIndex} />
+                            </Box>
                         </Flex>
                         <Box
                             p={5}
@@ -226,91 +208,116 @@ const Show = ({ ad, auth }) => {
                             <Text fontSize="2xl" fontWeight="bold">
                                 {ad.title}
                             </Text>
-                            <Text fontSize="lg">
+                            <Text fontSize="2xl" color={"#0060df"}>
                                 {ad.price} {ad.currency}
                             </Text>
                         </Box>
                         <Flex
                             direction={"column"}
                             w={"100%"}
-                            bg={"white"}
-                            p={5}
-                            rounded={"xl"}
-                            boxShadow={"md"}
+                            gap={5}
+
                         >
-                            <Box>
-                                <Text>
+                            <Box
+                                bg={"white"}
+                                p={5}
+                                rounded={"xl"}
+                                boxShadow={"md"}
+                            >
+                                <Text fontSize="2xl">
                                     <b>Опис на огласот:</b>
                                 </Text>
+                                <Divider />
+                                <Text p={2}>{ad.description}</Text>
                             </Box>
-                            <Divider />
-                            <Text>{ad.description}</Text>
-                            <Divider />
-                            <Box>
-                                {ad.brand && (
-                                    <Text>
-                                        <b>Бренд:</b> {ad.brand}
-                                    </Text>
-                                )}
-                                {ad.model && (
-                                    <Text>
-                                        <b>Модел:</b> {ad.model}
-                                    </Text>
-                                )}
-                                {ad.year && (
-                                    <Text>
-                                        <b>Година:</b> {ad.year}
-                                    </Text>
-                                )}
-                                {ad.fuel_type && (
-                                    <Text>
-                                        <b>Гориво:</b> {ad.fuel_type}
-                                    </Text>
-                                )}
-                                {ad.mileage && (
-                                    <Text>
-                                        <b>Километри:</b> {ad.mileage}
-                                    </Text>
-                                )}
-                                {ad.transmission && (
-                                    <Text>
-                                        <b>Менувач:</b> {ad.transmission}
-                                    </Text>
-                                )}
-                                {ad.body_type && (
-                                    <Text>
-                                        <b>Каросерија:</b> {ad.body_type}
-                                    </Text>
-                                )}
-                                {ad.color && (
-                                    <Text>
-                                        <b>Боја:</b> {ad.color}
-                                    </Text>
-                                )}
-                                {ad.registration_country && (
-                                    <Text>
-                                        <b>Регистрација:</b>{" "}
-                                        {ad.registration_country}
-                                    </Text>
-                                )}
-                                {ad.registration_valid_until && (
-                                    <Text>
-                                        <b>Регистрирана до::</b>{" "}
-                                        {ad.registration_valid_until}
-                                    </Text>
-                                )}
-                                {ad.engine_power_ks && (
-                                    <Text>
-                                        <b>Сила на моторот (ks):</b>{" "}
-                                        {ad.engine_power_ks}
-                                    </Text>
-                                )}
-                                {ad.emission_class && (
-                                    <Text>
-                                        <b>Класа на емисија:</b>{" "}
-                                        {ad.emission_class}
-                                    </Text>
-                                )}
+                            <Box
+                                bg={"white"}
+                                p={5}
+                                rounded={"xl"}
+                                boxShadow={"md"}
+                            >
+                                <Text fontSize="2xl">
+                                    <b>Карактеристики:</b>
+                                </Text>
+                                <Divider />
+                                <Box p={2}>
+                                    {ad.brand && (
+                                        <Text>
+                                            <b>Бренд:</b> {ad.brand}
+                                        </Text>
+                                    )}
+                                    {ad.model && (
+                                        <Text>
+                                            <b>Модел:</b> {ad.model}
+                                        </Text>
+                                    )}
+                                    {ad.year && (
+                                        <Text>
+                                            <b>Година:</b> {ad.year}
+                                        </Text>
+                                    )}
+                                    {ad.fuel_type && (
+                                        <Text>
+                                            <b>Гориво:</b> {ad.fuel_type}
+                                        </Text>
+                                    )}
+                                    {ad.mileage && (
+                                        <Text>
+                                            <b>Километри:</b> {ad.mileage}
+                                        </Text>
+                                    )}
+                                    {ad.transmission && (
+                                        <Text>
+                                            <b>Менувач:</b> {ad.transmission}
+                                        </Text>
+                                    )}
+                                    {ad.body_type && (
+                                        <Text>
+                                            <b>Каросерија:</b> {ad.body_type}
+                                        </Text>
+                                    )}
+                                    {ad.color && (
+                                        <Text>
+                                            <b>Боја:</b> {ad.color}
+                                        </Text>
+                                    )}
+                                    {ad.registration_country && (
+                                        <Text>
+                                            <b>Регистрација:</b>{" "}
+                                            {ad.registration_country}
+                                        </Text>
+                                    )}
+                                    {ad.registration_valid_until && (
+                                        <Text>
+                                            <b>Регистрирана до::</b>{" "}
+                                            {ad.registration_valid_until}
+                                        </Text>
+                                    )}
+                                    {ad.engine_power_ks && (
+                                        <Text>
+                                            <b>Сила на моторот (ks):</b>{" "}
+                                            {ad.engine_power_ks}
+                                        </Text>
+                                    )}
+                                    {ad.emission_class && (
+                                        <Text>
+                                            <b>Класа на емисија:</b>{" "}
+                                            {ad.emission_class}
+                                        </Text>
+                                    )}
+                                </Box>
+                                <Flex justifyContent={"center"}>
+                                    <Link color={"#0060df"} href="#">
+                                        <Flex color={"#0060df"} align="center">
+                                            <Icon as={FiThumbsDown} mr={2} />
+                                            <Text
+                                                _hover={
+                                                    { textDecoration: 'underline', }
+                                                }
+                                            >Пријави оглас</Text>
+                                        </Flex>
+                                    </Link>
+                                </Flex>
                             </Box>
                         </Flex>
                     </VStack>

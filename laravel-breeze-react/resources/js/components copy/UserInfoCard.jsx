@@ -23,6 +23,9 @@ import {
 import { MdMoreVert } from "react-icons/md";
 import userIcon from "../assets/profile.jpg";
 import { CiLocationArrow1 } from "react-icons/ci";
+import { FiThumbsDown } from "react-icons/fi";
+import { VscVerified } from "react-icons/vsc";
+
 
 const UserInfoCard = ({ user }) => {
     return (
@@ -72,19 +75,19 @@ const UserInfoCard = ({ user }) => {
                 <Divider />
                 <Flex align="center">
                     <Icon as={FaTruck} mr={2} />
-                    <Text>Delivery: National</Text>
+                    <Text>Достава: Цела Македонија</Text>
                 </Flex>
                 <Divider />
                 <Flex align="center">
-                    <Icon as={FaInfoCircle} mr={2} />
-                    <Text>Supplier type</Text>
+                    <Icon color={"green"} as={VscVerified} mr={2} />
+                    <Text>Верифициран продавач</Text>
                 </Flex>
                 <Divider />
 
                 <Link color="#0060df" href="#">
                     <Flex align="center">
-                        <Icon as={FaExclamationCircle} mr={2} />
-                        <Text>Report a problem</Text>
+                        <Icon as={FiThumbsDown} mr={2} />
+                        <Text>Пријави корисник</Text>
                     </Flex>
                 </Link>
             </VStack>

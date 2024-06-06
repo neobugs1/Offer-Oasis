@@ -4,7 +4,7 @@ import React from "react";
 
 const DodadiOglas = () => {
     return (
-        <Link href={route("ad.create")} className="h-full">
+        <Link href={route("search")} className="h-full">
             <Box
                 as="button"
                 h={"100%"}

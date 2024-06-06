@@ -230,6 +230,7 @@ const SearchBar = ({ queryParams, auth }) => {
                     >
                         Цела Македонија
                     </MenuItem>
+                    {auth.user && (
                     <MenuItem
                         onClick={() =>
                             setSelectedLocation(
@@ -245,6 +246,7 @@ const SearchBar = ({ queryParams, auth }) => {
                     >
                         <MdOutlineMyLocation /> Моја локација
                     </MenuItem>
+                    )}
                     {locations.map((category) => (
                         <NestedMenu
                             key={category.name}
