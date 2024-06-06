@@ -5,8 +5,12 @@ import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ChakraProvider } from "@chakra-ui/react";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import { Suspense } from "react";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
+
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -19,9 +23,11 @@ createInertiaApp({
         const root = createRoot(el);
 
         root.render(
-            <ChakraProvider>
-                <App {...props} />
-            </ChakraProvider>
+            <Suspense fallback="Loading...">
+                <ChakraProvider>
+                    <App {...props} />
+                </ChakraProvider>
+            </Suspense>
         );
     },
     progress: {

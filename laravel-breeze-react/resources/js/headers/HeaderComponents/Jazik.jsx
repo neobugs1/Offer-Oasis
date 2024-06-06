@@ -1,3 +1,4 @@
+import i18n from "@/i18n";
 import {
     Box,
     Button,
@@ -16,11 +17,16 @@ import {
     RadioGroup,
     Stack,
 } from "@chakra-ui/react";
+import i18next, { changeLanguage } from "i18next";
 import React from "react";
 import { VscChevronDown, VscGlobe } from "react-icons/vsc";
 
 const Jazik = () => {
-    const [selectedLanguage, setSelectedLanguage] = React.useState("MK");
+
+    const changeLanguage = (language) => {
+        i18n.changeLanguage(language.toLowerCase());
+    };
+
     return (
         <Popover trigger="hover">
             <PopoverTrigger>
@@ -42,7 +48,7 @@ const Jazik = () => {
                     gap={3}
                 >
                     <Icon as={VscGlobe} w={10} h={"100%"} />
-                    {selectedLanguage === "MK" ? "МК" : "EN"}
+                    {i18n.language === "mk" ? "МК" : "EN"}
                     <Icon as={VscChevronDown} w={5} h={5} />
                 </Box>
             </PopoverTrigger>
@@ -58,8 +64,8 @@ const Jazik = () => {
                             Јазик
                         </Heading>
                         <RadioGroup
-                            onChange={setSelectedLanguage}
-                            value={selectedLanguage}
+                            onChange={changeLanguage}
+                            value={i18n.language}
                         >
                             <Stack direction="column" gap={5} mb={2}>
                                 <Box
@@ -69,7 +75,7 @@ const Jazik = () => {
                                         },
                                     }}
                                 >
-                                    <Radio value="MK" size="lg">
+                                    <Radio value="mk" size="lg">
                                         Македонски (MK)
                                     </Radio>
                                 </Box>
@@ -80,7 +86,7 @@ const Jazik = () => {
                                         },
                                     }}
                                 >
-                                    <Radio value="EN" size="lg">
+                                    <Radio value="en" size="lg">
                                         English (EN)
                                     </Radio>
                                 </Box>

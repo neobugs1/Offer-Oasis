@@ -20,8 +20,10 @@ import LoggedInUser from "./HeaderComponents/LoggedInUser";
 import Jazik from "./HeaderComponents/Jazik";
 import DodadiOglas from "./HeaderComponents/DodadiOglas";
 import SiteOglasiButton from "./HeaderComponents/SiteOglasiButton";
+import { useTranslation } from "react-i18next";
 
 const DefaultHeader = ({ auth }) => {
+    const { t } = useTranslation();
     return (
         <>
             <Flex

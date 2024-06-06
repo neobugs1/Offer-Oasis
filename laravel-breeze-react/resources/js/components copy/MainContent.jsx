@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useTransition } from "react";
 import {
     Box,
     Container,
@@ -15,8 +15,11 @@ import { Link } from "@inertiajs/react";
 import BackgroundChanger from "./BackgroundChanger";
 import LatestAds from "./LatestAds";
 import { Search2Icon } from "@chakra-ui/icons";
+import { useTranslation } from "react-i18next";
 
 const MainContent = ({ ads }) => {
+    const { t } = useTranslation();
+
     return (
         <BackgroundChanger>
             <Flex justify={"center"} direction={"column"} h="93vh">
@@ -30,7 +33,7 @@ const MainContent = ({ ads }) => {
                 >
                     <Spacer />
                     <Text fontSize="4xl" color="white">
-                        Пребарајте огласи
+                        {t('prebarajte')}
                     </Text>
                     <Flex
                         justifyContent={"center"}
@@ -64,7 +67,7 @@ const MainContent = ({ ads }) => {
                             borderColor={"rgba(255, 255, 255, 1)"}
                         />
 
-                        <Heading color={"white"}>или</Heading>
+                        <Heading color={"white"}>{t('ili')}</Heading>
                         <Divider
                             orientation="vertical"
                             maxH={"2vh"}
