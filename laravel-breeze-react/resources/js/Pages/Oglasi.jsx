@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import AdListing from "@/components copy/AdListing";
 import MyAdListing from "@/components copy/MyAdListing";
@@ -10,10 +11,36 @@ import {
     HStack,
     Heading,
     Spacer,
+    Alert,
+    AlertIcon,
+    AlertTitle,
+    CloseButton,
 } from "@chakra-ui/react";
 import { Head, Link } from "@inertiajs/react";
 
 export default function Ads({ auth, ads }) {
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
+
+    useEffect(() => {
+        // Check if there's a success message in local storage
+        const storedSuccessMessage = localStorage.getItem("successMessage");
+        if (storedSuccessMessage) {
+            setSuccessMessage(storedSuccessMessage);
+            setShowSuccess(true);
+            // Clear the success message from local storage
+            localStorage.removeItem("successMessage");
+        }
+    }, []);
+
+    const handleShowSuccess = (message) => {
+        setSuccessMessage(message);
+        setShowSuccess(true);
+        // Store the success message in local storage
+        localStorage.setItem("successMessage", message);
+    };
+
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -28,6 +55,18 @@ export default function Ads({ auth, ads }) {
             }
         >
             <Head title="Твои огласи" />
+            {showSuccess && (
+                <Alert status="success" mb={4}>
+                    <AlertIcon />
+                    <AlertTitle mr={2}>{successMessage}</AlertTitle>
+                    <CloseButton
+                        onClick={() => setShowSuccess(false)}
+                        position="absolute"
+                        right="8px"
+                        top="8px"
+                    />
+                </Alert>
+            )}
             <Center className="py-12">
                 <Flex gap={10} w={"75%"}>
                     <Box w={"100%"}>

@@ -195,7 +195,7 @@ class AdController extends Controller
             }
         }
         // return response()->json(['message' => 'Ad created successfully', 'ad' => $ad], 201);
-        return to_route('ad.show', $ad->id)->with('success', 'Ad created successfully');
+        return to_route('oglasi', $ad->id)->with('success', 'Огласот е успешно креиран!');
     }
 
     /**
@@ -234,7 +234,7 @@ class AdController extends Controller
 
         $ad->update($data);
 
-        return redirect()->route('oglasi', $ad->id)->with("success", "Ad renewed successfully");
+        return Inertia::render('oglasi')->with("success", "Огласот е успешно обновен!");
     }
 
     /**
@@ -272,7 +272,7 @@ class AdController extends Controller
         }
         $ad->update($data);
 
-        return redirect()->route('ad.show', $ad->id)->with("success", "Ad updated successfully");
+        return redirect()->route('oglasi', $ad->id)->with("success", "Огласот е успешно променет!");
     }
 
     public function approve(UpdateAdRequest $request, Ad $ad)
@@ -283,7 +283,7 @@ class AdController extends Controller
 
         $ad->update($data);
 
-        return redirect()->route('reviews', $ad->id)->with("success", "Ad approved successfully");
+        return redirect()->route('reviews', $ad->id)->with("success", "Огласот е успешно одобрен!");
     }
 
     public function reject(UpdateAdRequest $request, Ad $ad)
@@ -294,7 +294,7 @@ class AdController extends Controller
 
         $ad->update($data);
 
-        return redirect()->route('reviews', $ad->id)->with("success", "Ad rejected successfully");
+        return redirect()->route('reviews', $ad->id)->with("success", "Огласот е успешно одбиен!");
     }
 
     /**
@@ -314,6 +314,6 @@ class AdController extends Controller
             }
         }
         $ad->delete();
-        return to_route('search')->with("success", "Ad deleted successfully");
+        return to_route('search')->with("success", "Огласот е успешно избришан!");
     }
 }

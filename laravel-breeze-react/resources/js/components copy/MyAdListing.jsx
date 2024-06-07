@@ -12,6 +12,7 @@ import {
     Tooltip,
     VStack,
 } from "@chakra-ui/react";
+import { Inertia } from "@inertiajs/inertia";
 import { Link, useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
