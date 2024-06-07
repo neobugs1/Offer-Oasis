@@ -34,7 +34,6 @@ export default function AdForm({ auth, categories }) {
         registration_valid_until: "",
         engine_power_ks: "",
         emission_class: "",
-
         category: "",
         images: [],
     });
@@ -72,6 +71,11 @@ export default function AdForm({ auth, categories }) {
             category: newCategory,
         };
         setData({ ...data, ...newData });
+    };
+
+    const handleFileChange = (e) => {
+        const files = Array.from(e.target.files);
+        setData("images", files);
     };
 
     return (
@@ -117,9 +121,7 @@ export default function AdForm({ auth, categories }) {
                             <Input
                                 type="file"
                                 multiple
-                                onChange={(e) =>
-                                    setData("images", [...e.target.files])
-                                }
+                                onChange={handleFileChange}
                             />
                         </FormControl>
                         <Flex w={"100%"}>

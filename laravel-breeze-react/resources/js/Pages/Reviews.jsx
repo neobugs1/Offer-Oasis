@@ -1,9 +1,25 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import ReviewAdListing from "@/components copy/ReviewAdListing";
-import { Accordion, Box, HStack, Heading } from "@chakra-ui/react";
-import { Head, Link } from "@inertiajs/react";
+import { Accordion, Box, HStack, Heading, useToast } from "@chakra-ui/react";
+import { Head, Link, usePage } from "@inertiajs/react";
+import { useEffect } from "react";
 
 export default function Reviews({ auth, ads }) {
+    const { flash } = usePage().props;
+    const toast = useToast();
+
+    useEffect(() => {
+        if (flash.success) {
+            toast({
+                title: "Success",
+                description: flash.success,
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+                position: "top-right",
+            });
+        }
+    }, [flash.success]);
     return (
         <AuthenticatedLayout
             user={auth.user}

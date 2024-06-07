@@ -7,21 +7,16 @@ import {
     Text,
     Button,
     Flex,
-    Spacer,
     VStack,
     HStack,
     IconButton,
-    AspectRatio,
-    Center,
     Divider,
     Icon,
-    textDecoration,
 } from "@chakra-ui/react";
 import {
     FaArrowLeft,
     FaArrowRight,
     FaChevronRight,
-    FaEnvelope,
     FaExpand,
 } from "react-icons/fa";
 import { Inertia } from "@inertiajs/inertia";
@@ -29,8 +24,10 @@ import UserInfoCard from "@/components copy/UserInfoCard";
 import { AiOutlineHome } from "react-icons/ai";
 import ImageCarousel from "@/components copy/Show/ImageCarousel";
 import { FiThumbsDown } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 const Show = ({ ad, auth }) => {
+    const { t } = useTranslation();
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     const handleNextImage = () => {
@@ -52,12 +49,13 @@ const Show = ({ ad, auth }) => {
             }
         });
     };
+
     const deleteAd = (ad) => {
-        if (!window.confirm("Are you sure you want to delete the ad?")) {
+        if (!window.confirm(t("show.confirmDelete"))) {
             return;
         }
         if (!ad.id) {
-            console.error("Error: ad.id is undefined");
+            console.error(t("show.error"));
             return;
         }
         Inertia.post(route("ad.destroy", ad.id), { _method: "delete" });
@@ -72,7 +70,6 @@ const Show = ({ ad, auth }) => {
     return (
         <Layout auth={auth}>
             <Head title={ad.title}></Head>
-            {/* <pre>{JSON.stringify(ad, 8, 2)}</pre> */}
             <Flex
                 w={"100%"}
                 h={"100%"}
@@ -89,18 +86,15 @@ const Show = ({ ad, auth }) => {
                 >
                     <AiOutlineHome color="#0060df" size={25} />
                     <FaChevronRight color="gray" />
-
                     <HStack spacing={5}>
                         {ad.category.map((category, index) => (
-                            <>
+                            <React.Fragment key={index}>
                                 <Link>
                                     <Text
                                         fontSize="sm"
                                         color={"#0060df"}
                                         fontWeight="bold"
-                                        _hover={{
-                                            textDecoration: "underline",
-                                        }}
+                                        _hover={{ textDecoration: "underline" }}
                                     >
                                         {category.name}
                                     </Text>
@@ -108,7 +102,7 @@ const Show = ({ ad, auth }) => {
                                 {index < ad.category.length - 1 && (
                                     <FaChevronRight color="gray" />
                                 )}
-                            </>
+                            </React.Fragment>
                         ))}
                         <FaChevronRight color="gray" />
                         <Text fontSize="lg" color={"black"} fontWeight="bold">
@@ -126,7 +120,6 @@ const Show = ({ ad, auth }) => {
                     >
                         <UserInfoCard user={ad.seller} />
                     </Box>
-                    <HStack></HStack>
                     <VStack align="start" spacing={4} w="77%">
                         <Flex
                             position="relative"
@@ -135,14 +128,14 @@ const Show = ({ ad, auth }) => {
                             boxShadow="md"
                             rounded={"xl"}
                             gap={5}
-                            maxH={imageHeight ? `${imageHeight}px` : 'none'}
+                            maxH={imageHeight ? `${imageHeight}px` : "none"}
                         >
                             <Box minW={"100%"}>
                                 <Image
                                     src={
                                         ad.images &&
-                                            ad.images[currentImageIndex] &&
-                                            ad.images[currentImageIndex].url
+                                        ad.images[currentImageIndex] &&
+                                        ad.images[currentImageIndex].url
                                             ? ad.images[currentImageIndex].url
                                             : "https://via.placeholder.com/300"
                                     }
@@ -163,11 +156,9 @@ const Show = ({ ad, auth }) => {
                                 h={20}
                                 w={14}
                                 _hover={{
-                                    bgGradient:
-                                        "linear(to-l, white, gray.200)",
+                                    bgGradient: "linear(to-l, white, gray.200)",
                                 }}
                             />
-
                             <IconButton
                                 aria-label="Next image"
                                 icon={<FaArrowRight />}
@@ -180,8 +171,7 @@ const Show = ({ ad, auth }) => {
                                 h={20}
                                 w={14}
                                 _hover={{
-                                    bgGradient:
-                                        "linear(to-r, white, gray.200)",
+                                    bgGradient: "linear(to-r, white, gray.200)",
                                 }}
                             />
                             <Text
@@ -195,7 +185,12 @@ const Show = ({ ad, auth }) => {
                                 {currentImageIndex + 1}/{ad.images.length}
                             </Text>
                             <Box>
-                                <ImageCarousel ad={ad} imageHeight={imageHeight} currentImageIndex={currentImageIndex} setCurrentImageIndex={setCurrentImageIndex} />
+                                <ImageCarousel
+                                    ad={ad}
+                                    imageHeight={imageHeight}
+                                    currentImageIndex={currentImageIndex}
+                                    setCurrentImageIndex={setCurrentImageIndex}
+                                />
                             </Box>
                         </Flex>
                         <Box
@@ -212,12 +207,7 @@ const Show = ({ ad, auth }) => {
                                 {ad.price} {ad.currency}
                             </Text>
                         </Box>
-                        <Flex
-                            direction={"column"}
-                            w={"100%"}
-                            gap={5}
-
-                        >
+                        <Flex direction={"column"} w={"100%"} gap={5}>
                             <Box
                                 bg={"white"}
                                 p={5}
@@ -225,7 +215,7 @@ const Show = ({ ad, auth }) => {
                                 boxShadow={"md"}
                             >
                                 <Text fontSize="2xl">
-                                    <b>Опис на огласот:</b>
+                                    <b>{t("show.descriptionTitle")}</b>
                                 </Text>
                                 <Divider />
                                 <Text p={2}>{ad.description}</Text>
@@ -237,71 +227,81 @@ const Show = ({ ad, auth }) => {
                                 boxShadow={"md"}
                             >
                                 <Text fontSize="2xl">
-                                    <b>Карактеристики:</b>
+                                    <b>{t("show.characteristicsTitle")}</b>
                                 </Text>
                                 <Divider />
                                 <Box p={2}>
                                     {ad.brand && (
                                         <Text>
-                                            <b>Бренд:</b> {ad.brand}
+                                            <b>{t("show.brand")}</b> {ad.brand}
                                         </Text>
                                     )}
                                     {ad.model && (
                                         <Text>
-                                            <b>Модел:</b> {ad.model}
+                                            <b>{t("show.model")}</b> {ad.model}
                                         </Text>
                                     )}
                                     {ad.year && (
                                         <Text>
-                                            <b>Година:</b> {ad.year}
+                                            <b>{t("show.year")}</b> {ad.year}
                                         </Text>
                                     )}
                                     {ad.fuel_type && (
                                         <Text>
-                                            <b>Гориво:</b> {ad.fuel_type}
+                                            <b>{t("show.fuelType")}</b>{" "}
+                                            {ad.fuel_type}
                                         </Text>
                                     )}
                                     {ad.mileage && (
                                         <Text>
-                                            <b>Километри:</b> {ad.mileage}
+                                            <b>{t("show.mileage")}</b>{" "}
+                                            {ad.mileage}
                                         </Text>
                                     )}
                                     {ad.transmission && (
                                         <Text>
-                                            <b>Менувач:</b> {ad.transmission}
+                                            <b>{t("show.transmission")}</b>{" "}
+                                            {ad.transmission}
                                         </Text>
                                     )}
                                     {ad.body_type && (
                                         <Text>
-                                            <b>Каросерија:</b> {ad.body_type}
+                                            <b>{t("show.bodyType")}</b>{" "}
+                                            {ad.body_type}
                                         </Text>
                                     )}
                                     {ad.color && (
                                         <Text>
-                                            <b>Боја:</b> {ad.color}
+                                            <b>{t("show.color")}</b> {ad.color}
                                         </Text>
                                     )}
                                     {ad.registration_country && (
                                         <Text>
-                                            <b>Регистрација:</b>{" "}
+                                            <b>
+                                                {t("show.registrationCountry")}
+                                            </b>{" "}
                                             {ad.registration_country}
                                         </Text>
                                     )}
                                     {ad.registration_valid_until && (
                                         <Text>
-                                            <b>Регистрирана до::</b>{" "}
+                                            <b>
+                                                {t(
+                                                    "show.registrationValidUntil"
+                                                )}
+                                            </b>{" "}
                                             {ad.registration_valid_until}
                                         </Text>
                                     )}
                                     {ad.engine_power_ks && (
                                         <Text>
-                                            <b>Сила на моторот (ks):</b>{" "}
+                                            <b>{t("show.enginePowerKs")}</b>{" "}
                                             {ad.engine_power_ks}
                                         </Text>
                                     )}
                                     {ad.emission_class && (
                                         <Text>
-                                            <b>Класа на емисија:</b>{" "}
+                                            <b>{t("show.emissionClass")}</b>{" "}
                                             {ad.emission_class}
                                         </Text>
                                     )}
@@ -311,10 +311,12 @@ const Show = ({ ad, auth }) => {
                                         <Flex color={"#0060df"} align="center">
                                             <Icon as={FiThumbsDown} mr={2} />
                                             <Text
-                                                _hover={
-                                                    { textDecoration: 'underline', }
-                                                }
-                                            >Пријави оглас</Text>
+                                                _hover={{
+                                                    textDecoration: "underline",
+                                                }}
+                                            >
+                                                {t("show.reportAd")}
+                                            </Text>
                                         </Flex>
                                     </Link>
                                 </Flex>
@@ -323,9 +325,9 @@ const Show = ({ ad, auth }) => {
                     </VStack>
                 </Flex>
             </Flex>
-            <Button onClick={() => deleteAd(ad)}>Избриши оглас</Button>
+            <Button onClick={() => deleteAd(ad)}>{t("show.deleteAd")}</Button>
             <Link className="w-full" href={route("ad.edit", ad.id)}>
-                <Button w={"100%"}>Измени оглас</Button>
+                <Button w={"100%"}>{t("show.editAd")}</Button>
             </Link>
         </Layout>
     );

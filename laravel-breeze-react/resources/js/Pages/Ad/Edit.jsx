@@ -40,12 +40,22 @@ export default function AdForm({ auth, categories, ad }) {
         images: ad.images || [],
         _method: "put",
     });
-    const toast = useToast();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(data);
-        post(route("ad.update", ad.id));
+
+        const formData = new FormData();
+        data.images.forEach((file, index) => {
+            formData.append(`images[${index}]`, file);
+        });
+        // Append other form data
+        Object.keys(data).forEach((key) => {
+            if (key !== "images") {
+                formData.append(key, data[key]);
+            }
+        });
+
+        post(route("ad.update", ad.id), formData);
     };
 
     const renderOption = (category, level = 0) => (
@@ -59,6 +69,18 @@ export default function AdForm({ auth, categories, ad }) {
                 )}
         </React.Fragment>
     );
+
+    const handleImageDelete = (index) => {
+        const newImages = [...data.images];
+        newImages.splice(index, 1);
+        console.log(data.images);
+        setData("images", newImages);
+    };
+
+    const handleImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        setData("images", [...data.images, ...files]); // Add new files to existing files
+    };
 
     const resetData = (newCategory) => {
         const newData = {
@@ -109,23 +131,24 @@ export default function AdForm({ auth, categories, ad }) {
                 </FormControl>
                 <FormControl>
                     <FormLabel>Upload Images</FormLabel>
-                    <Input
-                        type="file"
-                        multiple
-                        onChange={(e) => {
-                            const newImages = Array.from(e.target.files);
-                            setData("images", newImages);
-                        }}
-                    />
-                    {ad.images && (
-                        <Flex gap={2} mt={2}>
-                            {ad.images.map((image) => (
-                                <Image
-                                    key={image.id}
-                                    src={image.url}
-                                    alt={image.name}
-                                    style={{ width: "250px" }}
-                                />
+                    <Input type="file" multiple onChange={handleImageChange} />
+                    {data.images && (
+                        <Flex direction="column" mt={2}>
+                            {data.images.map((imageUrl, index) => (
+                                <Flex key={index} align="center" mt={2}>
+                                    <Image
+                                        src={imageUrl.url || imageUrl} // Use the URL directly
+                                        alt={`Image ${index + 1}`}
+                                        style={{ width: "100px" }}
+                                    />
+                                    <Button
+                                        ml={4}
+                                        colorScheme="red"
+                                        onClick={() => handleImageDelete(index)}
+                                    >
+                                        Delete
+                                    </Button>
+                                </Flex>
                             ))}
                         </Flex>
                     )}

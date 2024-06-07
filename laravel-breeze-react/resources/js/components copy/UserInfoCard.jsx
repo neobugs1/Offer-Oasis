@@ -12,28 +12,22 @@ import {
     Link,
     StackDivider,
 } from "@chakra-ui/react";
-import {
-    FaPhone,
-    FaTruck,
-    FaInfoCircle,
-    FaExclamationCircle,
-    FaViber,
-    FaWhatsapp,
-} from "react-icons/fa";
-import { MdMoreVert } from "react-icons/md";
-import userIcon from "../assets/profile.jpg";
+import { FaPhone, FaTruck, FaViber, FaWhatsapp } from "react-icons/fa";
 import { CiLocationArrow1 } from "react-icons/ci";
 import { FiThumbsDown } from "react-icons/fi";
 import { VscVerified } from "react-icons/vsc";
-
+import userIcon from "../assets/profile.jpg";
+import { useTranslation } from "react-i18next";
 
 const UserInfoCard = ({ user }) => {
+    const { t } = useTranslation();
+
     return (
         <Box p={4}>
             <VStack spacing={3} align="start">
                 <Image
                     src={userIcon}
-                    alt="Shipment Tracking Logo"
+                    alt={t("userInfoCard.profileAlt")}
                     boxSize="70px"
                     objectFit="cover"
                     rounded={"lg"}
@@ -49,14 +43,14 @@ const UserInfoCard = ({ user }) => {
                 <Flex align="center">
                     <Image
                         src="https://flagsapi.com/MK/flat/64.png"
-                        alt="Macedonia Flag"
+                        alt={t("userInfoCard.flagAlt")}
                         boxSize="20px"
                         mr={2}
                     />
-                    <Text>Македонија</Text>
+                    <Text>{t("userInfoCard.country")}</Text>
                 </Flex>
                 <Button bgColor={"#0060df"} color={"white"} width="100%">
-                    Контактирај го продавачот
+                    {t("userInfoCard.contactSeller")}
                 </Button>
                 <Divider />
                 <HStack
@@ -75,19 +69,18 @@ const UserInfoCard = ({ user }) => {
                 <Divider />
                 <Flex align="center">
                     <Icon as={FaTruck} mr={2} />
-                    <Text>Достава: Цела Македонија</Text>
+                    <Text>{t("userInfoCard.delivery")}</Text>
                 </Flex>
                 <Divider />
                 <Flex align="center">
                     <Icon color={"green"} as={VscVerified} mr={2} />
-                    <Text>Верифициран продавач</Text>
+                    <Text>{t("userInfoCard.verifiedSeller")}</Text>
                 </Flex>
                 <Divider />
-
                 <Link color="#0060df" href="#">
                     <Flex align="center">
                         <Icon as={FiThumbsDown} mr={2} />
-                        <Text>Пријави корисник</Text>
+                        <Text>{t("userInfoCard.reportUser")}</Text>
                     </Flex>
                 </Link>
             </VStack>

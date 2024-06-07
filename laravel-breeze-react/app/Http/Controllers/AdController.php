@@ -180,7 +180,7 @@ class AdController extends Controller
                 $img->scale(width: 640);
 
                 // Generate a filename with .jpg extension
-                $filename = time() . '.jpg';
+                $filename = time() . uniqid() . '.jpg';
 
                 // Compress the image and save it with .jpg extension
                 $img->save(public_path('storage\\ads\\' . $filename), 60);
@@ -194,8 +194,7 @@ class AdController extends Controller
                 ]);
             }
         }
-        // return response()->json(['message' => 'Ad created successfully', 'ad' => $ad], 201);
-        return to_route('oglasi', $ad->id)->with('success', 'Огласот е успешно креиран!');
+        return to_route('oglasi', $ad->id)->with(['success' => 'Огласот е успешно креиран!']);
     }
 
     /**
@@ -234,8 +233,13 @@ class AdController extends Controller
 
         $ad->update($data);
 
-        return Inertia::render('oglasi')->with("success", "Огласот е успешно обновен!");
+        return redirect()->back()->with([
+            'success' =>
+                'Огласот е успешно обновен!',
+        ]);
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -244,11 +248,19 @@ class AdController extends Controller
     {
         $this->authorize('update', $ad);
 
-        $data = $request->all();
-        $data['updated_by'] = auth()->id();
-        $data['status'] = 'pending';
-
+        // dd($request->all());
+        // If there are new images, delete the old ones
         if ($request->hasFile('images')) {
+            foreach ($ad->images as $image) {
+                // Get the relative file path
+                $filePath = str_replace(Storage::url(''), '', $image->url);
+                // Delete the file from storage
+                Storage::disk('public')->delete($filePath);
+                // Delete the image record from the database
+                $image->delete();
+            }
+
+            // Then add the new images
             foreach ($request->file('images') as $image) {
                 $manager = new ImageManager(new Driver());
 
@@ -257,9 +269,9 @@ class AdController extends Controller
                 // Resize the image to a width of 640 and constrain aspect ratio (auto height)
                 $img->scale(width: 640);
 
-                $filename = time() . '.jpg';
+                $filename = time() . uniqid() . '.jpg';
 
-                // Compress the image
+                // Compress the image and save it with .jpg extension
                 $img->save(public_path('storage\\ads\\' . $filename), 60);
 
                 $path = 'ads/' . $filename;
@@ -270,10 +282,18 @@ class AdController extends Controller
                 ]);
             }
         }
+
+        $data = $request->all();
+        $data['updated_by'] = auth()->id();
+        $data['status'] = 'pending';
         $ad->update($data);
 
-        return redirect()->route('oglasi', $ad->id)->with("success", "Огласот е успешно променет!");
+        return redirect()->route("oglasi")->with([
+            "success" => "Огласот е успешно променет!"
+        ]);
     }
+
+
 
     public function approve(UpdateAdRequest $request, Ad $ad)
     {
@@ -283,7 +303,7 @@ class AdController extends Controller
 
         $ad->update($data);
 
-        return redirect()->route('reviews', $ad->id)->with("success", "Огласот е успешно одобрен!");
+        return redirect()->back()->with(["success" => "Огласот е успешно одобрен!"]);
     }
 
     public function reject(UpdateAdRequest $request, Ad $ad)
@@ -294,7 +314,7 @@ class AdController extends Controller
 
         $ad->update($data);
 
-        return redirect()->route('reviews', $ad->id)->with("success", "Огласот е успешно одбиен!");
+        return redirect()->back()->with(["success" => "Огласот е успешно одбиен!"]);
     }
 
     /**
@@ -314,6 +334,8 @@ class AdController extends Controller
             }
         }
         $ad->delete();
-        return to_route('search')->with("success", "Огласот е успешно избришан!");
+        return redirect()->back()->with([
+            "success" => "Огласот е успешно избришан!"
+        ]);
     }
 }

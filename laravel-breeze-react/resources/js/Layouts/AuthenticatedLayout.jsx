@@ -21,6 +21,7 @@ import {
     MenuList,
     MenuItem,
     MenuDivider,
+    Badge,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import LogoLink from "@/headers/HeaderComponents/LogoLink";
@@ -73,6 +74,11 @@ export default function Authenticated({ user, header, children }) {
                     </HStack>
                     <Flex alignItems="center">
                         <Menu>
+                            {user.role == "admin" && (
+                                <Badge mr={5} rounded={"md"} colorScheme="red">
+                                    ADMIN
+                                </Badge>
+                            )}
                             <MenuButton
                                 as={Button}
                                 rounded="full"

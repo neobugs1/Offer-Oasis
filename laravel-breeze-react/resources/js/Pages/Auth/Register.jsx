@@ -21,6 +21,7 @@ import {
     SelectField,
 } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
+
 export default function Register({ auth, locations }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
@@ -31,15 +32,21 @@ export default function Register({ auth, locations }) {
         location: "",
     });
 
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+
     useEffect(() => {
         return () => {
             reset("password", "password_confirmation");
         };
     }, []);
 
+    useEffect(() => {
+        setData("name", `${firstName} ${lastName}`);
+    }, [firstName, lastName]);
+
     const submit = (e) => {
         e.preventDefault();
-
         post(route("register"));
     };
 
@@ -55,7 +62,6 @@ export default function Register({ auth, locations }) {
         </React.Fragment>
     );
 
-    // const { locations } = usePage().props;
     const { t } = useTranslation();
 
     return (
@@ -87,7 +93,7 @@ export default function Register({ auth, locations }) {
                             <Text fontSize="lg" fontWeight="bold" mb={4}>
                                 {t("register.createProfileFree")}
                             </Text>
-                            <FormControl as="form" onSubmit={submit}>
+                            <form onSubmit={submit}>
                                 <Flex mb={4}>
                                     <FormControl mr={4}>
                                         <FormLabel htmlFor="firstName">
@@ -99,13 +105,10 @@ export default function Register({ auth, locations }) {
                                             )}
                                             id="firstName"
                                             name="firstName"
-                                            value={data.firstName}
-                                            onChange={(e) =>
-                                                setData({
-                                                    ...data,
-                                                    firstName: e.target.value,
-                                                })
-                                            }
+                                            value={firstName}
+                                            onChange={(e) => {
+                                                setFirstName(e.target.value);
+                                            }}
                                         />
                                         {errors.firstName && (
                                             <Text color="red.500">
@@ -121,13 +124,10 @@ export default function Register({ auth, locations }) {
                                             placeholder={t("register.lastName")}
                                             id="lastName"
                                             name="lastName"
-                                            value={data.lastName}
-                                            onChange={(e) =>
-                                                setData({
-                                                    ...data,
-                                                    lastName: e.target.value,
-                                                })
-                                            }
+                                            value={lastName}
+                                            onChange={(e) => {
+                                                setLastName(e.target.value);
+                                            }}
                                         />
                                         {errors.lastName && (
                                             <Text color="red.500">
@@ -147,10 +147,7 @@ export default function Register({ auth, locations }) {
                                         name="email"
                                         value={data.email}
                                         onChange={(e) =>
-                                            setData({
-                                                ...data,
-                                                email: e.target.value,
-                                            })
+                                            setData("email", e.target.value)
                                         }
                                     />
                                     {errors.email && (
@@ -171,10 +168,10 @@ export default function Register({ auth, locations }) {
                                             name="password"
                                             value={data.password}
                                             onChange={(e) =>
-                                                setData({
-                                                    ...data,
-                                                    password: e.target.value,
-                                                })
+                                                setData(
+                                                    "password",
+                                                    e.target.value
+                                                )
                                             }
                                         />
                                         {errors.password && (
@@ -196,11 +193,10 @@ export default function Register({ auth, locations }) {
                                             name="password_confirmation"
                                             value={data.password_confirmation}
                                             onChange={(e) =>
-                                                setData({
-                                                    ...data,
-                                                    password_confirmation:
-                                                        e.target.value,
-                                                })
+                                                setData(
+                                                    "password_confirmation",
+                                                    e.target.value
+                                                )
                                             }
                                         />
                                         {errors.password_confirmation && (
@@ -210,7 +206,7 @@ export default function Register({ auth, locations }) {
                                         )}
                                     </FormControl>
                                 </Flex>
-                                <FormControl mr={4}>
+                                <FormControl mb={4}>
                                     <FormLabel htmlFor="phoneNumber">
                                         {t("register.phoneNumber")}
                                     </FormLabel>
@@ -220,10 +216,10 @@ export default function Register({ auth, locations }) {
                                         name="phoneNumber"
                                         value={data.phoneNumber}
                                         onChange={(e) =>
-                                            setData({
-                                                ...data,
-                                                phoneNumber: e.target.value,
-                                            })
+                                            setData(
+                                                "phoneNumber",
+                                                e.target.value
+                                            )
                                         }
                                     />
                                     {errors.phoneNumber && (
@@ -233,28 +229,25 @@ export default function Register({ auth, locations }) {
                                     )}
                                 </FormControl>
                                 <FormControl mb={4}>
-                                    <FormLabel htmlFor="companyName">
+                                    <FormLabel htmlFor="location">
                                         {t("register.location")}
                                     </FormLabel>
                                     <Select
                                         placeholder={t("register.location")}
-                                        id="companyName"
-                                        name="companyName"
-                                        value={data.companyName}
+                                        id="location"
+                                        name="location"
+                                        value={data.location}
                                         onChange={(e) =>
-                                            setData({
-                                                ...data,
-                                                companyName: e.target.value,
-                                            })
+                                            setData("location", e.target.value)
                                         }
                                     >
                                         {locations.map((location) =>
                                             renderOption(location)
                                         )}
                                     </Select>
-                                    {errors.companyName && (
+                                    {errors.location && (
                                         <Text color="red.500">
-                                            {errors.companyName}
+                                            {errors.location}
                                         </Text>
                                     )}
                                 </FormControl>
@@ -283,7 +276,7 @@ export default function Register({ auth, locations }) {
                                 >
                                     {t("register.registerButton")}
                                 </Button>
-                            </FormControl>
+                            </form>
                         </Box>
                         <Box
                             w={{ base: "100%", lg: "35%" }}

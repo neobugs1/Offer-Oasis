@@ -15,32 +15,26 @@ import {
     AlertIcon,
     AlertTitle,
     CloseButton,
+    useToast,
 } from "@chakra-ui/react";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 
-export default function Ads({ auth, ads }) {
-    const [showSuccess, setShowSuccess] = useState(false);
-    const [successMessage, setSuccessMessage] = useState("");
+export default function Oglasi({ auth, ads }) {
+    const { flash } = usePage().props;
+    const toast = useToast();
 
     useEffect(() => {
-        // Check if there's a success message in local storage
-        const storedSuccessMessage = localStorage.getItem("successMessage");
-        if (storedSuccessMessage) {
-            setSuccessMessage(storedSuccessMessage);
-            setShowSuccess(true);
-            // Clear the success message from local storage
-            localStorage.removeItem("successMessage");
+        if (flash.success) {
+            toast({
+                title: "Success",
+                description: flash.success,
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+                position: "top-right",
+            });
         }
-    }, []);
-
-    const handleShowSuccess = (message) => {
-        setSuccessMessage(message);
-        setShowSuccess(true);
-        // Store the success message in local storage
-        localStorage.setItem("successMessage", message);
-    };
-
-
+    }, [flash.success]);
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -55,10 +49,10 @@ export default function Ads({ auth, ads }) {
             }
         >
             <Head title="Твои огласи" />
-            {showSuccess && (
+            {/* {showSuccess && (
                 <Alert status="success" mb={4}>
                     <AlertIcon />
-                    <AlertTitle mr={2}>{successMessage}</AlertTitle>
+                    <AlertTitle mr={2}>{flash.success}</AlertTitle>
                     <CloseButton
                         onClick={() => setShowSuccess(false)}
                         position="absolute"
@@ -66,7 +60,7 @@ export default function Ads({ auth, ads }) {
                         top="8px"
                     />
                 </Alert>
-            )}
+            )} */}
             <Center className="py-12">
                 <Flex gap={10} w={"75%"}>
                     <Box w={"100%"}>

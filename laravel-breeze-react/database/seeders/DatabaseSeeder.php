@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         $BabyAndChildrenProducts = Category::create(['name' => 'Бебешки и Детски Производи']);
 
         $HealthBeautySupplementsAndEquipment = Category::create(['name' => 'Здравје, Убавина Додатоци и Опрема']);
-        $CDsDVDsVHSMusicMovies = Category::create(['name' => 'ЦД-а, ДВД-а, ВХС, Музика, Филмови']);
+        $CDsDVDsVHSMusicMovies = Category::create(['name' => 'CD-а, DVD-а, VHS, Музика, Филмови']);
         $BooksAndLiterature = Category::create(['name' => 'Книги и Литература']);
         $other = Category::create(['name' => 'Останато']);
 
@@ -77,7 +77,6 @@ class DatabaseSeeder extends Seeder
         $Cair = $Skopje->children()->create(['name' => 'Чаир']);
         $Karpos = $Skopje->children()->create(['name' => 'Карпош']);
 
-        $Aracinovo = Location::create(['name' => 'Арачиново']);
         $Berovo = Location::create(['name' => 'Берово']);
         $Bitola = Location::create(['name' => 'Битола']);
         $Bogdanci = Location::create(['name' => 'Богданци']);
