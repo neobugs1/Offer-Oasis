@@ -33,7 +33,7 @@ import AdsPage from "@/components copy/AdsPage";
 import SearchLayout from "@/Layouts/SearchLayout";
 import SearchBar from "@/headers/HeaderComponents/SearchBar";
 
-const Search = ({ auth, ads, queryParams = null }) => {
+const Search = ({ auth, ads, queryParams = null, mostPopularAds }) => {
     return (
         <SearchLayout auth={auth}>
             <Head
@@ -47,7 +47,7 @@ const Search = ({ auth, ads, queryParams = null }) => {
             ></Head>
             <Box p={6} bg={"#00193c1a"}>
                 {/* <SearchBar queryParams={queryParams} /> */}
-                <AdsPage ads={ads} />
+                <AdsPage ads={ads} mostPopularAds={mostPopularAds} />
             </Box>
         </SearchLayout>
     );

@@ -14,7 +14,7 @@ import {
     useToast,
 } from "@chakra-ui/react";
 import Layout from "@/Layouts/Layout";
-import React from "react";
+import React, { useState } from "react";
 import { Inertia } from "@inertiajs/inertia";
 
 export default function AdForm({ auth, categories, ad }) {
@@ -37,22 +37,29 @@ export default function AdForm({ auth, categories, ad }) {
         emission_class: ad.emission_class || "",
 
         category: ad.category[ad.category.length - 1].id || "",
-        images: ad.images || [],
+        images: ad.images.map((img) => ({ url: img.url, id: img.id })) || [],
         _method: "put",
     });
+    const [imagesToDelete, setImagesToDelete] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const formData = new FormData();
         data.images.forEach((file, index) => {
-            formData.append(`images[${index}]`, file);
+            if (file instanceof File) {
+                formData.append(`images[${index}]`, file);
+            }
         });
-        // Append other form data
+
         Object.keys(data).forEach((key) => {
             if (key !== "images") {
                 formData.append(key, data[key]);
             }
+        });
+
+        imagesToDelete.forEach((id, index) => {
+            formData.append(`imagesToDelete[${index}]`, id);
         });
 
         post(route("ad.update", ad.id), formData);
@@ -72,14 +79,16 @@ export default function AdForm({ auth, categories, ad }) {
 
     const handleImageDelete = (index) => {
         const newImages = [...data.images];
+        if (newImages[index].id) {
+            setImagesToDelete([...imagesToDelete, newImages[index].id]);
+        }
         newImages.splice(index, 1);
-        console.log(data.images);
         setData("images", newImages);
     };
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        setData("images", [...data.images, ...files]); // Add new files to existing files
+        setData("images", [...data.images, ...files]);
     };
 
     const resetData = (newCategory) => {
@@ -134,10 +143,13 @@ export default function AdForm({ auth, categories, ad }) {
                     <Input type="file" multiple onChange={handleImageChange} />
                     {data.images && (
                         <Flex direction="column" mt={2}>
-                            {data.images.map((imageUrl, index) => (
+                            {data.images.map((image, index) => (
                                 <Flex key={index} align="center" mt={2}>
                                     <Image
-                                        src={imageUrl.url || imageUrl} // Use the URL directly
+                                        src={
+                                            image.url ||
+                                            URL.createObjectURL(image)
+                                        } // Use URL.createObjectURL for File objects
                                         alt={`Image ${index + 1}`}
                                         style={{ width: "100px" }}
                                     />

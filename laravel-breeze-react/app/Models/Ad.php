@@ -57,4 +57,12 @@ class Ad extends Model
     {
         return $this->belongsTo(Category::class, 'category');
     }
+    public function scopeWhereFullText($query, $columns, $search)
+    {
+        $columns = implode(" || ' ' || ", $columns);
+        $search = implode(' ', (array) $search);
+
+        return $query->whereRaw("to_tsvector('english', {$columns}) @@ plainto_tsquery('english', ?)", $search);
+    }
+
 }

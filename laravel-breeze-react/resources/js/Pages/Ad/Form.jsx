@@ -21,7 +21,7 @@ export default function AdForm({ auth, categories }) {
         title: "",
         description: "",
         price: "",
-        currency: "",
+        currency: "MKD",
         brand: "",
         model: "",
         year: "",

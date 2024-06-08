@@ -38,7 +38,14 @@ return new class extends Migration {
             $table->integer('view_count')->default(0);
             $table->timestamps();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+
         });
+        // Create a trigram index for more flexible full-text search
+        DB::statement('
+          CREATE INDEX ads_trgm_index ON ads USING GIN (
+              (title || \' \' || description || \' \' || COALESCE(brand, \'\') || \' \' || COALESCE(model, \'\') || \' \' || COALESCE(fuel_type, \'\') || \' \' || COALESCE(transmission, \'\') || \' \' || COALESCE(body_type, \'\') || \' \' || COALESCE(color, \'\') || \' \' || COALESCE(registration_country, \'\') || \' \' || COALESCE(emission_class, \'\') || \' \' || status) gin_trgm_ops
+          );
+      ');
     }
 
     /**

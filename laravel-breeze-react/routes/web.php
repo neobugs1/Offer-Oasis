@@ -25,8 +25,16 @@ Route::get('/', function () {
 Route::get('/oglasi', function () {
     $ads = auth()->user()->ads()->orderBy('date_posted', 'desc')->paginate(5)->onEachSide(1);
     $adsData = AdResource::collection($ads)->response()->getData(true);
+
+    $pendingCount = auth()->user()->ads()->where('status', 'pending')->count();
+    $approvedCount = auth()->user()->ads()->where('status', 'approved')->count();
+    $rejectedCount = auth()->user()->ads()->where('status', 'rejected')->count();
+
     return Inertia::render('Oglasi', [
         'ads' => $adsData,
+        'pendingCount' => $pendingCount,
+        'approvedCount' => $approvedCount,
+        'rejectedCount' => $rejectedCount,
     ]);
 })->middleware(['auth', 'verified'])->name('oglasi');
 

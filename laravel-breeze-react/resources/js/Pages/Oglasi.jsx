@@ -19,7 +19,13 @@ import {
 } from "@chakra-ui/react";
 import { Head, Link, usePage } from "@inertiajs/react";
 
-export default function Oglasi({ auth, ads }) {
+export default function Oglasi({
+    auth,
+    ads,
+    pendingCount,
+    approvedCount,
+    rejectedCount,
+}) {
     const { flash } = usePage().props;
     const toast = useToast();
 
@@ -96,7 +102,12 @@ export default function Oglasi({ auth, ads }) {
                         </HStack>
                     </Box>
                     <Box w={"25%"}>
-                        <StatisticsPanel stats={ads.meta.total} />
+                        <StatisticsPanel
+                            stats={ads.meta.total}
+                            pending={pendingCount}
+                            approved={approvedCount}
+                            rejected={rejectedCount}
+                        />
                     </Box>
                 </Flex>
             </Center>

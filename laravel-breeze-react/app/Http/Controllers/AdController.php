@@ -30,8 +30,6 @@ class AdController extends Controller
      */
     public function index()
     {
-
-
         function getChildIds($parentId, $table)
         {
             $childIds = DB::table($table)->where('parent_id', $parentId)->pluck('id')->toArray();
@@ -48,7 +46,20 @@ class AdController extends Controller
             ->select('ads.*', 'users.location');
 
         if (request('searchTerm')) {
-            $query->where('title', 'like', '%' . request('searchTerm') . '%');
+            $searchTerm = '%' . request('searchTerm') . '%';
+            $query->where(function ($subQuery) use ($searchTerm) {
+                $subQuery->where('title', 'ILIKE', $searchTerm)
+                    ->orWhere('description', 'ILIKE', $searchTerm)
+                    ->orWhere('brand', 'ILIKE', $searchTerm)
+                    ->orWhere('model', 'ILIKE', $searchTerm)
+                    ->orWhere('fuel_type', 'ILIKE', $searchTerm)
+                    ->orWhere('transmission', 'ILIKE', $searchTerm)
+                    ->orWhere('body_type', 'ILIKE', $searchTerm)
+                    ->orWhere('color', 'ILIKE', $searchTerm)
+                    ->orWhere('registration_country', 'ILIKE', $searchTerm)
+                    ->orWhere('emission_class', 'ILIKE', $searchTerm)
+                    ->orWhere('status', 'ILIKE', $searchTerm);
+            });
         }
         if (request('category')) {
             $categoryIds = array_merge([request('category')], getChildIds(request('category'), 'categories'));
@@ -59,7 +70,7 @@ class AdController extends Controller
             $query->whereIn('location', $locationIds);
         }
 
-        //Filter
+        // Filter
         if (request('brand')) {
             $query->where('brand', request('brand'));
         }
@@ -93,8 +104,7 @@ class AdController extends Controller
         if (request('kw_to')) {
             $query->where('engine_power_ks', '<=', request('kw_to'));
         }
-        //END FILTER
-
+        // END FILTER
 
         if (request('sort') === 'price') {
             $query->orderBy('price');
@@ -114,8 +124,15 @@ class AdController extends Controller
             }
         ])->get();
 
+        $mostPopularAds = Ad::where('status', 'approved')
+            ->orderBy('view_count', 'desc')
+            ->take(5)
+            ->get();
+
+
         return inertia('Search', [
             'ads' => AdResource::collection($ads)->response()->getData(true),
+            'mostPopularAds' => AdResource::collection($mostPopularAds)->response()->getData(true),
             'categories' => $categories,
             'locations' => $locations,
             'queryParams' => request()->query() ?: null,
@@ -148,7 +165,7 @@ class AdController extends Controller
             "category" => request()->get('category'),
             "price" => request()->get('price'),
             "start_price" => request()->get('price'),
-            "currency" => "MKD",
+            "currency" => request()->get('currency'),
 
             'brand' => request()->get('brand'),
             'model' => request()->get('model'),
@@ -202,8 +219,10 @@ class AdController extends Controller
      */
     public function show(Ad $ad)
     {
+        $ad->increment('view_count');
+
         return inertia('Ad/Show', [
-            'ad' => new AdResource($ad),
+            'ad' => new AdResource($ad->fresh()),
         ]);
     }
 
@@ -248,31 +267,28 @@ class AdController extends Controller
     {
         $this->authorize('update', $ad);
 
-        // dd($request->all());
-        // If there are new images, delete the old ones
-        if ($request->hasFile('images')) {
-            foreach ($ad->images as $image) {
-                // Get the relative file path
-                $filePath = str_replace(Storage::url(''), '', $image->url);
-                // Delete the file from storage
-                Storage::disk('public')->delete($filePath);
-                // Delete the image record from the database
-                $image->delete();
-            }
+        // Collect incoming image IDs
+        $incomingImageIds = collect($request->input('images'))->pluck('id')->filter()->toArray();
 
-            // Then add the new images
+        // Find images to delete
+        $imagesToDelete = $ad->images()->whereNotIn('id', $incomingImageIds)->get();
+
+        // Delete specific images
+        foreach ($imagesToDelete as $image) {
+            $filePath = str_replace(Storage::url(''), '', $image->url);
+            Storage::disk('public')->delete($filePath);
+            $image->delete();
+        }
+
+        // Add new images
+        if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $manager = new ImageManager(new Driver());
-
                 $img = $manager->read($image);
-
-                // Resize the image to a width of 640 and constrain aspect ratio (auto height)
                 $img->scale(width: 640);
 
                 $filename = time() . uniqid() . '.jpg';
-
-                // Compress the image and save it with .jpg extension
-                $img->save(public_path('storage\\ads\\' . $filename), 60);
+                $img->save(public_path('storage/ads/' . $filename), 60);
 
                 $path = 'ads/' . $filename;
 
@@ -283,7 +299,7 @@ class AdController extends Controller
             }
         }
 
-        $data = $request->all();
+        $data = $request->except(['images', 'imagesToDelete']);
         $data['updated_by'] = auth()->id();
         $data['status'] = 'pending';
         $ad->update($data);

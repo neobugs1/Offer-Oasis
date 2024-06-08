@@ -22,7 +22,7 @@ import LatestAds from "./LatestAds";
 import PopularAds from "./PopularAds";
 import { useTranslation } from "react-i18next";
 
-const AdsPage = ({ ads }) => {
+const AdsPage = ({ ads, mostPopularAds }) => {
     const { url } = usePage();
     const baseURL = "http://127.0.0.1:8000/search";
 
@@ -190,7 +190,7 @@ const AdsPage = ({ ads }) => {
                     <Heading textAlign={"center"} fontSize={"medium"}>
                         {t("search.mostViewed")}
                     </Heading>
-                    <PopularAds ads={ads} />
+                    <PopularAds ads={mostPopularAds} />
                 </Box>
             </Flex>
         </Flex>
