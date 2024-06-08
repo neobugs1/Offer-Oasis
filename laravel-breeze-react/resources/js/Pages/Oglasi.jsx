@@ -55,18 +55,6 @@ export default function Oglasi({
             }
         >
             <Head title="Твои огласи" />
-            {/* {showSuccess && (
-                <Alert status="success" mb={4}>
-                    <AlertIcon />
-                    <AlertTitle mr={2}>{flash.success}</AlertTitle>
-                    <CloseButton
-                        onClick={() => setShowSuccess(false)}
-                        position="absolute"
-                        right="8px"
-                        top="8px"
-                    />
-                </Alert>
-            )} */}
             <Center className="py-12">
                 <Flex gap={10} w={"75%"}>
                     <Box w={"100%"}>

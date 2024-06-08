@@ -10,6 +10,7 @@ import {
     Heading,
     Spacer,
     Divider,
+    FormControl,
 } from "@chakra-ui/react";
 import { Link } from "@inertiajs/react";
 import BackgroundChanger from "./BackgroundChanger";
@@ -42,16 +43,25 @@ const MainContent = ({ ads }) => {
                         flexDirection={"column"}
                         h={"100%"}
                     >
-                        <Flex w="full" maxW="650px" alignItems={"center"}>
-                            <Input
-                                placeholder={t("searchInput")}
-                                size="lg"
-                                bg="white"
-                                roundedLeft="3xl"
-                                roundedRight={0}
-                            />
-                            <Link href={route("search")}>
+                        <FormControl
+                            as={"form"}
+                            action={route("search")}
+                            method="GET"
+                            w="full"
+                            maxW="650px"
+                            alignItems={"center"}
+                        >
+                            <Flex w="full" maxW="650px" alignItems={"center"}>
+                                <Input
+                                    name="searchTerm"
+                                    placeholder={t("searchInput")}
+                                    size="lg"
+                                    bg="white"
+                                    roundedLeft="3xl"
+                                    roundedRight={0}
+                                />
                                 <Button
+                                    type="submit"
                                     bg={"#0060df"}
                                     size="lg"
                                     roundedRight="3xl"
@@ -59,8 +69,8 @@ const MainContent = ({ ads }) => {
                                 >
                                     <Search2Icon color={"white"} />
                                 </Button>
-                            </Link>
-                        </Flex>
+                            </Flex>
+                        </FormControl>
                         <Divider
                             orientation="vertical"
                             maxH={"2vh"}
