@@ -218,7 +218,9 @@ const Show = ({ ad, auth }) => {
                                     <b>{t("show.descriptionTitle")}</b>
                                 </Text>
                                 <Divider />
-                                <Text p={2}>{ad.description}</Text>
+                                <Text p={2} style={{ whiteSpace: "pre-wrap" }}>
+                                    {ad.description}
+                                </Text>
                             </Box>
                             <Box
                                 bg={"white"}

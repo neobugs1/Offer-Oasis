@@ -109,25 +109,38 @@ const AdListing = ({ ad, index }) => {
                         {currentImageIndex + 1}/{ad.images.length}
                     </Text>
                 </Box>
-                <VStack align="start" spacing={2}>
-                    <Link href={route("ad.show", ad.id)}>
-                        <Box w={"100%"}>
-                            <Text
-                                fontSize="2xl"
-                                fontWeight="bold"
-                                whiteSpace="nowrap"
-                                overflow="hidden"
-                                textOverflow="ellipsis"
-                                _hover={{
-                                    textDecoration: "underline",
-                                }}
-                            >
-                                {ad.title}
-                            </Text>
-                        </Box>
-                    </Link>
+                <VStack align="start" spacing={2} w={"100%"}>
+                    <Box w="75%">
+                        <Link href={route("ad.show", ad.id)}>
+                            <Box w="100%">
+                                <Text
+                                    fontSize="2xl"
+                                    fontWeight="bold"
+                                    whiteSpace="nowrap"
+                                    overflow="hidden"
+                                    textOverflow="ellipsis"
+                                    _hover={{
+                                        textDecoration: "underline",
+                                    }}
+                                >
+                                    {ad.title}
+                                </Text>
+                            </Box>
+                        </Link>
 
-                    <Text fontSize="sm">{ad.description}</Text>
+                        <Text
+                            fontSize="sm"
+                            sx={{
+                                display: "-webkit-box",
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: "vertical",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                            }}
+                        >
+                            {ad.description}
+                        </Text>
+                    </Box>
                     <HStack>
                         <Text
                             fontWeight="bold"

@@ -316,8 +316,10 @@ class AdController extends Controller
         $this->authorize('update', $ad);
 
         $data['status'] = "approved";
+        $data['date_posted'] = now();
 
         $ad->update($data);
+
 
         return redirect()->back()->with(["success" => "Огласот е успешно одобрен!"]);
     }
@@ -327,6 +329,7 @@ class AdController extends Controller
         $this->authorize('update', $ad);
 
         $data['status'] = "rejected";
+        $data['date_posted'] = now();
 
         $ad->update($data);
 
