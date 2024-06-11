@@ -163,7 +163,12 @@ const AdListing = ({ ad, index }) => {
                     <HStack spacing={5}>
                         {ad.category.map((category, index) => (
                             <React.Fragment key={category.id}>
-                                <Link>
+                                <Link
+                                    href={route("search", {
+                                        category: category.id,
+                                        page: 1,
+                                    })}
+                                >
                                     <Text
                                         fontSize="sm"
                                         color={"gray.500"}
