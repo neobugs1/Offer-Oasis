@@ -84,12 +84,19 @@ const Show = ({ ad, auth }) => {
                     alignItems={"center"}
                     gap={3}
                 >
-                    <AiOutlineHome color="#0060df" size={25} />
+                    <Link href={route("search")}>
+                        <AiOutlineHome color="#0060df" size={25} />
+                    </Link>
                     <FaChevronRight color="gray" />
                     <HStack spacing={5}>
                         {ad.category.map((category, index) => (
                             <React.Fragment key={index}>
-                                <Link>
+                                <Link
+                                    href={route("search", {
+                                        category: category.id,
+                                        page: 1,
+                                    })}
+                                >
                                     <Text
                                         fontSize="sm"
                                         color={"#0060df"}
