@@ -70,12 +70,7 @@ const Show = ({ ad, auth }) => {
     return (
         <Layout auth={auth}>
             <Head title={ad.title}></Head>
-            <Flex
-                w={"100%"}
-                h={"100%"}
-                bg={"gray.200"}
-                flexDirection={"column"}
-            >
+            <Flex w={"100%"} h={"100%"} bg={"#f3f4f5"} flexDirection={"column"}>
                 <Flex
                     w="70%"
                     mx={"auto"}

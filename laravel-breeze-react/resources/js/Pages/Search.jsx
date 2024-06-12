@@ -45,7 +45,7 @@ const Search = ({ auth, ads, queryParams = null, mostPopularAds }) => {
                         : "Огласи"
                 }
             ></Head>
-            <Box p={6} bg={"#00193c1a"}>
+            <Box p={6} bg={"#f3f4f5"}>
                 {/* <SearchBar queryParams={queryParams} /> */}
                 <AdsPage ads={ads} mostPopularAds={mostPopularAds} />
             </Box>

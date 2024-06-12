@@ -15,6 +15,13 @@ import {
     FormLabel,
     FormControl,
     SimpleGrid,
+    textDecoration,
+    useDisclosure,
+    AlertIcon,
+    Alert,
+    AlertTitle,
+    AlertDescription,
+    CloseButton,
 } from "@chakra-ui/react";
 import Layout from "@/Layouts/Layout";
 import { useTranslation } from "react-i18next";
@@ -40,22 +47,49 @@ export default function Login({ status, canResetPassword, auth }) {
 
     const { t } = useTranslation();
 
+    const {
+        isOpen: isVisible,
+        onClose,
+        onOpen,
+    } = useDisclosure({ defaultIsOpen: true });
+
     return (
         <Layout auth={auth}>
             <Head title={t("login.loginTitle")} />
             <Flex
                 justifyContent={"center"}
-                bgColor={"#00193c1a"}
+                bgColor={"#f3f4f5"}
                 alignItems={"center"}
                 flexDirection={"column"}
                 p={10}
             >
+                {isVisible ? (
+                    <Box w={"700px"} justifyContent={"center"} mb={5}>
+                        <Alert status="info" justifyContent={"space-between"}>
+                            <Flex>
+                                <AlertIcon />
+                                <AlertTitle>Инфо!</AlertTitle>
+                                <AlertDescription>
+                                    Потребно е да сте најавени за да поставите
+                                    оглас
+                                </AlertDescription>
+                            </Flex>
+                            <CloseButton
+                                alignSelf="flex-start"
+                                position="relative"
+                                right={-1}
+                                top={-1}
+                                onClick={onClose}
+                            />
+                        </Alert>
+                    </Box>
+                ) : null}
                 <Box
                     w="400px"
                     p={5}
                     bgColor={"white"}
                     roundedTop={"xl"}
-                    boxShadow={"lg"}
+                    boxShadow={"md"}
                 >
                     <Flex direction="column" align="center" gap={5}>
                         <Text
@@ -145,7 +179,11 @@ export default function Login({ status, canResetPassword, auth }) {
                                     fontSize="sm"
                                     color="#0060df"
                                 >
-                                    {t("login.forgotPassword")}
+                                    <Text
+                                        _hover={{ textDecoration: "underline" }}
+                                    >
+                                        {t("login.forgotPassword")}
+                                    </Text>
                                 </Link>
                             )}
                         </div>
@@ -166,7 +204,12 @@ export default function Login({ status, canResetPassword, auth }) {
                         color="#0060df"
                         mb={4}
                     >
-                        {t("login.createAccount")}
+                        <Text
+                            color={"blue"}
+                            _hover={{ textDecoration: "underline" }}
+                        >
+                            {t("login.createAccount")}
+                        </Text>
                     </Link>
                 </Box>
             </Flex>
