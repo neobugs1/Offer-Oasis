@@ -30,6 +30,12 @@ Offer Oasis e веб апликација која служи за сподел�
 
 - Full-text search
 
+## Видео:
+
+[![embed](https://i.ytimg.com/vi/F8gCo3d7UbA/maxresdefault.jpg)](https://www.youtube.com/watch?v=F8gCo3d7UbA "Youtube Video")
+
+Кликнете на сликата или во случај тоа да не работи, линк: https://www.youtube.com/watch?v=F8gCo3d7UbA
+
 ## Автор
 
 Изработено од: Никола Смилески(193265)
