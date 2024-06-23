@@ -329,10 +329,20 @@ const Show = ({ ad, auth }) => {
                     </VStack>
                 </Flex>
             </Flex>
-            <Button onClick={() => deleteAd(ad)}>{t("show.deleteAd")}</Button>
-            <Link className="w-full" href={route("ad.edit", ad.id)}>
-                <Button w={"100%"}>{t("show.editAd")}</Button>
-            </Link>
+            {auth.user ? (
+                auth.user.role == "admin" && (
+                    <>
+                        <Button onClick={() => deleteAd(ad)}>
+                            {t("show.deleteAd")}
+                        </Button>
+                        <Link className="w-full" href={route("ad.edit", ad.id)}>
+                            <Button w={"100%"}>{t("show.editAd")}</Button>
+                        </Link>
+                    </>
+                )
+            ) : (
+                <></>
+            )}
         </Layout>
     );
 };
