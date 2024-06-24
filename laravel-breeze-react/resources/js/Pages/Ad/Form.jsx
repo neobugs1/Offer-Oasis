@@ -301,7 +301,7 @@ export default function AdForm({ auth, categories }) {
                                 }
                             />
                         </FormControl>
-                        <Button type="submit" bg={"#0060df"}>
+                        <Button type="submit" bg={"#0060df"} color={"white"}>
                             Create Ad
                         </Button>
                     </VStack>

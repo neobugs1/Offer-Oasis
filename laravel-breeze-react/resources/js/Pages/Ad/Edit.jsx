@@ -301,7 +301,7 @@ export default function AdForm({ auth, categories, ad }) {
                         onChange={(e) => setData("description", e.target.value)}
                     />
                 </FormControl>
-                <Button type="submit" bg={"#0060df"}>
+                <Button type="submit" bg={"#0060df"} color={"white"}>
                     Edit Ad
                 </Button>
             </VStack>

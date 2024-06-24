@@ -231,7 +231,12 @@ const CarFilter = ({ currentURL, url }) => {
                     </HStack>
                 </VStack>
             </HStack>
-            <Button bg={"#0060df"} onClick={handleFilter} mb={4}>
+            <Button
+                bg={"#0060df"}
+                color={"white"}
+                onClick={handleFilter}
+                mb={4}
+            >
                 Филтрирај
             </Button>
         </VStack>
